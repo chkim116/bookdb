@@ -1,3 +1,5 @@
+import { Content } from "antd/lib/layout/layout";
+
 export default function Home() {
-    return <div>Hello NEXT WITH TYPESCRIPT!</div>;
+    return <Content>Hello NEXT WITH TYPESCRIPT!</Content>;
 }
