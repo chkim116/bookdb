@@ -6,8 +6,9 @@ const Container = styled.div`
 `;
 
 export default function Home() {
-    return;
-    <Container>
-        <MainPage></MainPage>;
-    </Container>;
+    return (
+        <Container>
+            <MainPage></MainPage>;
+        </Container>
+    );
 }

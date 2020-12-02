@@ -41,7 +41,11 @@ const Nav = () => {
             <MainHeader>
                 <Logo>BookDB</Logo>
                 <MainSearch>
-                    <Input type="text" width="250px" placeholder="입력" />
+                    <Input
+                        type="text"
+                        width="250px"
+                        placeholder="제목으로 책 검색하기"
+                    />
                     <Button width="30px" type="submit">
                         검색
                     </Button>
