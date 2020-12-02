@@ -1,5 +1,13 @@
-import { Content } from "antd/lib/layout/layout";
+import styled from "@emotion/styled";
+import MainPage from "../components/Home/MainPage";
+
+const Container = styled.div`
+    width: 100%;
+`;
 
 export default function Home() {
-    return <Content>Hello NEXT WITH TYPESCRIPT!</Content>;
+    return;
+    <Container>
+        <MainPage></MainPage>;
+    </Container>;
 }
