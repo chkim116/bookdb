@@ -20,7 +20,6 @@ const NavMenu = styled.nav`
             text-align: center;
             position: relative;
             font-size: ${(props) => props.theme.ls};
-            font-weight: 100;
             div {
                 cursor: pointer;
 
