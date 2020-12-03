@@ -36,8 +36,6 @@ const index = ({ list }: any) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-    // Get the paths we want to pre-render based on posts
-
     return {
         paths: [
             {

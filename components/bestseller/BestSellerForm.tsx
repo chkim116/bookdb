@@ -6,6 +6,8 @@ import { Button } from "../../styles/CommonStyle";
 import styled from "@emotion/styled";
 import { useRouter } from "next/dist/client/router";
 import Loader from "../../styles/loader";
+import { css } from "@emotion/react";
+import theme from "../../styles/theme";
 
 const Container = styled.div`
     width: 100%;
@@ -17,7 +19,7 @@ const Title = styled.div`
     text-align: center;
 `;
 
-const FilterNav = styled.div`
+const FilterNav = styled.div<any>`
     display: flex;
     justify-content: center;
     width: 100%;
@@ -26,6 +28,37 @@ const FilterNav = styled.div`
         margin: 0 8px;
         background: ${(props) => props.theme.white};
         border: 1px solid ${(props) => props.theme.gray};
+
+        ${(props) =>
+            props.selected === "0" &&
+            css`
+                &:nth-of-type(1) {
+                    pointer-events: none;
+                    background: ${theme.blue};
+                    color: ${theme.white};
+                }
+            `}
+
+        ${(props) =>
+            props.selected === "2" &&
+            css`
+                &:nth-of-type(2) {
+                    pointer-events: none;
+                    background: ${theme.blue};
+                    color: ${theme.white};
+                }
+            `}
+         
+            ${(props) =>
+            props.selected === "3" &&
+            css`
+                &:nth-of-type(3) {
+                    pointer-events: none;
+                    background: ${theme.blue};
+                    color: ${theme.white};
+                }
+            `}
+         
 
         &:hover {
             background: ${(props) => props.theme.blue};
@@ -106,13 +139,14 @@ const BestSellerForm = ({ list }: any) => {
     const title = checkRouter(id);
 
     const [loading, setLoading] = useState<boolean>(false);
-
+    const [selected, setSelected] = useState<any>("");
     const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         setLoading(true);
     };
 
     useEffect(() => {
         setLoading(false);
+        setSelected(id);
     }, [id]);
 
     return (
@@ -122,7 +156,7 @@ const BestSellerForm = ({ list }: any) => {
                 <Ranking>{title}</Ranking>
                 <small>출처:교보문고</small>
             </Title>
-            <FilterNav>
+            <FilterNav selected={selected}>
                 <Link href={`/bestseller/${Paths.WEEK}`}>
                     <Button onClick={onClick}>주간</Button>
                 </Link>
