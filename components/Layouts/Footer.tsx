@@ -9,6 +9,10 @@ const Footer = styled.div`
     width: 100%;
     margin: 0 auto;
     text-align: center;
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 `;
 
 const FooterForm = () => {

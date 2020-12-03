@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import Link from "next/link";
 import { Button, Input } from "../../styles/CommonStyle";
 import NavList from "./NavList";
 
@@ -8,6 +9,7 @@ const Container = styled.div`
 
 const Logo = styled.div`
     font-size: 24px;
+    cursor: pointer;
     font-weight: bold;
 `;
 
@@ -39,7 +41,9 @@ const Nav = () => {
     return (
         <Container>
             <MainHeader>
-                <Logo>BookDB</Logo>
+                <Link href="/">
+                    <Logo>BookDB</Logo>
+                </Link>
                 <MainSearch>
                     <Input
                         type="text"

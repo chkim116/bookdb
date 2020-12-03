@@ -1,6 +1,7 @@
 import React from "react";
 
 import styled from "@emotion/styled";
+import Link from "next/link";
 
 const NavMenu = styled.nav`
     width: 100%;
@@ -63,8 +64,10 @@ const NavList = () => {
                 <li>
                     <div>추천</div>
                     <NavSubMenu>
-                        <li>이달 신간</li>
-                        <li>월간 베스트</li>
+                        <li>신간</li>
+                        <Link href="/bestseller/0">
+                            <li>베스트셀러</li>
+                        </Link>
                     </NavSubMenu>
                 </li>
                 <li>
