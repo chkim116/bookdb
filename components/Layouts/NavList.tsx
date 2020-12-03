@@ -67,7 +67,7 @@ const NavList = () => {
                     </Link>
                 </li>
                 <li>
-                    <Link href="/board">
+                    <Link href="/board/freeboard">
                         <div>책장</div>
                     </Link>
 

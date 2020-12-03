@@ -10,6 +10,8 @@ import { BestSeller, Paths } from "../../pages/bestseller/[id]";
 const Container = styled.div`
     width: 100%;
     padding: 12px;
+    max-width: ${(props) => props.theme.maxWidth};
+    margin: 0 auto;
 `;
 
 const Title = styled.div`

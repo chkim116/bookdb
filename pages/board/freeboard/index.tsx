@@ -4,7 +4,7 @@ import { Container } from "../../../styles/CommonStyle";
 
 const index = () => {
     return (
-        <Container>
+        <Container color="#f8f8f8">
             <FreeBoard></FreeBoard>
         </Container>
     );

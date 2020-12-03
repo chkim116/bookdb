@@ -14,8 +14,13 @@ type ButtonType = {
     radius?: boolean;
 };
 
-export const Container = styled.div`
+type ContainerType = {
+    color?: string;
+};
+
+export const Container = styled.div<ContainerType>`
     width: 100%;
+    background: ${(props) => props.color};
 `;
 
 export const Input = styled.input<InputType>`

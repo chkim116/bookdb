@@ -14,7 +14,6 @@ import withReduxSaga from "next-redux-saga";
 const AppLayouts = styled.div`
     width: 100%;
     margin: 0 auto;
-    max-width: ${(props) => props.theme.maxWidth};
     display: flex;
     flex-direction: column;
 `;
