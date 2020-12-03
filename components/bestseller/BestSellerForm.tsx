@@ -6,6 +6,7 @@ import { css } from "@emotion/react";
 import theme from "../../styles/theme";
 import Link from "next/link";
 import { BestSeller, Paths } from "../../pages/bestseller/[id]";
+import BoardForm from "../Common/BoardForm";
 
 const Container = styled.div`
     width: 100%;
@@ -72,56 +73,6 @@ const Ranking = styled.h1`
     font-weight: bold;
 `;
 
-const BestSellerContainer = styled.div`
-    max-width: ${(props) => props.theme.maxWidth};
-    width: 100%;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-`;
-
-const RankingBooks = styled.div`
-    text-align: center;
-    padding: 12px;
-    border: 3px solid ${(props) => props.theme.border};
-    height: 480px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-`;
-
-const Rank = styled.div`
-    text-align: center;
-    width: 30px;
-    border-radius: 50%;
-    background: ${(props) => props.theme.blue};
-    height: 30px;
-    margin: 8px 0;
-    font-size: ${(props) => props.theme.ls};
-    color: ${(props) => props.theme.white};
-    margin: 8px auto;
-`;
-
-const BooksTitle = styled.h3`
-    font-weight: bold;
-    position: relative;
-`;
-
-const BooksImg = styled.div`
-    width: 200px;
-    height: 288px;
-    margin: 0 auto;
-    img {
-        width: 100%;
-        height: 100%;
-    }
-`;
-
-const Auth = styled.div`
-    padding: 8px 0;
-    font-weight: 700;
-`;
-
 type Props = {
     list: BestSeller[];
     title: string;
@@ -149,26 +100,7 @@ const BestSellerForm = ({ list, title, selected, onClick }: Props) => {
                     년간
                 </Button>
             </FilterNav>
-            <BestSellerContainer>
-                {list.map((v: BestSeller) => (
-                    <div key={v.id}>
-                        <Rank>{v.id + 1}</Rank>
-                        <RankingBooks>
-                            <BooksTitle>{v.title}</BooksTitle>
-                            <BooksImg>
-                                <img src={v.imageUrl} alt={v.imageAlt} />
-                            </BooksImg>
-                            <Auth>{v.auth}</Auth>
-                            <p>{v.summary}</p>
-                            <Link href={v.url}>
-                                <a target="blank">
-                                    <Button hover={true}>더보기</Button>
-                                </a>
-                            </Link>
-                        </RankingBooks>
-                    </div>
-                ))}
-            </BestSellerContainer>
+            <BoardForm list={list} />
         </Container>
     );
 };
