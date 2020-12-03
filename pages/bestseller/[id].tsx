@@ -1,12 +1,12 @@
-import React, { useCallback, useEffect, useState } from "react";
-import Axios from "axios";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
+import iconv from "iconv-lite";
 import cheerio from "cheerio";
 import { GetStaticPaths, GetStaticProps } from "next";
-import iconv from "iconv-lite";
 import BestSeller from "../../components/bestseller/BestSellerForm";
 import BestSellerForm from "../../components/bestseller/BestSellerForm";
 import { useRouter } from "next/dist/client/router";
+import Axios from "axios";
 
 export type BestSeller = {
     title: string;
@@ -28,7 +28,7 @@ const Container = styled.div`
     width: 100%;
 `;
 
-const checkRouter = (id: string | string[]): string => {
+const checkRouter = (id: string): string => {
     if (id === Paths.WEEK) {
         return "주간 베스트셀러 TOP20";
     }
@@ -41,29 +41,23 @@ const checkRouter = (id: string | string[]): string => {
 };
 
 const index = ({ list }: any) => {
-    const {
-        query: { id },
-    } = useRouter();
+    const router = useRouter();
 
-    const title = checkRouter(id);
-
-    const [loading, setLoading] = useState<boolean>(false);
+    const [title, setTitle] = useState<string>(Paths.WEEK);
     const [selected, setSelected] = useState<string | string[]>("");
-    const onClick = () => {
-        setLoading(true);
-    };
 
-    useEffect(() => {
-        setLoading(false);
-        setSelected(id);
-    }, [id]);
+    const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        const { value } = e.target as HTMLInputElement;
+        setTitle(checkRouter(value));
+        setSelected(value);
+        router.push(`/bestseller/${value}`);
+    };
 
     return (
         <Container>
             <BestSellerForm
                 list={list}
                 title={title}
-                loading={loading}
                 selected={selected}
                 onClick={onClick}
             />
@@ -90,37 +84,35 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
     let list: BestSeller[] = [];
-    try {
-        const gyobo = await Axios.get(
-            `http://www.kyobobook.co.kr/bestSellerNew/bestseller.laf?range=1&kind=${params.id}&orderClick=DAA&mallGb=KOR&linkClass=A`,
-            { responseType: "arraybuffer" }
-        ).then((res) => res.data);
-        const decoded = iconv.decode(gyobo, "EUC-KR");
-        const $ = cheerio.load(decoded);
-        const $bodyList = $("ul.list_type01").children("li");
+    const gyobo = await Axios.get(
+        `http://www.kyobobook.co.kr/bestSellerNew/bestseller.laf?range=1&kind=${params.id}&orderClick=DAA&mallGb=KOR&linkClass=A`,
+        { responseType: "arraybuffer" }
+    ).then((res) => res.data);
+    const decoded = iconv.decode(gyobo, "EUC-KR");
+    const $ = cheerio.load(decoded);
+    const $bodyList = $("ul.list_type01").children("li");
 
-        $bodyList.each(function (i) {
-            list[i] = {
-                title: $(this).find("div.title strong").text(),
-                url: $(this).find("div.cover a").attr("href"),
-                imageUrl: $(this).find("img").attr("src"),
-                imageAlt: $(this).find("img").attr("alt"),
-                summary: $(this).find("div.subtitle").text(),
-                auth: $(this)
-                    .find("div.author")
-                    .text()
-                    .split("|")[0]
-                    .replace("저자 더보기", ""),
-                id: i++,
-            };
-        });
-    } catch (err) {
-        console.log(err);
-    }
+    $bodyList.each(function (i) {
+        list[i] = {
+            title: $(this).find("div.title strong").text(),
+            url: $(this).find("div.cover a").attr("href"),
+            imageUrl: $(this).find("img").attr("src"),
+            imageAlt: $(this).find("img").attr("alt"),
+            summary: $(this).find("div.subtitle").text(),
+            auth: $(this)
+                .find("div.author")
+                .text()
+                .split("|")[0]
+                .replace("저자 더보기", ""),
+            id: i++,
+        };
+    });
+
     return {
         props: {
             list,
         },
     };
 };
+
 export default index;

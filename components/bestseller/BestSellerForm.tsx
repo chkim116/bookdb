@@ -1,12 +1,12 @@
 import React from "react";
-import Link from "next/link";
-import { BestSeller, Paths } from "../../pages/bestseller/[id]";
 import { Button } from "../../styles/CommonStyle";
 
 import styled from "@emotion/styled";
-import Loader from "../../styles/loader";
 import { css } from "@emotion/react";
 import theme from "../../styles/theme";
+import { BestSeller } from "../../redux/ranking";
+import Link from "next/link";
+import { Paths } from "../../pages/bestseller/[id]";
 
 const Container = styled.div`
     width: 100%;
@@ -124,31 +124,29 @@ const Auth = styled.div`
 type Props = {
     list: BestSeller[];
     title: string;
-    loading: boolean;
     selected: string | string[];
-    onClick: () => void;
+    onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 };
 
-const BestSellerForm = ({ list, title, loading, selected, onClick }: Props) => {
+const BestSellerForm = ({ list, title, selected, onClick }: Props) => {
     return (
         <Container>
-            {loading && <Loader></Loader>}
             <Title>
                 <Ranking>{title}</Ranking>
                 <small>출처:교보문고</small>
             </Title>
             <FilterNav selected={selected}>
-                <Link href={`/bestseller/${Paths.WEEK}`}>
-                    <Button onClick={onClick}>주간</Button>
-                </Link>
+                <Button onClick={onClick} value={Paths.WEEK}>
+                    주간
+                </Button>
 
-                <Link href={`/bestseller/${Paths.MONTHLY}`}>
-                    <Button onClick={onClick}>월간</Button>
-                </Link>
+                <Button onClick={onClick} value={Paths.MONTHLY}>
+                    월간
+                </Button>
 
-                <Link href={`/bestseller/${Paths.YEARS}`}>
-                    <Button onClick={onClick}>년간</Button>
-                </Link>
+                <Button onClick={onClick} value={Paths.YEARS}>
+                    년간
+                </Button>
             </FilterNav>
             <BestSellerContainer>
                 {list.map((v: BestSeller) => (
