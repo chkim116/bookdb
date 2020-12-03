@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import styled from "@emotion/styled";
 import iconv from "iconv-lite";
 import cheerio from "cheerio";
 import { GetStaticPaths, GetStaticProps } from "next";
@@ -7,6 +6,7 @@ import BestSeller from "../../components/bestseller/BestSellerForm";
 import BestSellerForm from "../../components/bestseller/BestSellerForm";
 import { useRouter } from "next/dist/client/router";
 import Axios from "axios";
+import { Container } from "../../styles/CommonStyle";
 
 export type BestSeller = {
     title: string;
@@ -24,10 +24,6 @@ export enum Paths {
     YEARS = "3",
 }
 
-const Container = styled.div`
-    width: 100%;
-`;
-
 const checkRouter = (id: string): string => {
     if (id === Paths.WEEK) {
         return "주간 베스트셀러 TOP20";
@@ -43,14 +39,14 @@ const checkRouter = (id: string): string => {
 const index = ({ list }: any) => {
     const router = useRouter();
 
-    const [title, setTitle] = useState<string>(Paths.WEEK);
-    const [selected, setSelected] = useState<string | string[]>("");
+    const [title, setTitle] = useState<string>("주간 베스트셀러 TOP20");
+    const [selected, setSelected] = useState<string | string[]>("0");
 
     const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         const { value } = e.target as HTMLInputElement;
-        setTitle(checkRouter(value));
         setSelected(value);
         router.push(`/bestseller/${value}`);
+        setTitle(checkRouter(value));
     };
 
     return (

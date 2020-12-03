@@ -4,9 +4,8 @@ import { Button } from "../../styles/CommonStyle";
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 import theme from "../../styles/theme";
-import { BestSeller } from "../../redux/ranking";
 import Link from "next/link";
-import { Paths } from "../../pages/bestseller/[id]";
+import { BestSeller, Paths } from "../../pages/bestseller/[id]";
 
 const Container = styled.div`
     width: 100%;

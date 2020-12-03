@@ -14,6 +14,10 @@ type ButtonType = {
     radius?: boolean;
 };
 
+export const Container = styled.div`
+    width: 100%;
+`;
+
 export const Input = styled.input<InputType>`
     border: 3px solid ${(props) => props.theme.border};
     padding: 6px 12px;
