@@ -47,3 +47,10 @@ export const Button = styled.button<ButtonType>`
         color: ${(props) => props.hover && props.theme.white};
     }
 `;
+
+export const Title = styled.h2`
+    text-align: center;
+    height: 70px;
+    padding: 34px 0;
+    color: ${(props) => props.theme.black};
+`;

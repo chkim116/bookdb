@@ -2,6 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import faker from "faker/locale/ko";
 import Link from "next/link";
+import { Title } from "../../../styles/CommonStyle";
 
 const Board = styled.div`
     max-width: ${(props) => props.theme.maxWidth};
@@ -17,13 +18,6 @@ const BoardImg = styled.div`
     width: 100%;
     text-align: center;
     padding-top: 12px;
-`;
-
-const Title = styled.h2`
-    text-align: center;
-    height: 70px;
-    padding: 34px 0;
-    color: ${(props) => props.theme.black};
 `;
 
 const BoardHead = styled.ul`

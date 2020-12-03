@@ -1,5 +1,5 @@
 import React from "react";
-import { BestSeller } from "../../pages/bestseller/[id]";
+import { BoardCard } from "../../@types/typs";
 import styled from "@emotion/styled";
 import Link from "next/link";
 import { Button } from "../../styles/CommonStyle";
@@ -10,16 +10,23 @@ const Container = styled.div`
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 12px;
+    padding: 36px 0;
 `;
 
-const BoardCard = styled.div`
+const BoardCardForm = styled.div<Review>`
     text-align: center;
     padding: 12px;
     border: 3px solid ${(props) => props.theme.border};
-    height: 480px;
+    background: ${(props) => props.theme.white};
+    height: ${(props) => !props.review && "480px"};
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+
+    a {
+        width: fit-content;
+        margin: 10px auto;
+    }
 `;
 
 const Rank = styled.div`
@@ -54,29 +61,34 @@ const Auth = styled.div`
     font-weight: 700;
 `;
 
-type Props = {
-    list: BestSeller[];
+type Review = {
+    review: boolean;
 };
 
-const BoardForm = ({ list }: Props) => {
+type Props = {
+    list: BoardCard[];
+    review?: boolean;
+};
+
+const BoardForm = ({ list, review }: Props) => {
     return (
         <Container>
-            {list.map((v: BestSeller) => (
+            {list.map((v: BoardCard) => (
                 <div key={v.id}>
-                    <Rank>{v.id + 1}</Rank>
-                    <BoardCard>
+                    {!review && <Rank>{v.id + 1}</Rank>}
+                    <BoardCardForm review={review}>
                         <BoardTitle>{v.title}</BoardTitle>
                         <BoardImg>
                             <img src={v.imageUrl} alt={v.imageAlt} />
                         </BoardImg>
                         <Auth>{v.auth}</Auth>
-                        <p>{v.summary}</p>
+                        <p>{v.summary.split("").slice(0, 250).join("")}...</p>
                         <Link href={v.url}>
-                            <a target="blank">
+                            <a target={!review && "blank"}>
                                 <Button hover={true}>더보기</Button>
                             </a>
                         </Link>
-                    </BoardCard>
+                    </BoardCardForm>
                 </div>
             ))}
         </Container>

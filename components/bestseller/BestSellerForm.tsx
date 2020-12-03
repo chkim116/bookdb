@@ -1,12 +1,10 @@
 import React from "react";
 import { Button } from "../../styles/CommonStyle";
-
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 import theme from "../../styles/theme";
-import Link from "next/link";
-import { BestSeller, Paths } from "../../pages/bestseller/[id]";
-import BoardForm from "../Common/BoardForm";
+import { BoardCard, Paths } from "../../@types/typs";
+import BoardForm from "../Common/BoardCardForm";
 
 const Container = styled.div`
     width: 100%;
@@ -74,7 +72,7 @@ const Ranking = styled.h1`
 `;
 
 type Props = {
-    list: BestSeller[];
+    list: BoardCard[];
     title: string;
     selected: string | string[];
     onClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;

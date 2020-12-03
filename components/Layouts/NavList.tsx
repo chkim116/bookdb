@@ -17,6 +17,7 @@ const NavMenu = styled.nav`
 
         li {
             width: 150px;
+            z-index: 500;
             text-align: center;
             position: relative;
             font-size: ${(props) => props.theme.ls};
@@ -46,7 +47,6 @@ const NavSubMenu = styled.ul`
     flex-direction: column;
     background-color: ${(props) => props.theme.white};
     cursor: pointer;
-
     li {
         width: 100%;
         border-bottom: 3px solid ${(props) => props.theme.border};

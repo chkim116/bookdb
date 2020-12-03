@@ -2,27 +2,11 @@ import React, { useState } from "react";
 import iconv from "iconv-lite";
 import cheerio from "cheerio";
 import { GetStaticPaths, GetStaticProps } from "next";
-import BestSeller from "../../components/bestseller/BestSellerForm";
 import BestSellerForm from "../../components/bestseller/BestSellerForm";
 import { useRouter } from "next/dist/client/router";
 import Axios from "axios";
 import { Container } from "../../styles/CommonStyle";
-
-export type BestSeller = {
-    title: string;
-    auth: string;
-    imageAlt: string;
-    imageUrl: string;
-    summary: string;
-    url: string;
-    id: number;
-};
-
-export enum Paths {
-    WEEK = "0",
-    MONTHLY = "2",
-    YEARS = "3",
-}
+import { Paths } from "../../@types/typs";
 
 const checkRouter = (id: string): string => {
     if (id === Paths.WEEK) {
