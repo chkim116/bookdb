@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Axios from "axios";
 import styled from "@emotion/styled";
 import cheerio from "cheerio";
@@ -6,6 +6,7 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import iconv from "iconv-lite";
 import BestSeller from "../../components/bestseller/BestSellerForm";
 import BestSellerForm from "../../components/bestseller/BestSellerForm";
+import { useRouter } from "next/dist/client/router";
 
 export type BestSeller = {
     title: string;
@@ -27,10 +28,45 @@ const Container = styled.div`
     width: 100%;
 `;
 
+const checkRouter = (id: string | string[]): string => {
+    if (id === Paths.WEEK) {
+        return "주간 베스트셀러 TOP20";
+    }
+    if (id === Paths.MONTHLY) {
+        return "월간 베스트셀러 TOP20";
+    }
+    if (id === Paths.YEARS) {
+        return "년간 베스트셀러 TOP20";
+    }
+};
+
 const index = ({ list }: any) => {
+    const {
+        query: { id },
+    } = useRouter();
+
+    const title = checkRouter(id);
+
+    const [loading, setLoading] = useState<boolean>(false);
+    const [selected, setSelected] = useState<string | string[]>("");
+    const onClick = () => {
+        setLoading(true);
+    };
+
+    useEffect(() => {
+        setLoading(false);
+        setSelected(id);
+    }, [id]);
+
     return (
         <Container>
-            <BestSellerForm list={list} />
+            <BestSellerForm
+                list={list}
+                title={title}
+                loading={loading}
+                selected={selected}
+                onClick={onClick}
+            />
         </Container>
     );
 };

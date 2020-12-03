@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Link from "next/link";
 import { BestSeller, Paths } from "../../pages/bestseller/[id]";
 import { Button } from "../../styles/CommonStyle";
 
 import styled from "@emotion/styled";
-import { useRouter } from "next/dist/client/router";
 import Loader from "../../styles/loader";
 import { css } from "@emotion/react";
 import theme from "../../styles/theme";
@@ -84,7 +83,10 @@ const RankingBooks = styled.div`
     text-align: center;
     padding: 12px;
     border: 3px solid ${(props) => props.theme.border};
-    height: 462px;
+    height: 480px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 `;
 
 const Rank = styled.div`
@@ -119,36 +121,15 @@ const Auth = styled.div`
     font-weight: 700;
 `;
 
-const checkRouter = (id: string | string[]): string => {
-    if (id === Paths.WEEK) {
-        return "주간 베스트셀러 TOP20";
-    }
-    if (id === Paths.MONTHLY) {
-        return "월간 베스트셀러 TOP20";
-    }
-    if (id === Paths.YEARS) {
-        return "년간 베스트셀러 TOP20";
-    }
+type Props = {
+    list: BestSeller[];
+    title: string;
+    loading: boolean;
+    selected: string | string[];
+    onClick: () => void;
 };
 
-const BestSellerForm = ({ list }: any) => {
-    const {
-        query: { id },
-    } = useRouter();
-
-    const title = checkRouter(id);
-
-    const [loading, setLoading] = useState<boolean>(false);
-    const [selected, setSelected] = useState<any>("");
-    const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-        setLoading(true);
-    };
-
-    useEffect(() => {
-        setLoading(false);
-        setSelected(id);
-    }, [id]);
-
+const BestSellerForm = ({ list, title, loading, selected, onClick }: Props) => {
     return (
         <Container>
             {loading && <Loader></Loader>}
