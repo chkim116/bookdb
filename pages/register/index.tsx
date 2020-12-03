@@ -1,7 +1,7 @@
 import React from "react";
 
-const Board = () => {
+const index = () => {
     return <div></div>;
 };
 
-export default Board;
+export default index;

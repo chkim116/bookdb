@@ -1,7 +1,7 @@
 import React from "react";
 
-const Register = () => {
+const index = () => {
     return <div></div>;
 };
 
-export default Register;
+export default index;
