@@ -1,7 +1,7 @@
 import React from "react";
 
-const Sell = () => {
+const index = () => {
     return <div></div>;
 };
 
-export default Sell;
+export default index;
