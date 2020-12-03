@@ -64,8 +64,12 @@ const Nav = ({ onChange, onSubmit, searchText }: Props) => {
                     </Button>
                 </MainSearch>
                 <UserForm>
-                    <div>로그인</div>
-                    <div>회원가입</div>
+                    <Link href="/login">
+                        <div>로그인</div>
+                    </Link>
+                    <Link href="/register">
+                        <div>회원가입</div>
+                    </Link>
                 </UserForm>
             </MainHeader>
             <NavList />
