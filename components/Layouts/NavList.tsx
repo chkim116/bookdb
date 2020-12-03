@@ -62,26 +62,35 @@ const NavList = () => {
         <NavMenu>
             <ul>
                 <li>
-                    <div>추천</div>
+                    <Link href="/bestseller/0">
+                        <div>베스트셀러</div>
+                    </Link>
+                </li>
+                <li>
+                    <Link href="/board">
+                        <div>책장</div>
+                    </Link>
+
                     <NavSubMenu>
-                        <li>신간</li>
-                        <Link href="/bestseller/0">
-                            <li>베스트셀러</li>
+                        <Link href="/board/freeboard">
+                            <li>자유게시글</li>
+                        </Link>
+                        <Link href="/board/review">
+                            <li>작품 리뷰</li>
                         </Link>
                     </NavSubMenu>
                 </li>
                 <li>
-                    <div>책장</div>
+                    <Link href="/sell">
+                        <div>중고거래</div>
+                    </Link>
                     <NavSubMenu>
-                        <li>자유게시글</li>
-                        <li>작품 리뷰</li>
-                    </NavSubMenu>
-                </li>
-                <li>
-                    <div>헌 책 거래</div>
-                    <NavSubMenu>
-                        <li>내 주변 찾기</li>
-                        <li>사고 팔고</li>
+                        <Link href="/sell/around">
+                            <li>내주변 찾기</li>
+                        </Link>
+                        <Link href="/sell/trade">
+                            <li>사고 팔고</li>
+                        </Link>
                     </NavSubMenu>
                 </li>
             </ul>

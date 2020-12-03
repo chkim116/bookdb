@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import Link from "next/link";
+import { ChangeEvent, FormEvent } from "react";
 import { Button, Input } from "../../styles/CommonStyle";
 import NavList from "./NavList";
 
@@ -37,17 +38,25 @@ const UserForm = styled.div`
     }
 `;
 
-const Nav = () => {
+type Props = {
+    onChange: (e: ChangeEvent<HTMLInputElement>) => void;
+    onSubmit: (e: FormEvent<HTMLFormElement>) => void;
+    searchText: string;
+};
+
+const Nav = ({ onChange, onSubmit, searchText }: Props) => {
     return (
         <Container>
             <MainHeader>
                 <Link href="/">
                     <Logo>BookDB</Logo>
                 </Link>
-                <MainSearch>
+                <MainSearch onSubmit={onSubmit}>
                     <Input
+                        onChange={onChange}
                         type="text"
                         width="250px"
+                        value={searchText}
                         placeholder="제목으로 책 검색하기"
                     />
                     <Button width="30px" type="submit">

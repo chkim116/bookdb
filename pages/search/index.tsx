@@ -1,8 +1,6 @@
-import Axios from "axios";
-import { GetStaticProps } from "next";
 import React from "react";
 
-type BookData = {
+export type BookData = {
     title: string;
     link: string;
     image: string;
@@ -15,27 +13,6 @@ type BookData = {
     description: string;
 };
 
-const index = ({ ...items }: BookData) => {
+const index = () => {
     return <div></div>;
-};
-
-export default index;
-
-export const getStaticProps: GetStaticProps = async () => {
-    const { data } = await Axios.get(
-        "https://openapi.naver.com/v1/search/book?query=react",
-        {
-            headers: {
-                "X-Naver-Client-Id": "r7zXYx4Kt_ooVXh2kxUB",
-                "X-Naver-Client-Secret": "ygQmF36eTQ",
-            },
-        }
-    );
-
-    const { items } = data;
-    return {
-        props: {
-            items,
-        },
-    };
 };
