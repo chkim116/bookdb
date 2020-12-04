@@ -40,7 +40,9 @@ export default function Home({ interview, list }: any) {
 
     if (process.browser) {
         const container = document.querySelector(".slider");
-        containerW = container.clientWidth;
+        if (container) {
+            containerW = container.clientWidth;
+        }
         const width = document.querySelectorAll(".sliderbox");
         width.forEach((v) => (widths += v.clientWidth));
     }

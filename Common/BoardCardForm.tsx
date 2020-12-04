@@ -87,8 +87,9 @@ const BoardForm = ({ list, review, sell }: Props) => {
                         </BoardImg>
                         <Auth>{v.auth}</Auth>
                         <p>
-                            {v.summary.split("").slice(0, 250).join("")}
-                            ...
+                            {v.summary.length > 250
+                                ? `${v.summary.slice(0, 200)}...`
+                                : v.summary}
                         </p>
                         <Link href={v.url}>
                             <a target={!review && "blank"}>
