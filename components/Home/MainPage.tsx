@@ -56,11 +56,12 @@ const BestBooks = styled.div`
     overflow: hidden;
 `;
 
-const Books = styled.div`
+const Books = styled.div<ComponentProps>`
     position: relative;
     padding: 12px;
     text-align: center;
-    left: 0;
+    left: ${(props) => props.slide}%;
+    transition: left 500ms;
 
     div {
         margin: 8px 0;
@@ -77,22 +78,39 @@ const BooksImg = styled.div`
 const More = styled(Title)`
     justify-content: space-between;
     display: flex;
+
+    button {
+        line-height: 0;
+    }
 `;
+
+type ComponentProps = {
+    slide: number;
+};
 
 type Props = {
     interview: Interview[];
     list: BoardCard[];
+    slide: number;
+    onNextSlide: () => number;
+    onPrevSlide: () => number;
 };
 
-const MainPage = ({ interview, list }: Props) => {
+const MainPage = ({
+    interview,
+    list,
+    slide,
+    onNextSlide,
+    onPrevSlide,
+}: Props) => {
     return (
         <Container>
             <Title align="left">스테디셀러</Title>
             <BestContainer>
-                <Prev>이전</Prev>
+                <Prev onClick={onPrevSlide}>이전</Prev>
                 <BestBooks>
                     {list.map((v) => (
-                        <Books key={v.id}>
+                        <Books slide={slide} key={v.id}>
                             <BooksImg>
                                 <img src={v.imageUrl} alt={v.imageAlt} />
                             </BooksImg>
@@ -105,7 +123,7 @@ const MainPage = ({ interview, list }: Props) => {
                         </Books>
                     ))}
                 </BestBooks>
-                <Next>다음</Next>
+                <Next onClick={onNextSlide}>다음</Next>
             </BestContainer>
 
             <More align="left">
