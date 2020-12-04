@@ -5,31 +5,35 @@ import iconv from "iconv-lite";
 import cheerio from "cheerio";
 import Axios from "axios";
 import { BoardCard, Interview } from "../@types/typs";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 
-export type Left = {
+export type Slide = {
     slide: number;
-    isDone: boolean;
+};
+
+const btnSlide = (slide: number, max: number, next?: boolean) => {
+    if (slide === max) {
+        return slide;
+    } else {
+        if (next) {
+            return (slide += 100);
+        } else {
+            return (slide -= 100);
+        }
+    }
 };
 
 export default function Home({ interview, list }: any) {
     const [slide, setSlide] = useState(0);
-    const [isDone, setIsDone] = useState(false);
 
-    const onNextSlide = useCallback((): number => {
-        if (slide === -400) {
-            return slide;
-        } else {
-            setSlide((prev) => prev - 100);
-        }
+    const onNextSlide = useCallback(() => {
+        const left = btnSlide(slide, -300);
+        setSlide(left);
     }, [slide]);
 
-    const onPrevSlide = useCallback((): number => {
-        if (slide === 0) {
-            return slide;
-        } else {
-            setSlide((prev) => prev + 100);
-        }
+    const onPrevSlide = useCallback(() => {
+        const left = btnSlide(slide, 0, true);
+        setSlide(left);
     }, [slide]);
 
     return (

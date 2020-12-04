@@ -3,8 +3,9 @@ import styled from "@emotion/styled";
 import { BoardCard, Interview } from "../../@types/typs";
 import FreeBoardForm from "../../Common/FreeBoardForm";
 import { Button, Title } from "../../styles/CommonStyle";
-import Link from "next/link";
 import theme from "../../styles/theme";
+import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
+import BookSliders from "./BookSliders";
 
 const Container = styled.div`
     padding: 12px;
@@ -56,25 +57,6 @@ const BestBooks = styled.div`
     overflow: hidden;
 `;
 
-const Books = styled.div<ComponentProps>`
-    position: relative;
-    padding: 12px;
-    text-align: center;
-    left: ${(props) => props.slide}%;
-    transition: left 500ms;
-
-    div {
-        margin: 8px 0;
-    }
-`;
-
-const BooksImg = styled.div`
-    height: 250px;
-    img {
-        height: 100%;
-    }
-`;
-
 const More = styled(Title)`
     justify-content: space-between;
     display: flex;
@@ -84,16 +66,12 @@ const More = styled(Title)`
     }
 `;
 
-type ComponentProps = {
-    slide: number;
-};
-
 type Props = {
     interview: Interview[];
     list: BoardCard[];
     slide: number;
-    onNextSlide: () => number;
-    onPrevSlide: () => number;
+    onNextSlide: () => void;
+    onPrevSlide: () => void;
 };
 
 const MainPage = ({
@@ -107,25 +85,16 @@ const MainPage = ({
         <Container>
             <Title align="left">스테디셀러</Title>
             <BestContainer>
-                <Prev onClick={onPrevSlide}>이전</Prev>
+                <Prev onClick={onPrevSlide}>
+                    <AiOutlineArrowLeft size={28} />
+                </Prev>
                 <BestBooks>
-                    {list.map((v) => (
-                        <Books slide={slide} key={v.id}>
-                            <BooksImg>
-                                <img src={v.imageUrl} alt={v.imageAlt} />
-                            </BooksImg>
-                            <div>{v.auth}</div>
-                            <Link href={v.url}>
-                                <a target="blank">
-                                    <Button hover={true}>구매하기</Button>
-                                </a>
-                            </Link>
-                        </Books>
-                    ))}
+                    <BookSliders slide={slide} list={list} />
                 </BestBooks>
-                <Next onClick={onNextSlide}>다음</Next>
+                <Next onClick={onNextSlide}>
+                    <AiOutlineArrowRight size={28} />
+                </Next>
             </BestContainer>
-
             <More align="left">
                 작가인터뷰
                 <Button bg={theme.blue} color={theme.white}>

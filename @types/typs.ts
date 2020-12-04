@@ -3,7 +3,7 @@ export type BoardCard = {
     auth: string;
     imageAlt: string;
     imageUrl: string;
-    summary: string;
+    summary?: string;
     url: string;
     id: number;
 };
