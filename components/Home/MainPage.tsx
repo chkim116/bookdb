@@ -88,7 +88,7 @@ const MainPage = ({
                 <Prev onClick={onPrevSlide}>
                     <AiOutlineArrowLeft size={28} />
                 </Prev>
-                <BestBooks>
+                <BestBooks className="slider">
                     <BookSliders slide={slide} list={list} />
                 </BestBooks>
                 <Next onClick={onNextSlide}>

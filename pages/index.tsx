@@ -5,36 +5,50 @@ import iconv from "iconv-lite";
 import cheerio from "cheerio";
 import Axios from "axios";
 import { BoardCard, Interview } from "../@types/typs";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export type Slide = {
     slide: number;
 };
 
-const btnSlide = (slide: number, max: number, next?: boolean) => {
-    if (slide === max) {
-        return slide;
-    } else {
-        if (next) {
-            return (slide += 100);
-        } else {
-            return (slide -= 100);
-        }
-    }
-};
-
 export default function Home({ interview, list }: any) {
-    const [slide, setSlide] = useState(0);
+    const [slide, setSlide] = useState(0); // 이동
+    const [count, setCount] = useState(1); // 몇 번 이동시킬지 제한을 두는 카운트
+    const [boardWidth, setBoardWidth] = useState(0); // 게시글들의 너비
+    const [containerWidth, setContainerWidth] = useState(0); // 총 게시글 너비
+    const max = Math.floor(boardWidth / containerWidth) + 1; // 이 수와 같으면 앞으로 X
+    let widths: number = 0;
+    let containerW: number = 0;
 
     const onNextSlide = useCallback(() => {
-        const left = btnSlide(slide, -300);
-        setSlide(left);
-    }, [slide]);
+        if (count === max) {
+            return;
+        } else {
+            setCount((prev) => (prev += 1));
+            setSlide(-100 * count);
+        }
+    }, [slide, count]);
 
     const onPrevSlide = useCallback(() => {
-        const left = btnSlide(slide, 0, true);
-        setSlide(left);
-    }, [slide]);
+        if (count === 1) {
+            return;
+        } else {
+            setCount((prev) => (prev -= 1));
+            setSlide((prev) => prev + 100);
+        }
+    }, [slide, count]);
+
+    if (process.browser) {
+        const container = document.querySelector(".slider");
+        containerW = container.clientWidth;
+        const width = document.querySelectorAll(".sliderbox");
+        width.forEach((v) => (widths += v.clientWidth));
+    }
+
+    useEffect(() => {
+        setBoardWidth(widths);
+        setContainerWidth(containerW);
+    }, [widths, containerW]);
 
     return (
         <Container>
