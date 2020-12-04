@@ -1,10 +1,11 @@
 import React from "react";
 import styled from "@emotion/styled";
 import faker from "faker/locale/ko";
-import Link from "next/link";
 import { Title } from "../../../styles/CommonStyle";
 import BannerImg from "../../../Common/BannerImg";
 import PostButton from "../../../Common/PostButton";
+import { Board } from "../../../@types/typs";
+import FreeBoardForm from "../../../Common/FreeBoardForm";
 
 const Container = styled.div`
     margin: 0 auto;
@@ -12,7 +13,7 @@ const Container = styled.div`
     max-width: ${(props) => props.theme.maxWidth};
 `;
 
-const Board = styled.div`
+const BoardContainer = styled.div`
     margin: 0 auto;
     border: 1px solid ${(props) => props.theme.border};
     display: flex;
@@ -46,68 +47,6 @@ const BoardHead = styled.ul`
     }
 `;
 
-const BoardInfo = styled.div`
-    display: flex;
-    justify-content: space-around;
-    background-color: ${(props) => props.theme.white};
-    align-items: center;
-    text-align: center;
-    padding: 0 12px;
-    height: 136px;
-    border-bottom: 3px solid ${(props) => props.theme.border};
-    font-size: ${(props) => props.theme.ms};
-    div:nth-of-type(3) {
-        margin: 0 10px;
-        width: 120px;
-    }
-    div:nth-of-type(4) {
-        width: 120px;
-    }
-`;
-
-const BoardDetail = styled.div`
-    display: flex;
-    flex: 2;
-    justify-content: space-between;
-    align-items: center;
-    margin: 8px 30px;
-    width: 100%;
-    cursor: pointer;
-
-    div:nth-of-type(2) {
-        flex: 2;
-    }
-    h3,
-    p {
-        margin-left: 10px;
-        text-align: left;
-    }
-`;
-
-const BoardThmb = styled.div`
-    width: 140px;
-    height: 100%;
-    img {
-        width: 140px;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 12px;
-    }
-`;
-
-const BoardNum = styled.div`
-    width: 100px;
-`;
-
-type Board = {
-    num: number;
-    title: string;
-    text: string;
-    img: string;
-    user: string;
-    createdDate: string;
-};
-
 const FreeBoard = () => {
     const createBoard = (): Board => {
         return {
@@ -127,7 +66,7 @@ const FreeBoard = () => {
             <BannerImg src={faker.image.abstract(1200, 400)} />
             <Title>자유게시판</Title>
             <PostButton />
-            <Board>
+            <BoardContainer>
                 <BoardHead>
                     <li>글번호</li>
                     <li>제목</li>
@@ -135,28 +74,8 @@ const FreeBoard = () => {
                     <li>작성일</li>
                 </BoardHead>
 
-                {boards.map((b) => (
-                    <BoardInfo>
-                        <BoardNum>{b.num}</BoardNum>
-                        <Link href={`/board/freeboard/detail/${b.num}`}>
-                            <BoardDetail>
-                                <BoardThmb>
-                                    <img
-                                        src={b.img}
-                                        alt="게시글 썸네일 이미지"
-                                    />
-                                </BoardThmb>
-                                <div>
-                                    <h3>{b.title}</h3>
-                                    <p>{b.text}</p>
-                                </div>
-                            </BoardDetail>
-                        </Link>
-                        <div>{b.user}</div>
-                        <div>{b.createdDate}</div>
-                    </BoardInfo>
-                ))}
-            </Board>
+                <FreeBoardForm boards={boards}></FreeBoardForm>
+            </BoardContainer>
         </Container>
     );
 };

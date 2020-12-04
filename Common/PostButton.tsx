@@ -15,7 +15,7 @@ const PostBtn = styled.div`
 `;
 
 type Review = {
-    review: boolean;
+    review?: boolean;
 };
 
 const PostButton = ({ review }: Review) => {

@@ -12,6 +12,7 @@ const Container = styled.div`
     grid-template-columns: repeat(3, 1fr);
     gap: 12px;
     padding: 36px 0;
+    margin: 0 auto;
 `;
 
 const BoardCardForm = styled.div<Components>`
@@ -68,7 +69,7 @@ type Components = {
 };
 
 type Props = {
-    list: BoardCard[];
+    list?: BoardCard[];
     review?: boolean;
     sell?: boolean;
 };
@@ -85,7 +86,10 @@ const BoardForm = ({ list, review, sell }: Props) => {
                             <img src={v.imageUrl} alt={v.imageAlt} />
                         </BoardImg>
                         <Auth>{v.auth}</Auth>
-                        <p>{v.summary.split("").slice(0, 250).join("")}...</p>
+                        <p>
+                            {v.summary.split("").slice(0, 250).join("")}
+                            ...
+                        </p>
                         <Link href={v.url}>
                             <a target={!review && "blank"}>
                                 <Button

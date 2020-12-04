@@ -22,6 +22,10 @@ type ContainerType = {
     color?: string;
 };
 
+type TitleType = {
+    align?: string;
+};
+
 export const Container = styled.div<ContainerType>`
     width: 100%;
     background: ${(props) => props.color};
@@ -59,9 +63,10 @@ export const Button = styled.button<ButtonType>`
     }
 `;
 
-export const Title = styled.h2`
-    text-align: center;
-    height: 70px;
-    padding: 34px 0;
+export const Title = styled.h2<TitleType>`
+    text-align: ${(props) => (props.align ? props.align : "center")};
+    height: 50px;
+    line-height: 50px;
+    margin: 34px 0;
     color: ${(props) => props.theme.black};
 `;
