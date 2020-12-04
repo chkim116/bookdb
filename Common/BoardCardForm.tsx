@@ -1,8 +1,9 @@
 import React from "react";
-import { BoardCard } from "../../@types/typs";
+import { BoardCard } from "../@types/typs";
 import styled from "@emotion/styled";
 import Link from "next/link";
-import { Button } from "../../styles/CommonStyle";
+import { Button } from "../styles/CommonStyle";
+import theme from "../styles/theme";
 
 const Container = styled.div`
     max-width: ${(props) => props.theme.maxWidth};
@@ -13,7 +14,7 @@ const Container = styled.div`
     padding: 36px 0;
 `;
 
-const BoardCardForm = styled.div<Review>`
+const BoardCardForm = styled.div<Components>`
     text-align: center;
     padding: 12px;
     border: 3px solid ${(props) => props.theme.border};
@@ -61,22 +62,24 @@ const Auth = styled.div`
     font-weight: 700;
 `;
 
-type Review = {
-    review: boolean;
+type Components = {
+    review?: boolean;
+    sell?: boolean;
 };
 
 type Props = {
     list: BoardCard[];
     review?: boolean;
+    sell?: boolean;
 };
 
-const BoardForm = ({ list, review }: Props) => {
+const BoardForm = ({ list, review, sell }: Props) => {
     return (
         <Container>
             {list.map((v: BoardCard) => (
                 <div key={v.id}>
                     {!review && <Rank>{v.id + 1}</Rank>}
-                    <BoardCardForm review={review}>
+                    <BoardCardForm review={review} sell={sell}>
                         <BoardTitle>{v.title}</BoardTitle>
                         <BoardImg>
                             <img src={v.imageUrl} alt={v.imageAlt} />
@@ -85,7 +88,12 @@ const BoardForm = ({ list, review }: Props) => {
                         <p>{v.summary.split("").slice(0, 250).join("")}...</p>
                         <Link href={v.url}>
                             <a target={!review && "blank"}>
-                                <Button hover={true}>더보기</Button>
+                                <Button
+                                    hover={!sell && true}
+                                    bg={sell && theme.blue}
+                                    color={sell && theme.white}>
+                                    더보기
+                                </Button>
                             </a>
                         </Link>
                     </BoardCardForm>

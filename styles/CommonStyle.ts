@@ -1,3 +1,4 @@
+import { css } from "@emotion/react";
 import styled from "@emotion/styled";
 
 type InputType = {
@@ -11,6 +12,9 @@ type ButtonType = {
     color?: string;
     bg?: string;
     hover?: boolean;
+    hoverbg?: string;
+    hoverColor?: string;
+    border?: string;
     radius?: boolean;
 };
 
@@ -40,11 +44,18 @@ export const Button = styled.button<ButtonType>`
     color: ${(props) => (props.color ? props.color : props.theme.black)};
     font-weight: 700;
     border-radius: ${(props) => props.radius && "8px"};
+    border: ${(props) => props.border};
 
     &:hover {
         background: ${(props) => props.hover && props.theme.shadow};
         transition: ${(props) => props.hover && "all 300ms"};
         color: ${(props) => props.hover && props.theme.white};
+        ${(props) =>
+            props.hover &&
+            css`
+                background-color: ${props.hoverbg};
+                color: ${props.hoverColor};
+            `}
     }
 `;
 

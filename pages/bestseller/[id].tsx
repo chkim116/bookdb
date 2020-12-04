@@ -6,7 +6,7 @@ import BestSellerForm from "../../components/bestseller/BestSellerForm";
 import { useRouter } from "next/dist/client/router";
 import Axios from "axios";
 import { Container } from "../../styles/CommonStyle";
-import { Paths } from "../../@types/typs";
+import { BoardCard, Paths } from "../../@types/typs";
 
 const checkRouter = (id: string): string => {
     if (id === Paths.WEEK) {
@@ -63,7 +63,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-    let list: BestSeller[] = [];
+    let list: BoardCard[] = [];
     const gyobo = await Axios.get(
         `http://www.kyobobook.co.kr/bestSellerNew/bestseller.laf?range=1&kind=${params.id}&orderClick=DAA&mallGb=KOR&linkClass=A`,
         { responseType: "arraybuffer" }

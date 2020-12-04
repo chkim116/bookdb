@@ -3,21 +3,22 @@ import styled from "@emotion/styled";
 import faker from "faker/locale/ko";
 import Link from "next/link";
 import { Title } from "../../../styles/CommonStyle";
+import BannerImg from "../../../Common/BannerImg";
+import PostButton from "../../../Common/PostButton";
 
-const Board = styled.div`
-    max-width: ${(props) => props.theme.maxWidth};
+const Container = styled.div`
     margin: 0 auto;
-    border: 1px solid ${(props) => props.theme.border};
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    padding: 48px 0;
+    max-width: ${(props) => props.theme.maxWidth};
 `;
 
-const BoardImg = styled.div`
+const Board = styled.div`
+    margin: 0 auto;
+    border: 1px solid ${(props) => props.theme.border};
+    display: flex;
     width: 100%;
-    text-align: center;
-    padding-top: 12px;
+    flex-direction: column;
+    padding: 48px 0;
 `;
 
 const BoardHead = styled.ul`
@@ -122,11 +123,10 @@ const FreeBoard = () => {
     const boards: Board[] = new Array(10).fill(undefined).map(createBoard);
 
     return (
-        <>
-            <BoardImg>
-                <img src={faker.image.abstract(1200, 400)} />
-            </BoardImg>
+        <Container>
+            <BannerImg src={faker.image.abstract(1200, 400)} />
             <Title>자유게시판</Title>
+            <PostButton />
             <Board>
                 <BoardHead>
                     <li>글번호</li>
@@ -157,7 +157,7 @@ const FreeBoard = () => {
                     </BoardInfo>
                 ))}
             </Board>
-        </>
+        </Container>
     );
 };
 

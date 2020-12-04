@@ -84,10 +84,7 @@ const NavList = () => {
                         <div>중고거래</div>
                     </Link>
                     <NavSubMenu>
-                        <Link href="/sell/around">
-                            <li>내주변 찾기</li>
-                        </Link>
-                        <Link href="/sell/trade">
+                        <Link href="/sell">
                             <li>사고 팔고</li>
                         </Link>
                     </NavSubMenu>
