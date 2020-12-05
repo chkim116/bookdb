@@ -1,8 +1,9 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { Button, Input } from "../styles/CommonStyle";
-import login from "../../images/login.jpg";
+import login from "../images/login.jpg";
 import theme from "../styles/theme";
+import Link from "next/link";
 
 const Container = styled.div`
     position: fixed;
@@ -20,6 +21,12 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;
 
+    h2 {
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+    }
+
     img {
         position: absolute;
         filter: blur(3px);
@@ -32,17 +39,13 @@ const Container = styled.div`
 `;
 
 const LoginForm = styled.form`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 400px;
-    height: 450px;
+    width: 450px;
+    padding: 36px;
     overflow: scroll;
     &::-webkit-scrollbar {
         display: none;
     }
     z-index: 50000;
-    justify-content: space-around;
     background-color: ${(props) => props.theme.darkWhite};
     border-radius: 12px;
     div {
@@ -66,7 +69,10 @@ const LoginForm = styled.form`
 `;
 
 const Back = styled.button`
-    color: ${(props) => props.theme.black};
+    color: ${(props) => props.theme.blue};
+    width: 100%;
+    text-align: center;
+    margin-top: 50px;
 `;
 
 type Props = {
@@ -78,20 +84,36 @@ const UserSignForm = ({ register }: Props) => {
         <Container>
             <img src={login} alt="배경사진" />
             <LoginForm>
-                <h2>로그인</h2>
+                <h2>{register ? "회원가입" : "로그인"}</h2>
                 <div>
                     <Input
                         width="250px"
                         type="email"
-                        placeholder="아이디 입력"
+                        placeholder="아이디 입력 / 이메일 *"
                         name="userId"
                     />
                     <Input
                         width="250px"
                         type="password"
-                        placeholder="비밀번호 입력"
+                        placeholder="비밀번호 입력 *"
                         name="password"
                     />
+                    {register && (
+                        <>
+                            <Input
+                                width="250px"
+                                type="password"
+                                name="verifyPassword"
+                                placeholder="비밀번호 확인 *"
+                            />
+                            <Input
+                                width="250px"
+                                type="text"
+                                name="nickName"
+                                placeholder="닉네임 *"
+                            />
+                        </>
+                    )}
                     <div>
                         <Button
                             hover={true}
@@ -101,16 +123,18 @@ const UserSignForm = ({ register }: Props) => {
                             bg={theme.blue}
                             radius={true}
                             type="submit">
-                            로그인
+                            {register ? "가입완료" : "로그인"}
                         </Button>
-                        <Button
-                            hover={true}
-                            hoverColor={theme.black}
-                            radius={true}
-                            hoverbg={theme.gray}
-                            type="button">
-                            회원가입
-                        </Button>
+                        <Link href={register ? "/login" : "/register"}>
+                            <Button
+                                hover={true}
+                                hoverColor={theme.black}
+                                radius={true}
+                                hoverbg={theme.gray}
+                                type="button">
+                                {register ? "로그인" : "회원가입"}
+                            </Button>
+                        </Link>
                     </div>
                 </div>
                 <Back type="button">뒤로가기</Back>

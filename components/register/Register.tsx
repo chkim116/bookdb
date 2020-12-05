@@ -1,7 +1,8 @@
 import React from "react";
+import UserSignForm from "../../Common/UserSignForm";
 
 const Register = () => {
-    return <div></div>;
+    return <UserSignForm register={true}></UserSignForm>;
 };
 
 export default Register;
