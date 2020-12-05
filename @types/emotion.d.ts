@@ -11,6 +11,7 @@ declare module "@emotion/react" {
         border: string;
         yellow: string;
         darkYellow: string;
+        darkWhite: string;
         shadow: string;
         ss: string;
         ms: string;
