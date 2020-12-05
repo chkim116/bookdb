@@ -11,7 +11,12 @@ export type Slide = {
     slide: number;
 };
 
-export default function Home({ interview, list }: any) {
+type Props = {
+    interview: Interview[];
+    list: BoardCard[];
+};
+
+export default function Home({ interview, list }: Props) {
     const [slide, setSlide] = useState(0); // 이동
     const [count, setCount] = useState(1); // 몇 번 이동시킬지 제한을 두는 카운트
     const [boardWidth, setBoardWidth] = useState(0); // 게시글들의 너비
@@ -40,11 +45,11 @@ export default function Home({ interview, list }: any) {
 
     if (process.browser) {
         const container = document.querySelector(".slider");
-        if (container) {
-            containerW = container.clientWidth;
-        }
         const width = document.querySelectorAll(".sliderbox");
-        width.forEach((v) => (widths += v.clientWidth));
+        if (container && width) {
+            containerW = container.clientWidth;
+            width.forEach((v) => (widths += v.clientWidth));
+        }
     }
 
     useEffect(() => {
@@ -119,8 +124,8 @@ export const getStaticProps: GetStaticProps = async () => {
 
     return {
         props: {
-            interview,
-            list,
+            interview: interview as Interview[],
+            list: list as BoardCard[],
         },
     };
 };

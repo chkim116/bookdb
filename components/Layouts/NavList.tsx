@@ -71,21 +71,18 @@ const NavList = () => {
                     </Link>
 
                     <NavSubMenu>
-                        <Link href="/board/freeboard">
-                            <li>자유게시글</li>
-                        </Link>
                         <Link href="/board/review">
                             <li>작품 리뷰</li>
                         </Link>
                     </NavSubMenu>
                 </li>
                 <li>
-                    <Link href="/sell">
-                        <div>중고거래</div>
+                    <Link href="/board/freeboard">
+                        <div>커뮤니티</div>
                     </Link>
                     <NavSubMenu>
-                        <Link href="/sell">
-                            <li>사고 팔고</li>
+                        <Link href="/board/freeboard">
+                            <li>자유게시글</li>
                         </Link>
                     </NavSubMenu>
                 </li>

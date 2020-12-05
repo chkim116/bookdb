@@ -64,23 +64,20 @@ const Auth = styled.div`
 `;
 
 type Components = {
-    review?: boolean;
-    sell?: boolean;
+    review: boolean;
 };
 
-type Props = {
-    list?: BoardCard[];
-    review?: boolean;
-    sell?: boolean;
+type Props = Components & {
+    list: BoardCard[];
 };
 
-const BoardForm = ({ list, review, sell }: Props) => {
+const BoardForm = ({ list, review }: Props) => {
     return (
         <Container>
             {list.map((v: BoardCard) => (
                 <div key={v.id}>
                     {!review && <Rank>{v.id + 1}</Rank>}
-                    <BoardCardForm review={review} sell={sell}>
+                    <BoardCardForm review={review}>
                         <BoardTitle>{v.title}</BoardTitle>
                         <BoardImg>
                             <img src={v.imageUrl} alt={v.imageAlt} />
@@ -93,12 +90,7 @@ const BoardForm = ({ list, review, sell }: Props) => {
                         </p>
                         <Link href={v.url}>
                             <a target={!review && "blank"}>
-                                <Button
-                                    hover={!sell && true}
-                                    bg={sell && theme.blue}
-                                    color={sell && theme.white}>
-                                    더보기
-                                </Button>
+                                <Button>더보기</Button>
                             </a>
                         </Link>
                     </BoardCardForm>
