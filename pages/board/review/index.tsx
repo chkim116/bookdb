@@ -20,7 +20,7 @@ const index = () => {
     const board: BoardCard[] = new Array(10).fill(undefined).map(createBoard);
 
     return (
-        <Container color="#f8f8f8">
+        <Container>
             <Review board={board}></Review>
         </Container>
     );

@@ -1,5 +1,6 @@
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
+import { prependOnceListener } from "process";
 
 type InputType = {
     width?: string;
@@ -28,7 +29,7 @@ type TitleType = {
 
 export const Container = styled.div<ContainerType>`
     width: 100%;
-    background: ${(props) => props.color};
+    background: ${(props) => (props.color ? props.color : "#f8f8f8")};
 `;
 
 export const Input = styled.input<InputType>`
