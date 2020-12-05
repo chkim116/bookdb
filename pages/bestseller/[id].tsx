@@ -4,9 +4,9 @@ import cheerio from "cheerio";
 import { GetStaticPaths, GetStaticProps } from "next";
 import BestSellerForm from "../../components/bestseller/BestSellerForm";
 import { useRouter } from "next/dist/client/router";
-import Axios from "axios";
+import Axios, { AxiosResponse } from "axios";
 import { Container } from "../../styles/CommonStyle";
-import { BoardCard, Paths } from "../../@types/typs";
+import { Board, BoardCard, Paths } from "../../@types/typs";
 
 const checkRouter = (id: string): string => {
     if (id === Paths.WEEK) {
@@ -20,7 +20,11 @@ const checkRouter = (id: string): string => {
     }
 };
 
-const index = ({ list }: any) => {
+type Props = {
+    list: BoardCard[];
+};
+
+const index = ({ list }: Props) => {
     const router = useRouter();
 
     const [title, setTitle] = useState<string>("주간 베스트셀러 TOP20");
@@ -90,7 +94,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     return {
         props: {
-            list,
+            list: list as BoardCard[],
         },
     };
 };

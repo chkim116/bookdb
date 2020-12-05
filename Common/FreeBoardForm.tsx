@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import Link from "next/link";
 import { Board, Interview } from "../@types/typs";
 
-const BoardInfo = styled.div<BoardHover>`
+const BoardInfo = styled.div<Components>`
     display: flex;
     justify-content: space-around;
     background-color: ${(props) => props.theme.white};
@@ -22,9 +22,10 @@ const BoardInfo = styled.div<BoardHover>`
     }
 
     &:hover {
-        box-shadow: 3px 2px 6px 2px ${(props) => props.theme.shadow};
-        transition: all 500ms;
-        border-radius: 8px;
+        box-shadow: ${(props) =>
+            props.hover && `1px 2px 3px 2px ${props.theme.shadow}`};
+        transition: ${(props) => props.hover && "all 500ms"};
+        border-radius: ${(props) => props.hover && "8px"};
     }
 `;
 
@@ -61,7 +62,7 @@ const BoardNum = styled.div`
     width: 100px;
 `;
 
-type BoardHover = {
+type Components = {
     hover?: boolean;
 };
 

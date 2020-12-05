@@ -64,7 +64,7 @@ const Auth = styled.div`
 `;
 
 type Components = {
-    review: boolean;
+    review?: boolean;
 };
 
 type Props = Components & {
