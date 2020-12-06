@@ -1,6 +1,5 @@
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
-import { prependOnceListener } from "process";
 
 type InputType = {
     width?: string;

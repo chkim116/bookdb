@@ -2,6 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import { Button } from "../styles/CommonStyle";
 import theme from "../styles/theme";
+import Link from "next/link";
 
 const PostBtn = styled.div`
     display: flex;
@@ -21,13 +22,18 @@ type Review = {
 const PostButton = ({ review }: Review) => {
     return (
         <PostBtn>
-            <Button
-                bg={review ? theme.yellow : theme.blue}
-                color={review ? theme.black : theme.white}
-                hover={review && true}
-                radius={true}>
-                글쓰기
-            </Button>
+            <Link
+                href={
+                    review ? "/board/review/write" : "/board/freeboard/write"
+                }>
+                <Button
+                    bg={review ? theme.yellow : theme.blue}
+                    color={review ? theme.black : theme.white}
+                    hover={review && true}
+                    radius={true}>
+                    글쓰기
+                </Button>
+            </Link>
         </PostBtn>
     );
 };

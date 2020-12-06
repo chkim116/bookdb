@@ -4,6 +4,8 @@ import { Button, Input } from "../styles/CommonStyle";
 import login from "../images/login.jpg";
 import theme from "../styles/theme";
 import Link from "next/link";
+import { onGoBack } from "../hooks";
+import { useRouter } from "next/dist/client/router";
 
 const Container = styled.div`
     position: fixed;
@@ -80,6 +82,10 @@ type Props = {
 };
 
 const UserSignForm = ({ register }: Props) => {
+    const router = useRouter();
+    const onGoBack = () => {
+        router.back();
+    };
     return (
         <Container>
             <img src={login} alt="배경사진" />
@@ -137,7 +143,9 @@ const UserSignForm = ({ register }: Props) => {
                         </Link>
                     </div>
                 </div>
-                <Back type="button">뒤로가기</Back>
+                <Back type="button" onClick={onGoBack}>
+                    뒤로가기
+                </Back>
             </LoginForm>
         </Container>
     );
