@@ -9,7 +9,7 @@ const Container = styled.div`
 const ReviewWrite = () => {
     return (
         <Container>
-            <ReviewForm />
+            <ReviewForm review={true} />
         </Container>
     );
 };

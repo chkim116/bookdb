@@ -2,8 +2,8 @@ import React from "react";
 import styled from "@emotion/styled";
 import { Button, Input } from "../styles/CommonStyle";
 import theme from "../styles/theme";
-import { onGoBack } from "../hooks";
 import { useRouter } from "next/dist/client/router";
+import { RichTextEditor } from "./RichTextEditor";
 
 const Container = styled.div`
     width: 100%;
@@ -11,16 +11,37 @@ const Container = styled.div`
 
 const WriteContainer = styled.div`
     width: 100%;
-    max-width: ${(props) => props.theme.maxWidth};
+    max-width: 900px;
     margin: 0 auto;
     padding: 12px;
 `;
 
 const WriteForm = styled.form`
+    background: ${(props) => props.theme.white};
     display: flex;
     border: 1px solid ${(props) => props.theme.gray};
     padding: 12px;
     flex-direction: column;
+    align-items: center;
+
+    input {
+        margin: 5px 0;
+        border: none;
+        width: 100%;
+        font-size: ${(props) => props.theme.xls};
+        padding: 6px 0;
+        padding-left: 4px;
+    }
+`;
+
+const WriteSubmit = styled.div`
+    margin: 24px 0;
+    display: flex;
+    justify-content: center;
+
+    button {
+        margin: 0 6px;
+    }
 `;
 
 type Props = {
@@ -36,11 +57,10 @@ const ReviewForm = ({ review }: Props) => {
         <Container>
             <WriteContainer>
                 <WriteForm>
-                    {review && <Input type="text" placeholder="검색" />}
+                    {review && <Input type="text" placeholder="책 검색" />}
                     <Input type="text" placeholder="제목" />
-                    <Input type="file" accept="image/*" />
-                    <textarea placeholder="제목" />
-                    <div>
+                    <RichTextEditor />
+                    <WriteSubmit>
                         <Button
                             bg={theme.blue}
                             color={theme.white}
@@ -50,7 +70,7 @@ const ReviewForm = ({ review }: Props) => {
                         <Button type="button" onClick={onGoBack}>
                             뒤로가기
                         </Button>
-                    </div>
+                    </WriteSubmit>
                 </WriteForm>
             </WriteContainer>
         </Container>

@@ -4,7 +4,6 @@ import { Button, Input } from "../styles/CommonStyle";
 import login from "../images/login.jpg";
 import theme from "../styles/theme";
 import Link from "next/link";
-import { onGoBack } from "../hooks";
 import { useRouter } from "next/dist/client/router";
 
 const Container = styled.div`
@@ -35,8 +34,9 @@ const Container = styled.div`
         top: 0;
         left: 0;
         right: 0;
-        object-fit: fill;
+        object-fit: cover;
         width: 100%;
+        height: 100%;
     }
 `;
 
