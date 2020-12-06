@@ -10,6 +10,7 @@ import { useRouter } from "next/dist/client/router";
 
 import wrapper from "../store/configureStore";
 import withReduxSaga from "next-redux-saga";
+import Axios from "axios";
 
 const AppLayouts = styled.div`
     width: 100%;
@@ -17,6 +18,8 @@ const AppLayouts = styled.div`
     display: flex;
     flex-direction: column;
 `;
+
+Axios.defaults.baseURL = "http://localhost:4000/";
 
 function MyApp({ Component, pageProps }: AppProps) {
     const [searchText, setSearchText] = useState<string>("");

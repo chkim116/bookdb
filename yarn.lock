@@ -158,6 +158,19 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
+"@cooksmelon/ajax@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@cooksmelon/ajax/-/ajax-1.0.1.tgz#e3c6c2485b32895d8fd40b65b730972b206918ea"
+  integrity sha512-EaRwQyGAA2uGWtoPM2KagMOyXDIodDSucxaCvqsGdZvs2fFXxOKDh4kBrlWL2tgsnApcnTofouwUiHY7Gkx42Q==
+  dependencies:
+    "@types/react" "^17.0.0"
+    "@types/react-dom" "^17.0.0"
+    "@types/react-redux" "^7.1.11"
+    axios "^0.21.0"
+    react "^17.0.1"
+    react-dom "^17.0.1"
+    react-redux "^7.2.2"
+
 "@ctrl/tinycolor@^3.1.6":
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/@ctrl/tinycolor/-/tinycolor-3.2.0.tgz#77a8a33edb2fdc02318c828be78f6fb3d6c65eb2"
@@ -455,7 +468,7 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-redux@*":
+"@types/react-redux@*", "@types/react-redux@^7.1.11":
   version "7.1.11"
   resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-7.1.11.tgz#a18e8ab3651e8e8cc94798934927937c66021217"
   integrity sha512-OjaFlmqy0CRbYKBoaWF84dub3impqnLJUrz4u8PRjDzaa4n1A2cVmjMV81shwXyAD5x767efhA8STFGJz/r1Zg==
@@ -4275,7 +4288,7 @@ rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-dom@17.0.1:
+react-dom@17.0.1, react-dom@^17.0.1:
   version "17.0.1"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-17.0.1.tgz#1de2560474ec9f0e334285662ede52dbc5426fc6"
   integrity sha512-6eV150oJZ9U2t9svnsspTMrWNyHc6chX0KzDeAOXftRa8bNeOKTTfCJ7KorIwenkHd2xqVTBTCZd79yk/lx/Ug==
@@ -4310,7 +4323,7 @@ react-refresh@0.8.3:
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.8.3.tgz#721d4657672d400c5e3c75d063c4a85fb2d5d68f"
   integrity sha512-X8jZHc7nCMjaCqoU+V2I0cOhNW+QMBwSUkeXnTi8IPe6zaRWfn60ZzvFDZqWPfmSJfjub7dDW1SP0jaHWLu/hg==
 
-react@17.0.1:
+react@17.0.1, react@^17.0.1:
   version "17.0.1"
   resolved "https://registry.yarnpkg.com/react/-/react-17.0.1.tgz#6e0600416bd57574e3f86d92edba3d9008726127"
   integrity sha512-lG9c9UuMHdcAexXtigOZLX8exLWkW0Ku29qPRU8uhF2R9BN96dLCt0psvzPLlHc5OWkgymP3qwTRgbnw5BKx3w==
