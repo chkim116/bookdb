@@ -1,8 +1,10 @@
 import { useRouter } from "next/dist/client/router";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import SearchBoardForm from "../../components/search/SearchBoardForm";
 import { RootState } from "../../redux";
 import { getSearchFailure, getSearchResultRequest } from "../../redux/search";
+import { Container } from "../../styles/CommonStyle";
 
 const index = () => {
     const dispatch = useDispatch();
@@ -18,7 +20,11 @@ const index = () => {
         dispatch(getSearchResultRequest({ searchText: text }));
     }, [router.query]);
 
-    return <div>g2</div>;
+    return (
+        <Container>
+            <SearchBoardForm results={results} />
+        </Container>
+    );
 };
 
 export default index;

@@ -10,7 +10,7 @@ import wrapper from "../store/configureStore";
 import withReduxSaga from "next-redux-saga";
 import Axios from "axios";
 
-const AppLayouts = styled.div`
+const AppLayouts = styled.main`
     width: 100%;
     margin: 0 auto;
     display: flex;

@@ -3,9 +3,8 @@ import { BoardCard } from "../@types/types";
 import styled from "@emotion/styled";
 import Link from "next/link";
 import { Button } from "../styles/CommonStyle";
-import theme from "../styles/theme";
 
-const Container = styled.div`
+const Container = styled.article`
     max-width: ${(props) => props.theme.maxWidth};
     width: 100%;
     display: grid;

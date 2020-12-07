@@ -13,7 +13,7 @@ const Container = styled.div`
     max-width: ${(props) => props.theme.maxWidth};
 `;
 
-const BoardContainer = styled.div`
+const BoardContainer = styled.article`
     margin: 0 auto;
     border: 1px solid ${(props) => props.theme.border};
     display: flex;

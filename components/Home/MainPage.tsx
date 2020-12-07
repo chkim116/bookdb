@@ -14,7 +14,7 @@ const Container = styled.div`
     position: relative;
 `;
 
-const Board = styled.div`
+const Board = styled.article`
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
