@@ -3,6 +3,7 @@ import { HYDRATE } from "next-redux-wrapper";
 
 import loading from "./loading";
 import search from "./search";
+import review from "./review";
 
 const rootReducer = combineReducers({
     // index: (state: any = {}, action) => {
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
     // },
     loading,
     search,
+    review,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

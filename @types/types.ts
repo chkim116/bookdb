@@ -49,3 +49,10 @@ export type SearchResults = {
     pubdate: string;
     isbn: string;
 };
+
+export type SelectedBook = {
+    image: string;
+    title: string;
+    author: string;
+    isbn: string;
+};

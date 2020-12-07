@@ -1,5 +1,5 @@
 import React from "react";
-import ReviewForm from "../../../../Common/ReviewForm";
+import WriteForm from "../../../../Common/WriteForm";
 import styled from "@emotion/styled";
 
 const Container = styled.div`
@@ -9,7 +9,7 @@ const Container = styled.div`
 const FreeBoardWrite = () => {
     return (
         <Container>
-            <ReviewForm></ReviewForm>
+            <WriteForm></WriteForm>
         </Container>
     );
 };

@@ -3,6 +3,7 @@ import { SearchResults } from "../../@types/types";
 
 import styled from "@emotion/styled";
 import { Title } from "../../styles/CommonStyle";
+import Link from "next/link";
 
 const ResultsContainer = styled.article`
     max-width: ${(props) => props.theme.maxWidth};
@@ -64,35 +65,44 @@ const SearchBoardForm = ({ results, text }: Props) => {
         <ResultsContainer>
             <Title>{text} 검색 결과</Title>
             {results && results.length > 0 ? (
-                results.map((r) => (
-                    <ResultsForm>
-                        <div>
-                            <img src={r.image} />
-                        </div>
-                        <div>
-                            <Author>
-                                <div
-                                    dangerouslySetInnerHTML={{
-                                        __html: `${r.title.slice(0, 50)}${
-                                            r.title.length > 50 ? "..." : ""
-                                        }`,
-                                    }}></div>
-                                <div
-                                    dangerouslySetInnerHTML={{
-                                        __html: r.author,
-                                    }}></div>
-                            </Author>
-                            <Desc
-                                className="desc"
-                                dangerouslySetInnerHTML={{
-                                    __html: r.description,
-                                }}></Desc>
-                        </div>
-                        <PubDate>
-                            <div>{r.pubdate}</div>
-                            <div>{r.publisher}</div>
-                        </PubDate>
-                    </ResultsForm>
+                results.map((r, index) => (
+                    <Link href={r.link} key={index}>
+                        <a target="blank">
+                            <ResultsForm>
+                                <div>
+                                    <img src={r.image} />
+                                </div>
+                                <div>
+                                    <Author>
+                                        <div
+                                            dangerouslySetInnerHTML={{
+                                                __html: `${r.title.slice(
+                                                    0,
+                                                    50
+                                                )}${
+                                                    r.title.length > 50
+                                                        ? "..."
+                                                        : ""
+                                                }`,
+                                            }}></div>
+                                        <div
+                                            dangerouslySetInnerHTML={{
+                                                __html: r.author,
+                                            }}></div>
+                                    </Author>
+                                    <Desc
+                                        className="desc"
+                                        dangerouslySetInnerHTML={{
+                                            __html: r.description,
+                                        }}></Desc>
+                                </div>
+                                <PubDate>
+                                    <div>{r.pubdate}</div>
+                                    <div>{r.publisher}</div>
+                                </PubDate>
+                            </ResultsForm>
+                        </a>
+                    </Link>
                 ))
             ) : (
                 <div>검색 결과가 없습니다</div>

@@ -1,6 +1,6 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import Axios from "axios";
-import { all, call, fork, put, takeLatest, throttle } from "redux-saga/effects";
+import { all, call, debounce, fork, put, takeLatest } from "redux-saga/effects";
 import {
     getSearchFailure,
     getSearchRequest,
@@ -44,7 +44,7 @@ function* getResults({ payload }: PayloadAction<SearchPayload>) {
 }
 
 function* watchGetSearch() {
-    yield takeLatest(getSearchRequest, getSearching);
+    yield debounce(100, getSearchRequest, getSearching);
 }
 
 function* watchSearchResults() {

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import ReviewForm from "../../../../Common/ReviewForm";
+import WriteForm from "../../../../Common/WriteForm";
 
 const Container = styled.div`
     width: 100%;
@@ -9,7 +9,7 @@ const Container = styled.div`
 const ReviewWrite = () => {
     return (
         <Container>
-            <ReviewForm review={true} />
+            <WriteForm review={true} />
         </Container>
     );
 };

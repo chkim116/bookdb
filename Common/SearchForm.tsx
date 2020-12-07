@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { ChangeEvent, FormEvent, useCallback, useState } from "react";
+import { ChangeEvent, FormEvent, useCallback } from "react";
 import { useRouter } from "next/dist/client/router";
 import styled from "@emotion/styled";
 import { Button, Input } from "../styles/CommonStyle";
@@ -9,13 +9,14 @@ import { getSearchFailure, getSearchRequest } from "../redux/search";
 import { RootState } from "../redux";
 import Link from "next/link";
 import faker from "faker";
-import { search } from "*.jpg";
+import { useInput, useFindId } from "@cooksmelon/event";
+import { getSelectBookFailure, getSelectBookRequest } from "../redux/review";
 
 const MainSearch = styled.form`
     position: relative;
 `;
 
-const SearchResults = styled.div`
+export const SearchResults = styled.div`
     position: absolute;
     border-radius: 8px;
     display: flex;
@@ -39,7 +40,7 @@ const SearchResults = styled.div`
     }
 `;
 
-const SearchBookList = styled.div`
+export const SearchBookList = styled.div`
     display: flex;
     cursor: pointer;
     align-items: center;
@@ -60,12 +61,8 @@ const SearchBookList = styled.div`
     }
 `;
 
-type Props = {
-    write?: boolean;
-};
-
-const SearchForm = ({ write }: Props) => {
-    const [searchText, setSearchText] = useState<string>("");
+const SearchForm = () => {
+    const [searchText, _, setSearchText] = useInput("");
     const router = useRouter();
     const dispatch = useDispatch();
     const results: BookData[] = useSelector(
@@ -103,15 +100,18 @@ const SearchForm = ({ write }: Props) => {
                 value={searchText}
                 placeholder="제목으로 책 검색하기"
             />
-            {write || (
-                <Button onSubmit={onSubmit} width="30px" type="submit">
-                    검색
-                </Button>
-            )}
+
+            <Button onSubmit={onSubmit} width="30px" type="submit">
+                검색
+            </Button>
             <SearchResults>
                 {results.length > 0 && results[0].title !== "" ? (
                     results.map((r, index) => (
-                        <Link href={`/search?query=${r.title}`}>
+                        <Link
+                            href={`/search?query=${r.title.replace(
+                                /<[^>]*>?/gm,
+                                ""
+                            )}`}>
                             <SearchBookList key={index}>
                                 <div>
                                     <img
@@ -134,7 +134,7 @@ const SearchForm = ({ write }: Props) => {
                         </Link>
                     ))
                 ) : (
-                    <div> </div>
+                    <> </>
                 )}
             </SearchResults>
         </MainSearch>
