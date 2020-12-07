@@ -1,5 +1,5 @@
 import React from "react";
-import { BoardCard } from "../../../@types/typs";
+import { BoardCard } from "../../../@types/types";
 import Review from "../../../components/board/review/Review";
 import { Container } from "../../../styles/CommonStyle";
 import faker from "faker";

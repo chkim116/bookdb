@@ -1,13 +1,13 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import Axios from "axios";
-import { all, call, debounce, fork, put, takeLatest } from "redux-saga/effects";
+import { all, call, debounce, fork, put } from "redux-saga/effects";
 import {
     getSearchFailure,
     getSearchRequest,
     getSearchSuccess,
     SearchPayload,
 } from "../redux/search";
-import { BookData } from "../@types/typs";
+import { BookData } from "../@types/types";
 
 function getSearch(text: SearchPayload) {
     return Axios.post("/search", text).then((res) => res.data.items);

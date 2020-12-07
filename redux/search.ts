@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { BookData } from "../@types/typs";
+import { BookData } from "../@types/types";
 
 export type SearchState = {
     searchData: BookData[];

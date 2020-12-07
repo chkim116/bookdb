@@ -10,7 +10,7 @@ import { useRouter } from "next/dist/client/router";
 import styled from "@emotion/styled";
 import Axios from "axios";
 import { Button, Input } from "../styles/CommonStyle";
-import { BookData } from "../@types/typs";
+import { BookData } from "../@types/types";
 import { useDispatch, useSelector } from "react-redux";
 import { getSearchRequest, SearchState } from "../redux/search";
 import useSelection from "antd/lib/table/hooks/useSelection";

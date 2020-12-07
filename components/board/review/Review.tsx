@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { BoardCard } from "../../../@types/typs";
+import { BoardCard } from "../../../@types/types";
 import BoardForm from "../../../Common/BoardCardForm";
 import { Title } from "../../../styles/CommonStyle";
 import faker from "faker";

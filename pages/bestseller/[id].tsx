@@ -3,7 +3,7 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import BestSellerForm from "../../components/bestseller/BestSellerForm";
 import { useRouter } from "next/dist/client/router";
 import { Container } from "../../styles/CommonStyle";
-import { BoardCard, Paths } from "../../@types/typs";
+import { BoardCard, Paths } from "../../@types/types";
 import Axios from "axios";
 
 const checkRouter = (id: string | string[]): string => {

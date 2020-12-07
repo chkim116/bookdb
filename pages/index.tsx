@@ -2,7 +2,7 @@ import { GetStaticProps } from "next";
 import MainPage from "../components/Home/MainPage";
 import { Container } from "../styles/CommonStyle";
 import Axios from "axios";
-import { BoardCard, Interview } from "../@types/typs";
+import { BoardCard, Interview } from "../@types/types";
 import { useCallback, useEffect, useState } from "react";
 
 export type Slide = {

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import Link from "next/link";
-import { Board, Interview } from "../@types/typs";
+import { Board, Interview } from "../@types/types";
 
 const BoardInfo = styled.div<Components>`
     display: flex;
