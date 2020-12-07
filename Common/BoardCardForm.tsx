@@ -89,7 +89,7 @@ const BoardForm = ({ list, review }: Props) => {
                                 : v.summary}
                         </p>
                         <Link href={v.url}>
-                            <a target={!review && "blank"}>
+                            <a target={!review ? "blank" : "false"}>
                                 <Button>더보기</Button>
                             </a>
                         </Link>

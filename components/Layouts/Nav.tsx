@@ -1,7 +1,6 @@
 import styled from "@emotion/styled";
 import Link from "next/link";
-import { ChangeEvent, FormEvent } from "react";
-import { Button, Input } from "../../styles/CommonStyle";
+import SearchForm from "../../Common/SearchForm";
 import NavList from "./NavList";
 
 const Container = styled.div`
@@ -25,8 +24,6 @@ const MainHeader = styled.header`
     align-items: center;
 `;
 
-const MainSearch = styled.form``;
-
 const UserForm = styled.div`
     display: flex;
     div {
@@ -38,31 +35,14 @@ const UserForm = styled.div`
     }
 `;
 
-type Props = {
-    onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-    onSubmit: (e: FormEvent<HTMLFormElement>) => void;
-    searchText: string;
-};
-
-const Nav = ({ onChange, onSubmit, searchText }: Props) => {
+const Nav = () => {
     return (
         <Container>
             <MainHeader>
                 <Link href="/">
                     <Logo>BookDB</Logo>
                 </Link>
-                <MainSearch onSubmit={onSubmit}>
-                    <Input
-                        onChange={onChange}
-                        type="text"
-                        width="250px"
-                        value={searchText}
-                        placeholder="제목으로 책 검색하기"
-                    />
-                    <Button width="30px" type="submit">
-                        검색
-                    </Button>
-                </MainSearch>
+                <SearchForm />
                 <UserForm>
                     <Link href="/login">
                         <div>로그인</div>

@@ -96,8 +96,8 @@ const FreeBoardForm = ({ boards, interview }: Props) => {
                           </Link>
                       </BoardInfo>
                   ))
-                : boards.map((b) => (
-                      <BoardInfo>
+                : boards.map((b, index) => (
+                      <BoardInfo key={index}>
                           <BoardNum>{b.num}</BoardNum>
                           <Link href={`/board/freeboard/detail/${b.num}`}>
                               <BoardDetail>

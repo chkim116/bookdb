@@ -1,11 +1,11 @@
 import { combineReducers } from "@reduxjs/toolkit";
 
 import loading from "./loading";
-import ranking from "./ranking";
+import search from "./search";
 
 const rootReducer = combineReducers({
     loading,
-    ranking,
+    search,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

@@ -30,3 +30,14 @@ export type Board = {
     user: string;
     createdDate: string;
 };
+
+export type BookData = {
+    title: string;
+    description: string;
+    link: string;
+    image: string;
+    author: string;
+    publisher: string;
+    pubdate: string;
+    isbn: string;
+};

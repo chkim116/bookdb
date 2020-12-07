@@ -4,6 +4,7 @@ import { Button, Input } from "../styles/CommonStyle";
 import theme from "../styles/theme";
 import { useRouter } from "next/dist/client/router";
 import { RichTextEditor } from "./RichTextEditor";
+import SearchForm from "./SearchForm";
 
 const Container = styled.div`
     width: 100%;
@@ -57,7 +58,7 @@ const ReviewForm = ({ review }: Props) => {
         <Container>
             <WriteContainer>
                 <WriteForm>
-                    {review && <Input type="text" placeholder="책 검색" />}
+                    {review && <SearchForm write={true} />}
                     <Input type="text" placeholder="제목" />
                     <RichTextEditor />
                     <WriteSubmit>
