@@ -180,20 +180,24 @@ const ReviewForm = ({ review }: Props) => {
                             </SearchResults>
                         </ResultForm>
                     )}
-                    {selectBook.title !== "" ? (
-                        <SelectedBook>
-                            <div>
-                                <img src={selectBook.image} />
-                            </div>
-                            <BookDesc>
-                                <div>{selectBook.title}</div>
-                                <div>{selectBook.author}</div>
-                            </BookDesc>
-                        </SelectedBook>
+                    {review ? (
+                        selectBook.title !== "" ? (
+                            <SelectedBook>
+                                <div>
+                                    <img src={selectBook.image} />
+                                </div>
+                                <BookDesc>
+                                    <div>{selectBook.title}</div>
+                                    <div>{selectBook.author}</div>
+                                </BookDesc>
+                            </SelectedBook>
+                        ) : (
+                            <PleaseSelect>
+                                리뷰하고자 하는 책을 검색해 선택해주세요.
+                            </PleaseSelect>
+                        )
                     ) : (
-                        <PleaseSelect>
-                            리뷰하고자 하는 책을 검색해 선택해주세요.
-                        </PleaseSelect>
+                        <> </>
                     )}
                     <Input type="text" name="title" placeholder="제목" />
                     <RichTextEditor />
