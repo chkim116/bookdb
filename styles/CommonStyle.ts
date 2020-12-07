@@ -4,6 +4,10 @@ import styled from "@emotion/styled";
 type InputType = {
     width?: string;
     height?: string;
+    hover?: boolean;
+    hoverbg?: string;
+    hoverColor?: string;
+    hoverTrans?: boolean;
 };
 
 type ButtonType = {
@@ -36,6 +40,18 @@ export const Input = styled.input<InputType>`
     padding: 6px 12px;
     width: ${(props) => props.width && props.width};
     height: ${(props) => props.height && props.height};
+
+    &:hover {
+        transition: ${(props) => props.hoverTrans && "all 300ms"};
+        background: ${(props) => props.hover && props.theme.darkWhite};
+        ${(props) =>
+            props.hoverbg ||
+            (props.hoverColor &&
+                css`
+                    background-color: ${props.hoverbg};
+                    color: ${props.hoverColor};
+                `)}
+    }
 `;
 
 export const Button = styled.button<ButtonType>`

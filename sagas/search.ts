@@ -22,7 +22,9 @@ function getResult(text: SearchPayload) {
 function* getSearching({ payload }: PayloadAction<SearchPayload>) {
     try {
         if (payload.searchText === "") {
-            return;
+            return yield put(
+                getSearchFailure({ message: "입력 값이 없습니다." })
+            );
         }
         const data: BookData[] = yield call(getSearch, payload);
         yield put(getSearchSuccess(data));

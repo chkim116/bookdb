@@ -5,6 +5,10 @@ import { useRouter } from "next/dist/client/router";
 import { Container } from "../../styles/CommonStyle";
 import { BoardCard, Paths } from "../../@types/types";
 import Axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { loadRequest, loadSuccess } from "../../redux/loading";
+import { RootState } from "../../redux";
+import Loader from "../../styles/loader";
 
 const checkRouter = (id: string | string[]): string => {
     if (id === Paths.WEEK) {
@@ -25,22 +29,26 @@ type Props = {
 const index = ({ list }: Props) => {
     const router = useRouter();
     const [title, setTitle] = useState<string>("주간 베스트셀러 TOP20");
-    const [selected, setSelected] = useState<string | string[]>("0");
-
+    const [selected, setSelected] = useState<string>("0");
+    const dispatch = useDispatch();
+    const { isLoading } = useSelector((state: RootState) => state.loading);
     const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         const { value } = e.target as HTMLInputElement;
         setSelected(value);
+        dispatch(loadRequest());
         router.push(`/bestseller/${value}`);
     };
 
     useEffect(() => {
         const { id } = router.query;
         const bestTitle = checkRouter(id);
+        dispatch(loadSuccess());
         setTitle(bestTitle);
     }, [router]);
 
     return (
         <Container>
+            {isLoading && <Loader />}
             <BestSellerForm
                 list={list}
                 title={title}

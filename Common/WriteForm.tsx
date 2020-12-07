@@ -4,14 +4,17 @@ import { Button, Input } from "../styles/CommonStyle";
 import theme from "../styles/theme";
 import { useRouter } from "next/dist/client/router";
 import { RichTextEditor } from "./RichTextEditor";
-import { useInput, useFindId } from "@cooksmelon/event";
+import { useInput, useFindId, useFormInput } from "@cooksmelon/event";
 import { useDispatch, useSelector } from "react-redux";
 import {
     getSelectBookFailure,
     getSelectBookRequest,
     selectBookRequest,
 } from "../redux/review";
-import { SearchBookList, SearchResults } from "./SearchForm";
+import {
+    SearchBookList,
+    SearchResults,
+} from "../components/Layouts/SearchForm";
 import { BookData } from "../@types/types";
 import { RootState } from "../redux";
 import faker from "faker";
@@ -29,6 +32,13 @@ const SelectedBook = styled.div`
     border: 3px solid ${(props) => props.theme.border};
     padding: 12px;
     margin-bottom: 10px;
+`;
+
+const PleaseSelect = styled.div`
+    height: 50px;
+    line-height: 50px;
+    border-bottom: 1px solid ${(props) => props.theme.gray};
+    margin-bottom: 12px;
 `;
 
 const BookDesc = styled.div`
@@ -60,7 +70,6 @@ const WriteForm = styled.form`
         width: 100%;
         font-size: 28px;
         padding: 6px 0;
-        padding-left: 4px;
     }
 `;
 
@@ -76,6 +85,7 @@ const WriteSubmit = styled.div`
 
 const ResultForm = styled.div`
     position: relative;
+    text-align: center;
     input {
         font-size: ${(props) => props.theme.xls};
         padding-left: 5px;
@@ -88,7 +98,7 @@ type Props = {
 
 const ReviewForm = ({ review }: Props) => {
     const router = useRouter();
-    const [searchText, _, setSearchText] = useInput("");
+    const [searchText, onChange, setSearchText] = useInput("");
     const [findId, onFindId] = useFindId();
     const dispatch = useDispatch();
     const results: BookData[] = useSelector(
@@ -98,21 +108,13 @@ const ReviewForm = ({ review }: Props) => {
         (state: RootState) => state.review.selectedBook
     );
 
-    const onChange = useCallback(
-        (e: ChangeEvent<HTMLInputElement>): void => {
-            const { value } = e.target;
-            setSearchText(value);
-
-            if (value !== "") {
-                dispatch(getSelectBookRequest({ searchText: value }));
-            } else {
-                dispatch(
-                    getSelectBookFailure({ message: "입력 값이 없습니다." })
-                );
-            }
-        },
-        [searchText]
-    );
+    useEffect(() => {
+        if (searchText !== "") {
+            dispatch(getSelectBookRequest({ searchText }));
+        } else {
+            dispatch(getSelectBookFailure({ message: "입력 값이 없습니다." }));
+        }
+    }, [searchText]);
 
     useEffect(() => {
         const find = findId.replace(/<[^>]*>?/gm, "").split("&&");
@@ -149,7 +151,7 @@ const ReviewForm = ({ review }: Props) => {
                                         <SearchBookList
                                             onClick={onFindId}
                                             data-id={`${r.title}&&${r.author}&&${r.image}&&${r.isbn}`}
-                                            key={r.isbn}>
+                                            key={faker.random.uuid()}>
                                             <div>
                                                 <img
                                                     src={
@@ -173,12 +175,12 @@ const ReviewForm = ({ review }: Props) => {
                                         </SearchBookList>
                                     ))
                                 ) : (
-                                    <> </>
+                                    <div> </div>
                                 )}
                             </SearchResults>
                         </ResultForm>
                     )}
-                    {review && (
+                    {selectBook.title !== "" ? (
                         <SelectedBook>
                             <div>
                                 <img src={selectBook.image} />
@@ -188,8 +190,12 @@ const ReviewForm = ({ review }: Props) => {
                                 <div>{selectBook.author}</div>
                             </BookDesc>
                         </SelectedBook>
+                    ) : (
+                        <PleaseSelect>
+                            리뷰하고자 하는 책을 검색해 선택해주세요.
+                        </PleaseSelect>
                     )}
-                    <Input type="text" placeholder="제목" />
+                    <Input type="text" name="title" placeholder="제목" />
                     <RichTextEditor />
                     <WriteSubmit>
                         <Button

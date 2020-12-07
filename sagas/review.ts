@@ -19,7 +19,9 @@ function getSearch(text: SearchPayload) {
 function* getSearching({ payload }: PayloadAction<SearchPayload>) {
     try {
         if (payload.searchText === "") {
-            return;
+            return yield put(
+                getSelectBookFailure({ message: "입력 값이 없습니다." })
+            );
         }
         const data: BookData[] = yield call(getSearch, payload);
         yield put(getSelectBookSuccess(data));
