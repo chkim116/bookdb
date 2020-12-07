@@ -13,7 +13,7 @@ const index = () => {
         (state: RootState) => state.search.searchResults
     );
     const router = useRouter();
-    const text = Object.values(router.query)[0];
+    const text = Object.values(router.query)[0].toString();
 
     useEffect(() => {
         dispatch(getSearchFailure({ message: "이미 검색했으니 끌게요~" }));
@@ -22,7 +22,7 @@ const index = () => {
 
     return (
         <Container>
-            <SearchBoardForm results={results} />
+            <SearchBoardForm results={results} text={text} />
         </Container>
     );
 };
