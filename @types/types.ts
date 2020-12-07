@@ -34,6 +34,14 @@ export type Board = {
 export type BookData = {
     title: string;
     description: string;
+    image: string;
+    author: string;
+    isbn: string;
+};
+
+export type SearchResults = {
+    title: string;
+    description: string;
     link: string;
     image: string;
     author: string;

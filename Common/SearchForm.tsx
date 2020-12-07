@@ -1,20 +1,15 @@
-import React from "react";
-import {
-    ChangeEvent,
-    FormEvent,
-    useCallback,
-    useEffect,
-    useState,
-} from "react";
+import React, { useEffect } from "react";
+import { ChangeEvent, FormEvent, useCallback, useState } from "react";
 import { useRouter } from "next/dist/client/router";
 import styled from "@emotion/styled";
-import Axios from "axios";
 import { Button, Input } from "../styles/CommonStyle";
 import { BookData } from "../@types/types";
 import { useDispatch, useSelector } from "react-redux";
-import { getSearchRequest, SearchState } from "../redux/search";
-import useSelection from "antd/lib/table/hooks/useSelection";
+import { getSearchFailure, getSearchRequest } from "../redux/search";
 import { RootState } from "../redux";
+import Link from "next/link";
+import faker from "faker";
+import { search } from "*.jpg";
 
 const MainSearch = styled.form`
     position: relative;
@@ -76,28 +71,31 @@ const SearchForm = ({ write }: Props) => {
     const results: BookData[] = useSelector(
         (state: RootState) => state.search.searchData
     );
-    console.log(results);
 
     const onChange = useCallback(
         (e: ChangeEvent<HTMLInputElement>): void => {
             const { value } = e.target;
             setSearchText(value);
-            dispatch(getSearchRequest({ searchText: value }));
+            if (value !== "") {
+                dispatch(getSearchRequest({ searchText: value }));
+            } else {
+                dispatch(getSearchFailure({ message: "입력 값이 없습니다." }));
+            }
         },
         [searchText]
     );
 
     const onSubmit = useCallback(
-        (e: FormEvent<HTMLButtonElement>) => {
+        (e: FormEvent<HTMLButtonElement | HTMLFormElement>) => {
             e.preventDefault();
-            router.push(`/search?query=${searchText}`);
             setSearchText("");
+            router.push(`/search?query=${searchText}`);
         },
         [searchText]
     );
 
     return (
-        <MainSearch>
+        <MainSearch onSubmit={onSubmit}>
             <Input
                 onChange={onChange}
                 type="text"
@@ -111,21 +109,29 @@ const SearchForm = ({ write }: Props) => {
                 </Button>
             )}
             <SearchResults>
-                {results.length > 0 ? (
+                {results.length > 0 && results[0].title !== "" ? (
                     results.map((r, index) => (
-                        <SearchBookList key={index}>
-                            <div>
-                                <img src={r.image} />
-                            </div>
-                            <div
-                                dangerouslySetInnerHTML={{
-                                    __html: r.title,
-                                }}></div>
-                            <div
-                                dangerouslySetInnerHTML={{
-                                    __html: r.author,
-                                }}></div>
-                        </SearchBookList>
+                        <Link href={`/search?query=${r.title}`}>
+                            <SearchBookList key={index}>
+                                <div>
+                                    <img
+                                        src={
+                                            r.image
+                                                ? r.image
+                                                : faker.image.abstract(82, 120)
+                                        }
+                                    />
+                                </div>
+                                <div
+                                    dangerouslySetInnerHTML={{
+                                        __html: r.title,
+                                    }}></div>
+                                <div
+                                    dangerouslySetInnerHTML={{
+                                        __html: r.author,
+                                    }}></div>
+                            </SearchBookList>
+                        </Link>
                     ))
                 ) : (
                     <div> </div>

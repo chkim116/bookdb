@@ -1,17 +1,27 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { BookData } from "../@types/types";
+import { BookData, SearchResults } from "../@types/types";
 
 export type SearchState = {
     searchData: BookData[];
+    searchResults: SearchResults[];
     error?: null | string;
 };
 
 export type SearchPayload = {
-    searchText: string | number;
+    searchText: string | number | string[];
 };
 
 const initialState: SearchState = {
     searchData: [
+        {
+            title: "",
+            author: "",
+            description: "",
+            image: "",
+            isbn: "",
+        },
+    ],
+    searchResults: [
         {
             title: "",
             author: "",
@@ -45,6 +55,25 @@ const search = createSlice({
                 (f) => f.title === undefined
             );
         },
+
+        getSearchResultRequest: (
+            state,
+            { payload }: PayloadAction<SearchPayload>
+        ) => {
+            state = initialState;
+        },
+        getSearchResultSuccess: (
+            state,
+            { payload }: PayloadAction<SearchResults[]>
+        ) => {
+            state.searchResults = payload;
+        },
+        getSearchResultFailure: (state, { payload }) => {
+            state.error = payload;
+            state.searchResults = state.searchResults.filter(
+                (f) => f.title === undefined
+            );
+        },
     },
 });
 
@@ -52,6 +81,9 @@ export const {
     getSearchRequest,
     getSearchSuccess,
     getSearchFailure,
+    getSearchResultRequest,
+    getSearchResultSuccess,
+    getSearchResultFailure,
 } = search.actions;
 
 export default search.reducer;
