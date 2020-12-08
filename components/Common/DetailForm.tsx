@@ -8,9 +8,9 @@ import ReviewBookForm from "../board/review/detail/ReviewBook";
 const Container = styled.div`
     width: 100%;
     max-width: 900px;
-    margin: 0 auto;
     background-color: ${(props) => props.theme.white};
     padding: 12px;
+    margin: 30px auto;
 `;
 
 const DetailTitle = styled(Title)`

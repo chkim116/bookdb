@@ -9,7 +9,6 @@ const MyStars = styled.div`
     justify-content: center;
     align-items: center;
     padding: 12px 0;
-    border-bottom: 1px solid ${(props) => props.theme.gray};
     svg {
         margin: 0 2px;
         cursor: pointer;

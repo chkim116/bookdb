@@ -1,5 +1,4 @@
 import { GetServerSideProps } from "next";
-import { useRouter } from "next/dist/client/router";
 import React from "react";
 import { useSelector } from "react-redux";
 import { END } from "redux-saga";
@@ -8,11 +7,12 @@ import { RootState } from "../../../../redux";
 import { getReviewByIdRequest } from "../../../../redux/review";
 import wrapper from "../../../../store/configureStore";
 import { Container } from "../../../../styles/CommonStyle";
+import theme from "../../../../styles/theme";
 
 const index = () => {
     const { reviewById } = useSelector((state: RootState) => state.review);
     return (
-        <Container>
+        <Container color={theme.white}>
             <ReviewDetail reviewById={reviewById}></ReviewDetail>
         </Container>
     );

@@ -10,7 +10,7 @@ const theme = {
     darkYellow: "#ffd15e",
     shadow: "#a2a2a2",
     darkWhite: "#f8f8f8",
-
+    boxShadow: "0 0 10px 0 rgba(0, 0, 0, 0.1)",
     ss: "11px",
     ms: "14px",
     ls: "18px",

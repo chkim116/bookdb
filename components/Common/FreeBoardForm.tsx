@@ -9,7 +9,7 @@ const BoardInfo = styled.div<Components>`
     background-color: ${(props) => props.theme.white};
     align-items: center;
     text-align: center;
-    padding: 0px 12px;
+    padding: 12px;
     height: 136px;
     font-size: ${(props) => props.theme.ms};
     border-bottom: 3px solid ${(props) => props.theme.border};
@@ -22,8 +22,7 @@ const BoardInfo = styled.div<Components>`
     }
 
     &:hover {
-        box-shadow: ${(props) =>
-            props.hover && `1px 2px 3px 2px ${props.theme.shadow}`};
+        box-shadow: ${(props) => props.hover && props.theme.boxShadow};
         transition: ${(props) => props.hover && "all 500ms"};
         border-radius: ${(props) => props.hover && "8px"};
     }
@@ -37,6 +36,7 @@ const BoardDetail = styled.div`
     cursor: pointer;
 
     div:nth-of-type(2) {
+        margin-top: 12px;
         flex: 2;
     }
     h3,

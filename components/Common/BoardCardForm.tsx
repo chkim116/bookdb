@@ -4,12 +4,24 @@ import styled from "@emotion/styled";
 import Link from "next/link";
 import { Button } from "../../styles/CommonStyle";
 import faker from "faker";
+import Rating from "./Rating";
+import { css } from "@emotion/react";
 
-const Container = styled.article`
+const Container = styled.article<Components>`
     max-width: ${(props) => props.theme.maxWidth};
     width: 100%;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    ${(props) =>
+        props.review
+            ? css`
+                  display: flex;
+                  flex-wrap: wrap;
+                  justify-content: space-around;
+              `
+            : css`
+                  display: grid;
+                  grid-template-columns: repeat(3, 1fr);
+              `}
+
     gap: 12px;
     padding: 36px 0;
     margin: 0 auto;
@@ -18,13 +30,20 @@ const Container = styled.article`
 const BoardCardForm = styled.div<Components>`
     text-align: center;
     padding: 12px;
-    border: 3px solid ${(props) => props.theme.border};
+    min-height: 300px;
+    ${(props) =>
+        props.review &&
+        css`
+            max-width: 450px;
+        `}
+
     background: ${(props) => props.theme.white};
     height: ${(props) => !props.review && "480px"};
+    border-radius: 8px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-
+    box-shadow: ${(props) => props.theme.boxShadow};
     a {
         width: fit-content;
         margin: 10px auto;
@@ -74,7 +93,7 @@ type Props = Components & {
 
 const BoardForm = ({ list, review, reviewPost }: Props) => {
     return (
-        <Container>
+        <Container review={review ? true : false}>
             {review
                 ? reviewPost.map((v) => (
                       <div key={v._id}>
@@ -89,6 +108,7 @@ const BoardForm = ({ list, review, reviewPost }: Props) => {
                                           />
                                       </BoardImg>
                                       <Auth>{v.selectedBook.author}</Auth>
+                                      <Rating rating={v.rating} />
                                       <div
                                           dangerouslySetInnerHTML={{
                                               __html:

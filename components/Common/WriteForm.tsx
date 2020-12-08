@@ -224,7 +224,7 @@ const ReviewForm = ({ review }: Props) => {
                                         <div>{selectBook.author}</div>
                                     </BookDesc>
                                 </SelectedBook>
-                                <Rating />
+                                <Rating rating="" />
                             </>
                         ) : (
                             <PleaseSelect>
