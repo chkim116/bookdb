@@ -15,22 +15,15 @@ const Container = styled.div`
 
 type Props = {
     reviewPost: ReviewPost[];
-    onDelete: onClick;
-    onEdit: onClick;
 };
 
-const Review = ({ reviewPost, onDelete, onEdit }: Props) => {
+const Review = ({ reviewPost }: Props) => {
     return (
         <Container>
             <BannerImg src={faker.image.abstract(1200, 400)} />
             <Title>작품 리뷰</Title>
             <PostButton review={true} />
-            <BoardForm
-                reviewPost={reviewPost}
-                onDelete={onDelete}
-                onEdit={onEdit}
-                review={true}
-            />
+            <BoardForm reviewPost={reviewPost} review={true} />
         </Container>
     );
 };

@@ -91,11 +91,9 @@ type Components = {
 type Props = Components & {
     list?: BoardCard[];
     reviewPost?: ReviewPost[];
-    onDelete: onClick;
-    onEdit: onClick;
 };
 
-const BoardForm = ({ list, review, reviewPost, onDelete, onEdit }: Props) => {
+const BoardForm = ({ list, review, reviewPost }: Props) => {
     return (
         <Container review={review ? true : false}>
             {review
@@ -126,11 +124,7 @@ const BoardForm = ({ list, review, reviewPost, onDelete, onEdit }: Props) => {
                                   </BoardCardForm>
                               </a>
                           </Link>
-                          <EditBoxForm
-                              id={v._id}
-                              onDelete={onDelete}
-                              onEdit={onEdit}
-                          />
+                          <EditBoxForm id={v._id} review={review} />
                       </div>
                   ))
                 : list.map((v: BoardCard) => (
