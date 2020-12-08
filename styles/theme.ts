@@ -7,6 +7,7 @@ const theme = {
     sky: "#8ED0F9",
     border: "#F5F8FA",
     yellow: "#FBE574",
+    red: "#d63031",
     darkYellow: "#ffd15e",
     shadow: "#a2a2a2",
     darkWhite: "#f8f8f8",

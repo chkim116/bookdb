@@ -1,8 +1,9 @@
 import React from "react";
-import { BoardCard, ReviewPost } from "../../@types/types";
+import { BoardCard, onClick, ReviewPost } from "../../@types/types";
 import styled from "@emotion/styled";
 import Link from "next/link";
 import { Button } from "../../styles/CommonStyle";
+import EditBoxForm from "../Common/EditBox";
 import faker from "faker";
 import Rating from "./Rating";
 import { css } from "@emotion/react";
@@ -39,7 +40,8 @@ const BoardCardForm = styled.div<Components>`
 
     background: ${(props) => props.theme.white};
     height: ${(props) => !props.review && "480px"};
-    border-radius: 8px;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -89,9 +91,11 @@ type Components = {
 type Props = Components & {
     list?: BoardCard[];
     reviewPost?: ReviewPost[];
+    onDelete: onClick;
+    onEdit: onClick;
 };
 
-const BoardForm = ({ list, review, reviewPost }: Props) => {
+const BoardForm = ({ list, review, reviewPost, onDelete, onEdit }: Props) => {
     return (
         <Container review={review ? true : false}>
             {review
@@ -122,6 +126,11 @@ const BoardForm = ({ list, review, reviewPost }: Props) => {
                                   </BoardCardForm>
                               </a>
                           </Link>
+                          <EditBoxForm
+                              id={v._id}
+                              onDelete={onDelete}
+                              onEdit={onEdit}
+                          />
                       </div>
                   ))
                 : list.map((v: BoardCard) => (

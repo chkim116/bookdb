@@ -160,6 +160,16 @@ const review = createSlice({
         getReviewsPostFailure: (state, { payload }) => {
             state.isReviewErr = payload;
         },
+
+        delReviewRequest: (state, { payload }) => {
+            state.isReviewErr = null;
+        },
+        delReviewSuccess: (state, { payload }) => {
+            state.reviews = state.reviews.filter((r) => r._id !== payload);
+        },
+        delReviewFailure: (state, { payload }) => {
+            state.isReviewErr = payload;
+        },
     },
 });
 
@@ -180,6 +190,9 @@ export const {
     getReviewsPostRequest,
     getReviewsPostSuccess,
     getReviewsPostFailure,
+    delReviewRequest,
+    delReviewSuccess,
+    delReviewFailure,
 } = review.actions;
 
 export default review.reducer;

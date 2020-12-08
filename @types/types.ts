@@ -82,3 +82,5 @@ export type ReviewPost = {
         isbn: string;
     };
 };
+
+export type onClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;

@@ -3,6 +3,9 @@ import { all, call, debounce, put, fork, takeLatest } from "redux-saga/effects";
 import Axios from "axios";
 import { BookData, SelectedBook } from "../@types/types";
 import {
+    delReviewFailure,
+    delReviewRequest,
+    delReviewSuccess,
     getReviewByIdFailure,
     getReviewByIdRequest,
     getReviewByIdSuccess,
@@ -37,6 +40,10 @@ function getReviewId(id: string | string[]) {
 
 function getReview() {
     return Axios.get("/review").then((res) => res.data);
+}
+
+function deleteReviewPost(id: string) {
+    return Axios.delete(`/review/del/${id}`);
 }
 
 // call & put
@@ -96,6 +103,18 @@ function* getReviews() {
     }
 }
 
+function* deleteReview({ payload }: PayloadAction<string>) {
+    try {
+        yield call(deleteReviewPost, payload);
+        yield put(delReviewSuccess(payload));
+        yield put(loadSuccess());
+    } catch (err) {
+        console.log(err);
+        yield put(delReviewFailure(err.message));
+        yield put(loadFailure());
+    }
+}
+
 // watch
 
 function* watchSelectBook() {
@@ -118,6 +137,10 @@ function* watchGetReviews() {
     yield takeLatest(getReviewsPostRequest, getReviews);
 }
 
+function* watchDelReview() {
+    yield takeLatest(delReviewRequest, deleteReview);
+}
+
 export default function* review(): Generator {
     yield all([
         fork(watchSearchBook),
@@ -125,5 +148,6 @@ export default function* review(): Generator {
         fork(watchReviewSubmit),
         fork(watchGetReviewById),
         fork(watchGetReviews),
+        fork(watchDelReview),
     ]);
 }
