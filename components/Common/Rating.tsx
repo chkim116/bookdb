@@ -1,16 +1,14 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import styled from "@emotion/styled";
 import { BsStarFill } from "react-icons/bs";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { writeRating } from "../../redux/review";
-import useSelection from "antd/lib/table/hooks/useSelection";
-import { RootState } from "../../redux";
 
 const MyStars = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 20px 0;
+    padding: 12px 0;
     border-bottom: 1px solid ${(props) => props.theme.gray};
     svg {
         margin: 0 2px;
@@ -26,7 +24,6 @@ const Rating = ({ rating }: Props) => {
     const stars = useRef();
     const dispatch = useDispatch();
     const [ratingNum, setRatingNum] = useState("");
-    const fixStar = useSelector((state: RootState) => state.review.rating);
 
     const onMouseOver = useCallback(
         (e: React.MouseEvent<SVGElement, MouseEvent>) => {
@@ -66,7 +63,6 @@ const Rating = ({ rating }: Props) => {
 
     return (
         <>
-            <div>{rating !== "" ? rating : fixStar}</div>
             <MyStars ref={stars}>
                 <BsStarFill
                     size={24}
