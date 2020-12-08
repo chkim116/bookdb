@@ -1,14 +1,20 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { BookData, SelectedBook } from "../@types/types";
+import { BookData, SelectedBook, WriteText } from "../@types/types";
 import { SearchPayload } from "./search";
 
 export type ReviewState = {
     selectedBook: SelectedBook;
     searchData: BookData[];
     error: string | null;
+    title: string;
+    content: string;
+    regDate: Date;
 };
 
 const initialState: ReviewState = {
+    title: "",
+    content: "",
+    regDate: new Date(),
     selectedBook: {
         title: "",
         image: "",
@@ -67,6 +73,16 @@ const review = createSlice({
             state.error = payload;
             state.searchData = state.searchData.filter((f) => f.title === "");
         },
+
+        writeTitle: (state, { payload }) => {
+            state.title = payload.title;
+        },
+        writeContent: (state, { payload }) => {
+            state.content = payload.content;
+        },
+        writeSubmit: (state, { payload }: PayloadAction<WriteText>) => {
+            state.error = null;
+        },
     },
 });
 
@@ -77,6 +93,9 @@ export const {
     getSelectBookRequest,
     getSelectBookSuccess,
     getSelectBookFailure,
+    writeTitle,
+    writeContent,
+    writeSubmit,
 } = review.actions;
 
 export default review.reducer;

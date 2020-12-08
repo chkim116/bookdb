@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback, useEffect } from "react";
+import React, { useEffect } from "react";
 import styled from "@emotion/styled";
 import { Button, Input } from "../styles/CommonStyle";
 import theme from "../styles/theme";
@@ -10,6 +10,8 @@ import {
     getSelectBookFailure,
     getSelectBookRequest,
     selectBookRequest,
+    writeSubmit,
+    writeTitle,
 } from "../redux/review";
 import {
     SearchBookList,
@@ -18,6 +20,8 @@ import {
 import { BookData } from "../@types/types";
 import { RootState } from "../redux";
 import faker from "faker";
+import { useDisSubmit } from "@cooksmelon/ajax";
+import { loadRequest } from "../redux/loading";
 
 const Container = styled.div`
     width: 100%;
@@ -99,14 +103,30 @@ type Props = {
 const ReviewForm = ({ review }: Props) => {
     const router = useRouter();
     const [searchText, onChange, setSearchText] = useInput("");
+    const [write, onWrite] = useFormInput();
     const [findId, onFindId] = useFindId();
     const dispatch = useDispatch();
+
+    const { title, content } = useSelector((state: RootState) => state.review);
+
     const results: BookData[] = useSelector(
         (state: RootState) => state.review.searchData
     );
     const selectBook = useSelector(
         (state: RootState) => state.review.selectedBook
     );
+
+    const onSubmit = (
+        e: React.FormEvent<HTMLButtonElement | HTMLFormElement>
+    ) => {
+        e.preventDefault();
+        dispatch(loadRequest());
+        dispatch(writeSubmit({ title, content, regDate: new Date() }));
+    };
+
+    useEffect(() => {
+        dispatch(writeTitle(write));
+    }, [write]);
 
     useEffect(() => {
         if (searchText !== "") {
@@ -134,7 +154,7 @@ const ReviewForm = ({ review }: Props) => {
     return (
         <Container>
             <WriteContainer>
-                <WriteForm>
+                <WriteForm onSubmit={onSubmit}>
                     {review && (
                         <ResultForm>
                             <Input
@@ -199,10 +219,16 @@ const ReviewForm = ({ review }: Props) => {
                     ) : (
                         <> </>
                     )}
-                    <Input type="text" name="title" placeholder="제목" />
+                    <Input
+                        type="text"
+                        onChange={onWrite}
+                        name="title"
+                        placeholder="제목"
+                    />
                     <RichTextEditor />
                     <WriteSubmit>
                         <Button
+                            onSubmit={onSubmit}
                             bg={theme.blue}
                             color={theme.white}
                             type="submit">

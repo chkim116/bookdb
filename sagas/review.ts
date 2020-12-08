@@ -9,11 +9,18 @@ import {
     selectBookFailure,
     selectBookRequest,
     selectBookSuccess,
+    writeSubmit,
 } from "../redux/review";
 import { SearchPayload } from "../redux/search";
+import { loadFailure, loadSuccess } from "../redux/loading";
+import { WriteText } from "../@types/types";
 
 function getSearch(text: SearchPayload) {
     return Axios.post("/search", text).then((res) => res.data.items);
+}
+
+function postSubmit(text: WriteText) {
+    // return Axios.post()
 }
 
 function* getSearching({ payload }: PayloadAction<SearchPayload>) {
@@ -41,6 +48,16 @@ function* isSelected({ payload }: PayloadAction<SelectedBook>) {
     }
 }
 
+function* reviewSubmit({ payload }: PayloadAction<WriteText>) {
+    try {
+        yield call(postSubmit, payload);
+        yield put(loadSuccess());
+    } catch (err) {
+        console.log(err);
+        yield put(loadFailure());
+    }
+}
+
 function* watchSelectBook() {
     yield takeLatest(selectBookRequest, isSelected);
 }
@@ -49,6 +66,14 @@ function* watchSearchBook() {
     yield debounce(100, getSelectBookRequest, getSearching);
 }
 
+function* watchReviewSubmit() {
+    yield takeLatest(writeSubmit, reviewSubmit);
+}
+
 export default function* review(): Generator {
-    yield all([fork(watchSearchBook), fork(watchSelectBook)]);
+    yield all([
+        fork(watchSearchBook),
+        fork(watchSelectBook),
+        fork(watchReviewSubmit),
+    ]);
 }

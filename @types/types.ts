@@ -56,3 +56,9 @@ export type SelectedBook = {
     author: string;
     isbn: string;
 };
+
+export type WriteText = {
+    title: string;
+    content: string;
+    regDate: Date;
+};

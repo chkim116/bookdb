@@ -2,8 +2,11 @@ import React, { useEffect, useRef } from "react";
 import "../node_modules/quill/dist/quill.snow.css";
 
 import styled from "@emotion/styled";
-import Quill, { RangeStatic } from "quill";
+import Quill from "quill";
 import Axios from "axios";
+import { writeContent } from "../redux/review";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../redux";
 
 const QuillContainer = styled.div`
     width: 100%;
@@ -11,14 +14,23 @@ const QuillContainer = styled.div`
 
     .ql-toolbar {
         border: 3px solid ${(props) => props.theme.border};
+        position: sticky;
+        background: ${(props) => props.theme.white};
+        z-index: 880;
+        top: 0;
     }
     .ql-container {
         border: 3px solid ${(props) => props.theme.border};
         min-height: 500px;
     }
+    img {
+        padding: 8px;
+    }
 `;
 
 export const RichTextEditor = () => {
+    const dispatch = useDispatch();
+    const title = useSelector((state: RootState) => state.review.title);
     const Quill = typeof window === "object" ? require("quill") : () => false;
     const quillElement = useRef();
     const quillInstance = useRef();
@@ -106,7 +118,11 @@ export const RichTextEditor = () => {
             const quill: Quill = quillInstance.current;
             quill.on("text-change", (delta, oldDelta, source) => {
                 if (source === "user") {
-                    quill.root.innerHTML;
+                    dispatch(
+                        writeContent({
+                            content: quill.root.innerHTML,
+                        })
+                    );
                 }
             });
             quill.getModule("toolbar").addHandler("image", onClickImg);
