@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 import styled from "@emotion/styled";
 import { Button, Input } from "../../styles/CommonStyle";
 import theme from "../../styles/theme";
@@ -10,11 +10,12 @@ import {
     getSelectBookFailure,
     getSelectBookRequest,
     reviewWriteSubmit,
+    reviewWriteUpdate,
     selectBookRequest,
     writeTitle,
 } from "../../redux/review";
 import { SearchBookList, SearchResults } from "../Layouts/SearchForm";
-import { BookData } from "../../@types/types";
+import { BookData, ReviewPost } from "../../@types/types";
 import { RootState } from "../../redux";
 import faker from "faker";
 import { loadRequest } from "../../redux/loading";
@@ -92,9 +93,11 @@ const ResultForm = styled.div`
 
 type Props = {
     review?: boolean;
+    reviewById?: ReviewPost;
+    update?: boolean;
 };
 
-const ReviewForm = ({ review }: Props) => {
+const ReviewForm = ({ review, reviewById, update }: Props) => {
     const router = useRouter();
     const [searchText, onChange, setSearchText] = useInput("");
     const [write, onWrite] = useFormInput();
@@ -112,26 +115,35 @@ const ReviewForm = ({ review }: Props) => {
     );
 
     // 폼 제출 시 (리뷰 글쓰기&자유게시판 글쓰기)
-    const onSubmit = (
-        e: React.FormEvent<HTMLButtonElement | HTMLFormElement>
-    ) => {
-        e.preventDefault();
-        dispatch(loadRequest());
-        if (review) {
-            dispatch(
-                reviewWriteSubmit({
-                    title,
-                    content,
-                    regDate: new Date().toLocaleString(),
-                    rating,
-                    selectedBook,
-                })
-            );
-            router.push("/board/review");
-        }
-    };
+    const onSubmit = useCallback(
+        (e: React.FormEvent<HTMLButtonElement | HTMLFormElement>) => {
+            e.preventDefault();
+            dispatch(loadRequest());
+            if (review) {
+                update !== undefined
+                    ? dispatch(
+                          reviewWriteUpdate({
+                              title: title ? title : reviewById.title,
+                              content: content ? content : reviewById.content,
+                              id: router.query.id,
+                          })
+                      )
+                    : dispatch(
+                          reviewWriteSubmit({
+                              title,
+                              content,
+                              regDate: new Date().toLocaleString(),
+                              rating,
+                              selectedBook,
+                          })
+                      );
+                router.push("/board/review");
+            }
+        },
+        [title, content, dispatch, review, update]
+    );
 
-    // 제목 작성, content 작성 로직은 RichTextEditor.tsx에 있습니다.
+    // content 작성 로직은 RichTextEditor.tsx에 있습니다.
     useEffect(() => {
         dispatch(writeTitle(write));
     }, [write]);
@@ -143,7 +155,7 @@ const ReviewForm = ({ review }: Props) => {
         } else {
             dispatch(getSelectBookFailure({ message: "입력 값이 없습니다." }));
         }
-    }, [searchText]);
+    }, [searchText, dispatch]);
 
     // 리뷰할 책 선택
     useEffect(() => {
@@ -156,7 +168,7 @@ const ReviewForm = ({ review }: Props) => {
         };
         dispatch(selectBookRequest(selectedBook));
         setSearchText("");
-    }, [findId]);
+    }, [findId, dispatch]);
 
     const onGoBack = () => {
         router.back();
@@ -165,7 +177,7 @@ const ReviewForm = ({ review }: Props) => {
         <Container>
             <WriteContainer>
                 <WriteForm onSubmit={onSubmit}>
-                    {review && (
+                    {review && !update && (
                         <ResultForm>
                             <Input
                                 onChange={onChange}
@@ -210,7 +222,7 @@ const ReviewForm = ({ review }: Props) => {
                             </SearchResults>
                         </ResultForm>
                     )}
-                    {review ? (
+                    {review && !update ? (
                         selectBook.title !== "" ? (
                             <>
                                 <SelectedBook>
@@ -237,15 +249,16 @@ const ReviewForm = ({ review }: Props) => {
                         onChange={onWrite}
                         name="title"
                         placeholder="제목"
+                        defaultValue={update && reviewById.title}
                     />
-                    <RichTextEditor />
+                    {update && <RichTextEditor value={reviewById.content} />}
                     <WriteSubmit>
                         <Button
                             onSubmit={onSubmit}
                             bg={theme.blue}
                             color={theme.white}
                             type="submit">
-                            제출
+                            {update ? "수정" : "제출"}
                         </Button>
                         <Button type="button" onClick={onGoBack}>
                             뒤로가기

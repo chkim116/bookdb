@@ -122,6 +122,7 @@ const review = createSlice({
             state.rating = payload.rating;
         },
         reviewWriteSubmit: (state, { payload }: PayloadAction<WriteText>) => {},
+        reviewWriteUpdate: (state, { payload }: PayloadAction<WriteText>) => {},
 
         getReviewByIdRequest: (
             state,
@@ -184,6 +185,7 @@ export const {
     writeContent,
     writeRating,
     reviewWriteSubmit,
+    reviewWriteUpdate,
     getReviewByIdRequest,
     getReviewByIdSuccess,
     getReviewByIdFailure,

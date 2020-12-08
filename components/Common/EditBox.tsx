@@ -1,6 +1,5 @@
 import React, { useCallback } from "react";
 import styled from "@emotion/styled";
-import { onClick } from "../../@types/types";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/dist/client/router";
 import { loadRequest } from "../../redux/loading";

@@ -27,7 +27,11 @@ const QuillContainer = styled.div`
     }
 `;
 
-export const RichTextEditor = () => {
+type Props = {
+    value?: string;
+};
+
+export const RichTextEditor = ({ value }: Props) => {
     const dispatch = useDispatch();
     const Quill = typeof window === "object" ? require("quill") : () => false;
     const quillElement = useRef();
@@ -71,6 +75,16 @@ export const RichTextEditor = () => {
                 modules,
                 formats,
             });
+        }
+    }, []);
+
+    useEffect(() => {
+        if (quillElement.current || Quill) {
+            const quill: Quill = quillInstance.current;
+            if (value !== undefined) {
+                quill.root.innerHTML = value;
+            }
+
             const onClickImg = () => {
                 const input = document.createElement("input");
                 input.setAttribute("type", "file");
@@ -113,7 +127,6 @@ export const RichTextEditor = () => {
                 };
             };
 
-            const quill: Quill = quillInstance.current;
             quill.on("text-change", (delta, oldDelta, source) => {
                 if (source === "user") {
                     dispatch(
@@ -123,9 +136,10 @@ export const RichTextEditor = () => {
                     );
                 }
             });
+
             quill.getModule("toolbar").addHandler("image", onClickImg);
         }
-    }, []);
+    }, [value]);
 
     return (
         <QuillContainer>

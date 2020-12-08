@@ -16,6 +16,7 @@ import {
     getSelectBookRequest,
     getSelectBookSuccess,
     reviewWriteSubmit,
+    reviewWriteUpdate,
     selectBookFailure,
     selectBookRequest,
     selectBookSuccess,
@@ -32,6 +33,10 @@ function getSearch(text: SearchPayload) {
 
 function postSubmit(text: WriteText) {
     return Axios.post("/review/post", text);
+}
+
+function postUpdate(text: WriteText) {
+    return Axios.put("/review/edit", text);
 }
 
 function getReviewId(id: string | string[]) {
@@ -74,12 +79,23 @@ function* isSelected({ payload }: PayloadAction<SelectedBook>) {
 }
 
 function* reviewSubmit({ payload }: PayloadAction<WriteText>) {
+    console.log(payload);
     try {
         yield call(postSubmit, payload);
         yield put(loadSuccess());
     } catch (err) {
         console.log(err);
-        yield put(loadFailure());
+        yield put(loadFailure(err.message));
+    }
+}
+
+function* reviewUpdate({ payload }: PayloadAction<WriteText>) {
+    try {
+        yield call(postUpdate, payload);
+        yield put(loadSuccess());
+    } catch (err) {
+        console.log(err);
+        yield put(loadFailure(err.message));
     }
 }
 
@@ -129,6 +145,10 @@ function* watchReviewSubmit() {
     yield takeLatest(reviewWriteSubmit, reviewSubmit);
 }
 
+function* watchReviewUpdate() {
+    yield takeLatest(reviewWriteUpdate, reviewUpdate);
+}
+
 function* watchGetReviewById() {
     yield takeLatest(getReviewByIdRequest, getReviewById);
 }
@@ -146,6 +166,7 @@ export default function* review(): Generator {
         fork(watchSearchBook),
         fork(watchSelectBook),
         fork(watchReviewSubmit),
+        fork(watchReviewUpdate),
         fork(watchGetReviewById),
         fork(watchGetReviews),
         fork(watchDelReview),

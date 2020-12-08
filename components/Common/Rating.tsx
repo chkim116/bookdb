@@ -32,7 +32,7 @@ const Rating = ({ rating }: Props) => {
             const { value } = e.currentTarget.dataset;
             setRatingNum(value);
         },
-        [ratingNum]
+        [ratingNum, rating]
     );
 
     const onFix = useCallback(() => {
@@ -46,7 +46,7 @@ const Rating = ({ rating }: Props) => {
                 ? (star.attributes.fill.value = "red")
                 : (star.attributes.fill.value = "black")
         );
-    }, [ratingNum]);
+    }, [ratingNum, stars]);
 
     useEffect(() => {
         if (rating !== "") {
@@ -58,7 +58,7 @@ const Rating = ({ rating }: Props) => {
                     : (star.attributes.fill.value = "black")
             );
         }
-    }, [rating]);
+    }, [rating, stars]);
 
     return (
         <>

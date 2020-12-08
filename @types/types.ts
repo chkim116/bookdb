@@ -60,10 +60,11 @@ export type SelectedBook = {
 export type WriteText = {
     title: string;
     content: string;
-    regDate: string;
+    regDate?: string;
     password?: string;
-    selectedBook: SelectedBook;
+    selectedBook?: SelectedBook;
     rating?: string;
+    id?: string | string[];
 };
 
 export type ReviewPost = {
