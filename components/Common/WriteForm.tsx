@@ -12,7 +12,6 @@ import {
     reviewWriteSubmit,
     reviewWriteUpdate,
     selectBookRequest,
-    writeTitle,
 } from "../../redux/review";
 import { SearchBookList, SearchResults } from "../Layouts/SearchForm";
 import { BookData, ReviewPost } from "../../@types/types";
@@ -20,6 +19,11 @@ import { RootState } from "../../redux";
 import faker from "faker";
 import { loadRequest } from "../../redux/loading";
 import Rating from "./Rating";
+import {
+    freeBoardWriteSubmit,
+    freeBoardWriteUpdate,
+} from "../../redux/freeBoard";
+import { writeTitle } from "../../redux/write";
 
 const Container = styled.div`
     width: 100%;
@@ -31,7 +35,7 @@ const SelectedBook = styled.div`
     justify-content: space-around;
     align-items: center;
     flex-direction: column;
-    padding: 12px;
+    padding: 12px 6px;
 `;
 
 const PleaseSelect = styled.div`
@@ -53,13 +57,13 @@ const WriteContainer = styled.div`
     width: 100%;
     max-width: 900px;
     margin: 0 auto;
-    padding: 12px;
+    padding: 12px 6px;
 `;
 
 const WriteForm = styled.form`
     background: ${(props) => props.theme.white};
     display: flex;
-    padding: 12px;
+    padding: 12px 6px;
     flex-direction: column;
     align-items: center;
 
@@ -105,8 +109,9 @@ const ReviewForm = ({ review, reviewById, update }: Props) => {
     const dispatch = useDispatch();
 
     const { title, content, selectedBook, rating } = useSelector(
-        (state: RootState) => state.review
+        (state: RootState) => state.write
     );
+
     const results: BookData[] = useSelector(
         (state: RootState) => state.review.searchData
     );
@@ -132,12 +137,32 @@ const ReviewForm = ({ review, reviewById, update }: Props) => {
                           reviewWriteSubmit({
                               title,
                               content,
-                              regDate: new Date().toLocaleString(),
+                              regDate: new Date().toLocaleDateString(),
                               rating,
                               selectedBook,
                           })
                       );
                 router.push("/board/review");
+            } else {
+                update !== undefined
+                    ? dispatch(
+                          freeBoardWriteUpdate({
+                              title: title ? title : freeBoardById.title,
+                              content: content
+                                  ? content
+                                  : freeBoardById.content,
+                              id: router.query.id,
+                          })
+                      )
+                    : dispatch(
+                          freeBoardWriteSubmit({
+                              title,
+                              content,
+                              thumb,
+                              regDate: new Date().toLocaleDateString(),
+                          })
+                      );
+                router.push("/board/freeboard");
             }
         },
         [title, content, dispatch, review, update]
@@ -155,7 +180,7 @@ const ReviewForm = ({ review, reviewById, update }: Props) => {
         } else {
             dispatch(getSelectBookFailure({ message: "입력 값이 없습니다." }));
         }
-    }, [searchText, dispatch]);
+    }, [searchText]);
 
     // 리뷰할 책 선택
     useEffect(() => {
@@ -168,7 +193,7 @@ const ReviewForm = ({ review, reviewById, update }: Props) => {
         };
         dispatch(selectBookRequest(selectedBook));
         setSearchText("");
-    }, [findId, dispatch]);
+    }, [findId]);
 
     const onGoBack = () => {
         router.back();
@@ -180,6 +205,7 @@ const ReviewForm = ({ review, reviewById, update }: Props) => {
                     {review && !update && (
                         <ResultForm>
                             <Input
+                                autoComplete="off"
                                 onChange={onChange}
                                 type="text"
                                 width="250px"
@@ -251,7 +277,7 @@ const ReviewForm = ({ review, reviewById, update }: Props) => {
                         placeholder="제목"
                         defaultValue={update && reviewById.title}
                     />
-                    {update && <RichTextEditor value={reviewById.content} />}
+                    <RichTextEditor value={update && reviewById.content} />
                     <WriteSubmit>
                         <Button
                             onSubmit={onSubmit}

@@ -4,6 +4,8 @@ import { HYDRATE } from "next-redux-wrapper";
 import loading from "./loading";
 import search from "./search";
 import review from "./review";
+import freeBoard from "./freeBoard";
+import write from "./write";
 
 const rootReducer = (state: any, action: any) => {
     switch (action.type) {
@@ -14,6 +16,8 @@ const rootReducer = (state: any, action: any) => {
                 loading,
                 search,
                 review,
+                freeBoard,
+                write,
             });
             return combineReducer(state, action);
         }

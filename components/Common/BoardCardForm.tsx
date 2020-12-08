@@ -25,7 +25,7 @@ const Container = styled.article<Components>`
 
     gap: 12px;
     padding: 36px 0;
-    margin: 0 auto;
+    margin: 36px auto;
 `;
 
 const BoardCardForm = styled.div<Components>`
@@ -36,6 +36,7 @@ const BoardCardForm = styled.div<Components>`
         props.review &&
         css`
             max-width: 450px;
+            min-width: 235px;
         `}
 
     background: ${(props) => props.theme.white};
@@ -67,6 +68,7 @@ const Rank = styled.div`
 const BoardTitle = styled.h3`
     font-weight: bold;
     position: relative;
+    margin-bottom: 8px;
 `;
 
 const BoardImg = styled.div<Components>`

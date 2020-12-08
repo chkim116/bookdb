@@ -4,7 +4,7 @@ import "../../node_modules/quill/dist/quill.snow.css";
 import styled from "@emotion/styled";
 import Quill from "quill";
 import Axios from "axios";
-import { writeContent } from "../../redux/review";
+import { writeContent } from "../../redux/write";
 import { useDispatch } from "react-redux";
 
 const QuillContainer = styled.div`
@@ -75,15 +75,6 @@ export const RichTextEditor = ({ value }: Props) => {
                 modules,
                 formats,
             });
-        }
-    }, []);
-
-    useEffect(() => {
-        if (quillElement.current || Quill) {
-            const quill: Quill = quillInstance.current;
-            if (value !== undefined) {
-                quill.root.innerHTML = value;
-            }
 
             const onClickImg = () => {
                 const input = document.createElement("input");
@@ -127,6 +118,7 @@ export const RichTextEditor = ({ value }: Props) => {
                 };
             };
 
+            const quill: Quill = quillInstance.current;
             quill.on("text-change", (delta, oldDelta, source) => {
                 if (source === "user") {
                     dispatch(
@@ -136,8 +128,16 @@ export const RichTextEditor = ({ value }: Props) => {
                     );
                 }
             });
-
             quill.getModule("toolbar").addHandler("image", onClickImg);
+        }
+    }, []);
+
+    useEffect(() => {
+        if (value !== undefined) {
+            if (quillElement.current || Quill) {
+                const quill: Quill = quillInstance.current;
+                quill.root.innerHTML = value;
+            }
         }
     }, [value]);
 

@@ -6,19 +6,11 @@ export type ReviewState = {
     selectedBook: SelectedBook;
     searchData: BookData[];
     isReviewErr: string | null;
-    title: string;
-    content: string;
-    rating: string;
-    regDate: string;
     reviewById: ReviewPost;
     reviews: ReviewPost[];
 };
 
 const initialState: ReviewState = {
-    title: "",
-    content: "",
-    regDate: "",
-    rating: "",
     // 선택
     selectedBook: {
         title: "",
@@ -112,15 +104,6 @@ const review = createSlice({
             state.searchData = state.searchData.filter((f) => f.title === "");
         },
 
-        writeTitle: (state, { payload }) => {
-            state.title = payload.title;
-        },
-        writeContent: (state, { payload }) => {
-            state.content = payload.content;
-        },
-        writeRating: (state, { payload }) => {
-            state.rating = payload.rating;
-        },
         reviewWriteSubmit: (state, { payload }: PayloadAction<WriteText>) => {},
         reviewWriteUpdate: (state, { payload }: PayloadAction<WriteText>) => {},
 
@@ -140,6 +123,7 @@ const review = createSlice({
             state.reviewById.regDate = payload.regDate;
             state.reviewById.creator = payload.creator;
             state.reviewById.rating = payload.rating;
+            state.reviewById.userId = payload.userId;
             state.reviewById.selectedBook.title = payload.selectedBook.title;
             state.reviewById.selectedBook.author = payload.selectedBook.author;
             state.reviewById.selectedBook.image = payload.selectedBook.image;
@@ -181,9 +165,7 @@ export const {
     getSelectBookRequest,
     getSelectBookSuccess,
     getSelectBookFailure,
-    writeTitle,
-    writeContent,
-    writeRating,
+
     reviewWriteSubmit,
     reviewWriteUpdate,
     getReviewByIdRequest,

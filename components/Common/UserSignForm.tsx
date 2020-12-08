@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { Button, Input } from "../../styles/CommonStyle";
-import login from "../images/login.jpg";
+import login from "../../images/login.jpg";
 import theme from "../../styles/theme";
 import Link from "next/link";
 import { useRouter } from "next/dist/client/router";

@@ -10,14 +10,14 @@ const Container = styled.div`
     width: 100%;
     max-width: 900px;
     background-color: ${(props) => props.theme.white};
-    padding: 12px;
+    padding: 12px 6px;
     margin: 30px auto;
 `;
 
 const DetailTitle = styled(Title)`
     text-align: left;
     font-size: 32px;
-    padding: 12px;
+    padding: 12px 6px;
 `;
 
 const CreatorUser = styled.div`
@@ -36,9 +36,12 @@ const RatingStar = styled.div`
 const Content = styled.div`
     margin-top: 12px;
     border-top: 3px solid ${(props) => props.theme.border};
-    padding: 12px;
+    padding: 24px 6px;
     min-height: 500px;
-    padding: 24px;
+
+    img {
+        width: 100%;
+    }
 `;
 
 const Edit = styled.div`

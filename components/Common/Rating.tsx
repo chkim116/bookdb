@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import styled from "@emotion/styled";
 import { BsStarFill } from "react-icons/bs";
 import { useDispatch } from "react-redux";
-import { writeRating } from "../../redux/review";
+import { writeRating } from "../../redux/write";
 
 const MyStars = styled.div`
     display: flex;
@@ -21,8 +21,8 @@ type Props = {
 
 const Rating = ({ rating }: Props) => {
     const stars = useRef();
-    const dispatch = useDispatch();
     const [ratingNum, setRatingNum] = useState("");
+    const dispatch = useDispatch();
 
     const onMouseOver = useCallback(
         (e: React.MouseEvent<SVGElement, MouseEvent>) => {

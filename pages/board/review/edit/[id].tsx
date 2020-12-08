@@ -12,8 +12,10 @@ const index = () => {
     const {
         query: { id },
     } = router;
+
     const dispatch = useDispatch();
     const { reviewById } = useSelector((state: RootState) => state.review);
+
     useEffect(() => {
         dispatch(getReviewByIdRequest(id));
     }, []);
