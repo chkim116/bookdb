@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { Button } from "../styles/CommonStyle";
-import theme from "../styles/theme";
+import { Button } from "../../styles/CommonStyle";
+import theme from "../../styles/theme";
 import Link from "next/link";
 
 const PostBtn = styled.div`

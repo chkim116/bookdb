@@ -1,12 +1,11 @@
 import React, { useEffect, useRef } from "react";
-import "../node_modules/quill/dist/quill.snow.css";
+import "../../node_modules/quill/dist/quill.snow.css";
 
 import styled from "@emotion/styled";
 import Quill from "quill";
 import Axios from "axios";
-import { writeContent } from "../redux/review";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../redux";
+import { writeContent } from "../../redux/review";
+import { useDispatch } from "react-redux";
 
 const QuillContainer = styled.div`
     width: 100%;
@@ -30,7 +29,6 @@ const QuillContainer = styled.div`
 
 export const RichTextEditor = () => {
     const dispatch = useDispatch();
-    const title = useSelector((state: RootState) => state.review.title);
     const Quill = typeof window === "object" ? require("quill") : () => false;
     const quillElement = useRef();
     const quillInstance = useRef();

@@ -1,5 +1,5 @@
 import React from "react";
-import WriteForm from "../../../../Common/WriteForm";
+import WriteForm from "../../../Common/WriteForm";
 import styled from "@emotion/styled";
 
 const Container = styled.div`

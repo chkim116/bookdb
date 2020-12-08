@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "@emotion/styled";
-import WriteForm from "../../../../Common/WriteForm";
+import WriteForm from "../../../Common/WriteForm";
 
 const Container = styled.div`
     width: 100%;

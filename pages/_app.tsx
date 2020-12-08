@@ -9,6 +9,10 @@ import type { AppProps } from "next/app";
 import wrapper from "../store/configureStore";
 import withReduxSaga from "next-redux-saga";
 import Axios from "axios";
+import useSelection from "antd/lib/table/hooks/useSelection";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux";
+import Loader from "../styles/loader";
 
 const AppLayouts = styled.main`
     width: 100%;
@@ -20,8 +24,10 @@ const AppLayouts = styled.main`
 Axios.defaults.baseURL = "http://localhost:4000/";
 
 function MyApp({ Component, pageProps }: AppProps) {
+    const { isLoading } = useSelector((state: RootState) => state.loading);
     return (
         <ThemeProvider theme={theme}>
+            {isLoading && <Loader />}
             <Nav />
             <AppLayouts>
                 <Component {...pageProps} />

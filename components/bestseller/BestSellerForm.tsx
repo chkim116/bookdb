@@ -4,7 +4,7 @@ import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 import theme from "../../styles/theme";
 import { BoardCard, Paths } from "../../@types/types";
-import BoardForm from "../../Common/BoardCardForm";
+import BoardForm from "../Common/BoardCardForm";
 
 const Container = styled.div`
     width: 100%;

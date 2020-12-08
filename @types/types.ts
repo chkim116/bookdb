@@ -60,5 +60,24 @@ export type SelectedBook = {
 export type WriteText = {
     title: string;
     content: string;
-    regDate: Date;
+    regDate: string;
+    password?: string;
+    selectedBook: SelectedBook;
+    rating?: string;
+};
+
+export type ReviewPost = {
+    _id: string;
+    title: string;
+    content: string;
+    regDate: string;
+    creator: string;
+    password?: string;
+    rating?: string;
+    selectedBook: {
+        title: string;
+        author: string;
+        image: string;
+        isbn: string;
+    };
 };

@@ -1,26 +1,30 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { BookData, SelectedBook, WriteText } from "../@types/types";
+import { BookData, ReviewPost, SelectedBook, WriteText } from "../@types/types";
 import { SearchPayload } from "./search";
 
 export type ReviewState = {
     selectedBook: SelectedBook;
     searchData: BookData[];
-    error: string | null;
+    isReviewErr: string | null;
     title: string;
     content: string;
-    regDate: Date;
+    regDate: string;
+    reviewById: ReviewPost;
+    reviews: ReviewPost[];
 };
 
 const initialState: ReviewState = {
     title: "",
     content: "",
-    regDate: new Date(),
+    regDate: "",
+    // 선택
     selectedBook: {
         title: "",
         image: "",
         author: "",
         isbn: "",
     },
+    // 검색
     searchData: [
         {
             title: "",
@@ -30,7 +34,37 @@ const initialState: ReviewState = {
             isbn: "",
         },
     ],
-    error: null,
+    // id마다의 리뷰
+    reviewById: {
+        _id: "",
+        title: "",
+        content: "",
+        regDate: "",
+        creator: "",
+        selectedBook: {
+            title: "",
+            author: "",
+            image: "",
+            isbn: "",
+        },
+    },
+    // 모든 리뷰
+    reviews: [
+        {
+            _id: "",
+            title: "",
+            content: "",
+            regDate: "",
+            creator: "",
+            selectedBook: {
+                title: "",
+                author: "",
+                image: "",
+                isbn: "",
+            },
+        },
+    ],
+    isReviewErr: null,
 };
 
 const review = createSlice({
@@ -50,7 +84,7 @@ const review = createSlice({
             state.selectedBook = payload;
         },
         selectBookFailure: (state, { payload }) => {
-            state.error = payload;
+            state.isReviewErr = payload;
             state.selectedBook.title = "";
             state.selectedBook.image = "";
             state.selectedBook.author = "";
@@ -70,7 +104,7 @@ const review = createSlice({
             state.searchData = payload;
         },
         getSelectBookFailure: (state, { payload }) => {
-            state.error = payload;
+            state.isReviewErr = payload;
             state.searchData = state.searchData.filter((f) => f.title === "");
         },
 
@@ -80,8 +114,43 @@ const review = createSlice({
         writeContent: (state, { payload }) => {
             state.content = payload.content;
         },
-        writeSubmit: (state, { payload }: PayloadAction<WriteText>) => {
-            state.error = null;
+        reviewWriteSubmit: (state, { payload }: PayloadAction<WriteText>) => {},
+
+        getReviewByIdRequest: (
+            state,
+            { payload }: PayloadAction<string | string[]>
+        ) => {
+            state.isReviewErr = null;
+        },
+        getReviewByIdSuccess: (
+            state,
+            { payload }: PayloadAction<ReviewPost>
+        ) => {
+            state.reviewById._id = payload._id;
+            state.reviewById.title = payload.title;
+            state.reviewById.content = payload.content;
+            state.reviewById.regDate = payload.regDate;
+            state.reviewById.creator = payload.creator;
+            state.reviewById.selectedBook.title = payload.selectedBook.title;
+            state.reviewById.selectedBook.author = payload.selectedBook.author;
+            state.reviewById.selectedBook.image = payload.selectedBook.image;
+            state.reviewById.selectedBook.isbn = payload.selectedBook.isbn;
+        },
+        getReviewByIdFailure: (state, { payload }) => {
+            state.isReviewErr = payload;
+        },
+
+        getReviewsPostRequest: (state) => {
+            state.isReviewErr = null;
+        },
+        getReviewsPostSuccess: (
+            state,
+            { payload }: PayloadAction<ReviewPost[]>
+        ) => {
+            state.reviews = payload;
+        },
+        getReviewsPostFailure: (state, { payload }) => {
+            state.isReviewErr = payload;
         },
     },
 });
@@ -95,7 +164,13 @@ export const {
     getSelectBookFailure,
     writeTitle,
     writeContent,
-    writeSubmit,
+    reviewWriteSubmit,
+    getReviewByIdRequest,
+    getReviewByIdSuccess,
+    getReviewByIdFailure,
+    getReviewsPostRequest,
+    getReviewsPostSuccess,
+    getReviewsPostFailure,
 } = review.actions;
 
 export default review.reducer;

@@ -2,10 +2,10 @@ import React from "react";
 import styled from "@emotion/styled";
 import faker from "faker/locale/ko";
 import { Title } from "../../../styles/CommonStyle";
-import BannerImg from "../../../Common/BannerImg";
-import PostButton from "../../../Common/PostButton";
+import BannerImg from "../../Common/BannerImg";
+import PostButton from "../../Common/PostButton";
 import { Board } from "../../../@types/types";
-import FreeBoardForm from "../../../Common/FreeBoardForm";
+import FreeBoardForm from "../../Common/FreeBoardForm";
 
 const Container = styled.div`
     margin: 0 auto;

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import styled from "@emotion/styled";
-import { Button, Input } from "../styles/CommonStyle";
-import theme from "../styles/theme";
+import { Button, Input } from "../../styles/CommonStyle";
+import theme from "../../styles/theme";
 import { useRouter } from "next/dist/client/router";
 import { RichTextEditor } from "./RichTextEditor";
 import { useInput, useFindId, useFormInput } from "@cooksmelon/event";
@@ -9,19 +9,16 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     getSelectBookFailure,
     getSelectBookRequest,
+    reviewWriteSubmit,
     selectBookRequest,
-    writeSubmit,
     writeTitle,
-} from "../redux/review";
-import {
-    SearchBookList,
-    SearchResults,
-} from "../components/Layouts/SearchForm";
-import { BookData } from "../@types/types";
-import { RootState } from "../redux";
+} from "../../redux/review";
+import { SearchBookList, SearchResults } from "../Layouts/SearchForm";
+import { BookData } from "../../@types/types";
+import { RootState } from "../../redux";
 import faker from "faker";
 import { useDisSubmit } from "@cooksmelon/ajax";
-import { loadRequest } from "../redux/loading";
+import { loadRequest } from "../../redux/loading";
 
 const Container = styled.div`
     width: 100%;
@@ -107,8 +104,9 @@ const ReviewForm = ({ review }: Props) => {
     const [findId, onFindId] = useFindId();
     const dispatch = useDispatch();
 
-    const { title, content } = useSelector((state: RootState) => state.review);
-
+    const { title, content, selectedBook } = useSelector(
+        (state: RootState) => state.review
+    );
     const results: BookData[] = useSelector(
         (state: RootState) => state.review.searchData
     );
@@ -116,18 +114,29 @@ const ReviewForm = ({ review }: Props) => {
         (state: RootState) => state.review.selectedBook
     );
 
+    // 제목 작성, content 작성 로직은 RichTextEditor.tsx에 있습니다.
+    useEffect(() => {
+        dispatch(writeTitle(write));
+    }, [write]);
+
     const onSubmit = (
         e: React.FormEvent<HTMLButtonElement | HTMLFormElement>
     ) => {
         e.preventDefault();
         dispatch(loadRequest());
-        dispatch(writeSubmit({ title, content, regDate: new Date() }));
+        if (review) {
+            dispatch(
+                reviewWriteSubmit({
+                    title,
+                    content,
+                    regDate: new Date().toLocaleString(),
+                    selectedBook,
+                })
+            );
+        }
     };
 
-    useEffect(() => {
-        dispatch(writeTitle(write));
-    }, [write]);
-
+    // 리뷰할 책 검색
     useEffect(() => {
         if (searchText !== "") {
             dispatch(getSelectBookRequest({ searchText }));
@@ -136,6 +145,7 @@ const ReviewForm = ({ review }: Props) => {
         }
     }, [searchText]);
 
+    // 리뷰할 책 선택
     useEffect(() => {
         const find = findId.replace(/<[^>]*>?/gm, "").split("&&");
         const selectedBook = {

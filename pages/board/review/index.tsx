@@ -1,29 +1,30 @@
 import React from "react";
-import { BoardCard } from "../../../@types/types";
 import Review from "../../../components/board/review/Review";
 import { Container } from "../../../styles/CommonStyle";
-import faker from "faker";
+import { GetServerSideProps } from "next";
+import wrapper from "../../../store/configureStore";
+import { getReviewsPostRequest } from "../../../redux/review";
+import { END } from "redux-saga";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux";
 
 const index = () => {
-    const createBoard = (): BoardCard => {
-        return {
-            summary: faker.lorem.sentences(),
-            title: faker.lorem.word(),
-            imageUrl: faker.image.image(),
-            imageAlt: "image",
-            auth: faker.name.findName(),
-            url: `/board/review/detail/${faker.random.number()}`,
-            id: faker.random.number(20),
-        };
-    };
-
-    const board: BoardCard[] = new Array(10).fill(undefined).map(createBoard);
-
+    const { reviews } = useSelector((state: RootState) => state.review);
     return (
         <Container>
-            <Review board={board}></Review>
+            <Review reviewPost={reviews}></Review>
         </Container>
     );
 };
+
+export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps(
+    async (ctx) => {
+        const { store } = ctx;
+        store.dispatch(getReviewsPostRequest());
+
+        store.dispatch(END);
+        await store.sagaTask.toPromise();
+    }
+);
 
 export default index;

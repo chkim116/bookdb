@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { BoardCard, Interview } from "../../@types/types";
-import FreeBoardForm from "../../Common/FreeBoardForm";
+import FreeBoardForm from "../Common/FreeBoardForm";
 import { Button, Title } from "../../styles/CommonStyle";
 import theme from "../../styles/theme";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
