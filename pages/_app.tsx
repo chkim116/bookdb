@@ -9,7 +9,6 @@ import type { AppProps } from "next/app";
 import wrapper from "../store/configureStore";
 import withReduxSaga from "next-redux-saga";
 import Axios from "axios";
-import useSelection from "antd/lib/table/hooks/useSelection";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux";
 import Loader from "../styles/loader";

@@ -11,6 +11,7 @@ import theme from "../../../../styles/theme";
 
 const index = () => {
     const { reviewById } = useSelector((state: RootState) => state.review);
+
     return (
         <Container color={theme.white}>
             <ReviewDetail reviewById={reviewById}></ReviewDetail>

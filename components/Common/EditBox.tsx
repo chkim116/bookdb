@@ -17,11 +17,16 @@ const EditBox = styled.div`
         cursor: pointer;
         &:nth-of-type(1) {
             background: ${(props) => props.theme.red};
-            border-bottom-left-radius: 8px;
+
+            &:hover {
+                background: ${(props) => props.theme.gray};
+            }
         }
         &:nth-of-type(2) {
             background: ${(props) => props.theme.blue};
-            border-bottom-right-radius: 8px;
+            &:hover {
+                background: ${(props) => props.theme.gray};
+            }
         }
     }
 `;
@@ -43,6 +48,7 @@ const EditBoxForm = ({ id, review }: Props) => {
                 if (review) {
                     dispatch(loadRequest());
                     dispatch(delReviewRequest(id));
+                    router.push(`/board/review`);
                 }
             }
         },

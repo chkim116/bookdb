@@ -4,6 +4,7 @@ import Rating from "./Rating";
 import { Title } from "../../styles/CommonStyle";
 import { ReviewPost } from "../../@types/types";
 import ReviewBookForm from "../board/review/detail/ReviewBook";
+import EditBoxForm from "./EditBox";
 
 const Container = styled.div`
     width: 100%;
@@ -40,6 +41,11 @@ const Content = styled.div`
     padding: 24px;
 `;
 
+const Edit = styled.div`
+    width: 100px;
+    margin-left: auto;
+`;
+
 type Props = {
     reviewById?: ReviewPost;
     review?: boolean;
@@ -53,6 +59,9 @@ const DetailForm = ({ reviewById, review }: Props) => {
                 <div>{reviewById.regDate}</div>
             </CreatorUser>
             {review && <ReviewBookForm reviewById={reviewById} />}
+            <Edit>
+                <EditBoxForm id={reviewById._id} review={review} />
+            </Edit>
             <RatingStar>
                 <Rating rating={reviewById.rating} />
             </RatingStar>

@@ -79,6 +79,10 @@ const BoardImg = styled.div<Components>`
     }
 `;
 
+const Content = styled.div`
+    text-align: left;
+`;
+
 const Auth = styled.div`
     padding: 8px 0;
     font-weight: 700;
@@ -111,16 +115,17 @@ const BoardForm = ({ list, review, reviewPost }: Props) => {
                                       </BoardImg>
                                       <Auth>{v.selectedBook.author}</Auth>
                                       <Rating rating={v.rating} />
-                                      <div
-                                          dangerouslySetInnerHTML={{
-                                              __html:
-                                                  v.content.length > 200
-                                                      ? `${v.content.slice(
-                                                            0,
-                                                            200
-                                                        )}...`
-                                                      : v.content,
-                                          }}></div>
+                                      <Content>
+                                          {v.content.replace(/<[^>]*>?/gm, "")
+                                              .length > 200
+                                              ? `${v.content
+                                                    .replace(/<[^>]*>?/gm, "")
+                                                    .slice(0, 200)}...`
+                                              : v.content.replace(
+                                                    /<[^>]*>?/gm,
+                                                    ""
+                                                )}
+                                      </Content>
                                   </BoardCardForm>
                               </a>
                           </Link>

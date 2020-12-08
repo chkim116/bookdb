@@ -63,15 +63,16 @@ const WriteForm = styled.form`
     align-items: center;
 
     input {
-        margin: 5px 0;
+        margin: 10px 0;
         border: none;
         width: 100%;
-        font-size: 28px;
+        font-size: 24px;
     }
 `;
 
 const Title = styled(Input)`
-    padding: 12px;
+    padding-left: 20px;
+    border-bottom: 1px solid ${(props) => props.theme.gray};
 `;
 
 const WriteSubmit = styled.div`
@@ -87,9 +88,6 @@ const WriteSubmit = styled.div`
 const ResultForm = styled.div`
     position: relative;
     text-align: center;
-    input {
-        font-size: ${(props) => props.theme.xls};
-    }
 `;
 
 type Props = {
