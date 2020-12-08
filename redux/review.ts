@@ -8,6 +8,7 @@ export type ReviewState = {
     isReviewErr: string | null;
     title: string;
     content: string;
+    rating: string;
     regDate: string;
     reviewById: ReviewPost;
     reviews: ReviewPost[];
@@ -17,6 +18,7 @@ const initialState: ReviewState = {
     title: "",
     content: "",
     regDate: "",
+    rating: "",
     // 선택
     selectedBook: {
         title: "",
@@ -41,6 +43,7 @@ const initialState: ReviewState = {
         content: "",
         regDate: "",
         creator: "",
+        userId: "",
         selectedBook: {
             title: "",
             author: "",
@@ -56,6 +59,7 @@ const initialState: ReviewState = {
             content: "",
             regDate: "",
             creator: "",
+            userId: "",
             selectedBook: {
                 title: "",
                 author: "",
@@ -114,6 +118,9 @@ const review = createSlice({
         writeContent: (state, { payload }) => {
             state.content = payload.content;
         },
+        writeRating: (state, { payload }) => {
+            state.rating = payload.rating;
+        },
         reviewWriteSubmit: (state, { payload }: PayloadAction<WriteText>) => {},
 
         getReviewByIdRequest: (
@@ -131,6 +138,7 @@ const review = createSlice({
             state.reviewById.content = payload.content;
             state.reviewById.regDate = payload.regDate;
             state.reviewById.creator = payload.creator;
+            state.reviewById.rating = payload.rating;
             state.reviewById.selectedBook.title = payload.selectedBook.title;
             state.reviewById.selectedBook.author = payload.selectedBook.author;
             state.reviewById.selectedBook.image = payload.selectedBook.image;
@@ -164,6 +172,7 @@ export const {
     getSelectBookFailure,
     writeTitle,
     writeContent,
+    writeRating,
     reviewWriteSubmit,
     getReviewByIdRequest,
     getReviewByIdSuccess,

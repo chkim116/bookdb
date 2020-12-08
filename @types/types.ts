@@ -72,6 +72,7 @@ export type ReviewPost = {
     content: string;
     regDate: string;
     creator: string;
+    userId: string;
     password?: string;
     rating?: string;
     selectedBook: {

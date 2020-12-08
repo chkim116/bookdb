@@ -17,8 +17,8 @@ import { SearchBookList, SearchResults } from "../Layouts/SearchForm";
 import { BookData } from "../../@types/types";
 import { RootState } from "../../redux";
 import faker from "faker";
-import { useDisSubmit } from "@cooksmelon/ajax";
 import { loadRequest } from "../../redux/loading";
+import Rating from "./Rating";
 
 const Container = styled.div`
     width: 100%;
@@ -30,9 +30,7 @@ const SelectedBook = styled.div`
     justify-content: space-around;
     align-items: center;
     flex-direction: column;
-    border: 3px solid ${(props) => props.theme.border};
     padding: 12px;
-    margin-bottom: 10px;
 `;
 
 const PleaseSelect = styled.div`
@@ -60,7 +58,6 @@ const WriteContainer = styled.div`
 const WriteForm = styled.form`
     background: ${(props) => props.theme.white};
     display: flex;
-    border: 1px solid ${(props) => props.theme.gray};
     padding: 12px;
     flex-direction: column;
     align-items: center;
@@ -70,8 +67,11 @@ const WriteForm = styled.form`
         border: none;
         width: 100%;
         font-size: 28px;
-        padding: 6px 0;
     }
+`;
+
+const Title = styled(Input)`
+    padding: 12px;
 `;
 
 const WriteSubmit = styled.div`
@@ -89,7 +89,6 @@ const ResultForm = styled.div`
     text-align: center;
     input {
         font-size: ${(props) => props.theme.xls};
-        padding-left: 5px;
     }
 `;
 
@@ -104,7 +103,7 @@ const ReviewForm = ({ review }: Props) => {
     const [findId, onFindId] = useFindId();
     const dispatch = useDispatch();
 
-    const { title, content, selectedBook } = useSelector(
+    const { title, content, selectedBook, rating } = useSelector(
         (state: RootState) => state.review
     );
     const results: BookData[] = useSelector(
@@ -114,11 +113,7 @@ const ReviewForm = ({ review }: Props) => {
         (state: RootState) => state.review.selectedBook
     );
 
-    // 제목 작성, content 작성 로직은 RichTextEditor.tsx에 있습니다.
-    useEffect(() => {
-        dispatch(writeTitle(write));
-    }, [write]);
-
+    // 폼 제출 시 (리뷰 글쓰기&자유게시판 글쓰기)
     const onSubmit = (
         e: React.FormEvent<HTMLButtonElement | HTMLFormElement>
     ) => {
@@ -130,11 +125,18 @@ const ReviewForm = ({ review }: Props) => {
                     title,
                     content,
                     regDate: new Date().toLocaleString(),
+                    rating,
                     selectedBook,
                 })
             );
+            router.push("/board/review");
         }
     };
+
+    // 제목 작성, content 작성 로직은 RichTextEditor.tsx에 있습니다.
+    useEffect(() => {
+        dispatch(writeTitle(write));
+    }, [write]);
 
     // 리뷰할 책 검색
     useEffect(() => {
@@ -212,15 +214,18 @@ const ReviewForm = ({ review }: Props) => {
                     )}
                     {review ? (
                         selectBook.title !== "" ? (
-                            <SelectedBook>
-                                <div>
-                                    <img src={selectBook.image} />
-                                </div>
-                                <BookDesc>
-                                    <div>{selectBook.title}</div>
-                                    <div>{selectBook.author}</div>
-                                </BookDesc>
-                            </SelectedBook>
+                            <>
+                                <SelectedBook>
+                                    <div>
+                                        <img src={selectBook.image} />
+                                    </div>
+                                    <BookDesc>
+                                        <div>{selectBook.title}</div>
+                                        <div>{selectBook.author}</div>
+                                    </BookDesc>
+                                </SelectedBook>
+                                <Rating />
+                            </>
                         ) : (
                             <PleaseSelect>
                                 리뷰하고자 하는 책을 검색해 선택해주세요.
@@ -229,7 +234,7 @@ const ReviewForm = ({ review }: Props) => {
                     ) : (
                         <> </>
                     )}
-                    <Input
+                    <Title
                         type="text"
                         onChange={onWrite}
                         name="title"
