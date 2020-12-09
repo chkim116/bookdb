@@ -1,7 +1,9 @@
 import React from "react";
 import styled from "@emotion/styled";
 import Link from "next/link";
-import { Board, Interview } from "../../@types/types";
+import { Interview } from "../../@types/types";
+import { FreeBoard } from "../../redux/freeBoard";
+import faker from "faker";
 
 const BoardInfo = styled.div<Components>`
     display: flex;
@@ -67,11 +69,10 @@ type Components = {
 };
 
 type Props = {
-    boards?: Board[];
     interview?: Interview[];
+    freeBoards?: FreeBoard[];
 };
-
-const FreeBoardForm = ({ boards, interview }: Props) => {
+const FreeBoardForm = ({ freeBoards, interview }: Props) => {
     return (
         <>
             {interview
@@ -96,25 +97,33 @@ const FreeBoardForm = ({ boards, interview }: Props) => {
                           </Link>
                       </BoardInfo>
                   ))
-                : boards.map((b, index) => (
-                      <BoardInfo key={index}>
+                : freeBoards.map((b) => (
+                      <BoardInfo key={b._id}>
                           <BoardNum>{b.num}</BoardNum>
-                          <Link href={`/board/freeboard/detail/${b.num}`}>
+                          <Link href={`/board/freeboard/detail/${b._id}`}>
                               <BoardDetail>
                                   <BoardThmb>
                                       <img
-                                          src={b.img}
+                                          src={
+                                              b.thumb
+                                                  ? b.thumb
+                                                  : faker.image.imageUrl()
+                                          }
                                           alt="게시글 썸네일 이미지"
                                       />
                                   </BoardThmb>
                                   <div>
                                       <h3>{b.title}</h3>
-                                      <p>{b.text}</p>
+                                      <p>
+                                          {b.content
+                                              .replace(/<[^>]*>?/gm, "")
+                                              .slice(0, 200)}
+                                      </p>
                                   </div>
                               </BoardDetail>
                           </Link>
-                          <div>{b.user}</div>
-                          <div>{b.createdDate}</div>
+                          <div>{b.userId}</div>
+                          <div>{b.regDate}</div>
                       </BoardInfo>
                   ))}
         </>

@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { useRouter } from "next/dist/client/router";
 import { loadRequest } from "../../redux/loading";
 import { delReviewRequest } from "../../redux/review";
+import { delFreeBoardRequest } from "../../redux/freeBoard";
 
 const EditBox = styled.div`
     display: flex;
@@ -48,6 +49,10 @@ const EditBoxForm = ({ id, review }: Props) => {
                     dispatch(loadRequest());
                     dispatch(delReviewRequest(id));
                     router.push(`/board/review`);
+                } else {
+                    dispatch(loadRequest());
+                    dispatch(delFreeBoardRequest(id));
+                    router.push(`/board/freeboard`);
                 }
             }
         },
@@ -59,6 +64,8 @@ const EditBoxForm = ({ id, review }: Props) => {
             const { id } = e.currentTarget.dataset;
             if (review) {
                 router.push(`/board/review/edit/${id}`);
+            } else {
+                router.push(`/board/freeboard/edit/${id}`);
             }
         },
         []

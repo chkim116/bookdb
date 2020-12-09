@@ -1,8 +1,8 @@
 import React from "react";
-import WriteForm from "../../../Common/WriteForm";
+import WriteCommonForm from "../../../Common/WriteForm";
 
 const FreeBoardWrite = () => {
-    return <WriteForm review={false}></WriteForm>;
+    return <WriteCommonForm review={false} update={false}></WriteCommonForm>;
 };
 
 export default FreeBoardWrite;

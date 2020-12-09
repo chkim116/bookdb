@@ -20,23 +20,23 @@ import { loadFailure, loadSuccess } from "../redux/loading";
 // ajax
 
 function postSubmit(text: WriteText) {
-    return Axios.post("/freeboard/post", text);
+    return Axios.post("/board/post", text);
 }
 
 function postUpdate(text: WriteText) {
-    return Axios.put("/freeboard/edit", text);
+    return Axios.put("/board/edit", text);
 }
 
 function getFreeBoardId(id: string | string[]) {
-    return Axios.get(`/freeboard/${id}`).then((res) => res.data);
+    return Axios.get(`/board/${id}`).then((res) => res.data);
 }
 
 function getFreeBoard() {
-    return Axios.get("/freeboard").then((res) => res.data);
+    return Axios.get("/board").then((res) => res.data);
 }
 
 function deleteFreeBoardPost(id: string) {
-    return Axios.delete(`/freeboard/del/${id}`);
+    return Axios.delete(`/board/del/${id}`);
 }
 
 // call & put

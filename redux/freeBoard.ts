@@ -7,6 +7,9 @@ export type FreeBoard = {
     userId: string;
     thumb: string;
     _id: string;
+    count: number;
+    num: number;
+    password: string;
 };
 
 type InitialState = {
@@ -23,6 +26,9 @@ const initialState: InitialState = {
         userId: "",
         thumb: "",
         _id: "",
+        num: 0,
+        count: 0,
+        password: "",
     },
     freeBoards: [
         {
@@ -32,6 +38,9 @@ const initialState: InitialState = {
             userId: "",
             _id: "",
             thumb: "",
+            num: 0,
+            count: 0,
+            password: "",
         },
     ],
     isFreeBoardErr: null,
@@ -55,12 +64,13 @@ const freeBoard = createSlice({
             state.isFreeBoardErr = null;
         },
         getFreeBoardByIdSuccess: (state, { payload }) => {
-            state.freeBoardById.content = payload.cotent;
+            state.freeBoardById.content = payload.content;
             state.freeBoardById.regDate = payload.regDate;
             state.freeBoardById.title = payload.title;
             state.freeBoardById.thumb = payload.thumb;
             state.freeBoardById.userId = payload.userId;
             state.freeBoardById._id = payload._id;
+            state.freeBoardById.count = payload.count;
         },
         getFreeBoardByIdFailure: (state, { payload }) => {
             state.isFreeBoardErr = payload;

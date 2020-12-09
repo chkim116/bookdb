@@ -5,6 +5,7 @@ import { Title } from "../../styles/CommonStyle";
 import { ReviewPost } from "../../@types/types";
 import ReviewBookForm from "../board/review/detail/ReviewBook";
 import EditBoxForm from "./EditBox";
+import { FreeBoard } from "../../redux/freeBoard";
 
 const Container = styled.div`
     width: 100%;
@@ -51,24 +52,48 @@ const Edit = styled.div`
 
 type Props = {
     reviewById?: ReviewPost;
-    review?: boolean;
+    review: boolean;
+    freeBoardById?: FreeBoard;
 };
-const DetailForm = ({ reviewById, review }: Props) => {
+const DetailForm = ({ reviewById, freeBoardById, review }: Props) => {
     return (
         <Container>
-            <DetailTitle>{reviewById.title}</DetailTitle>
-            <CreatorUser>
-                <div>{reviewById.userId}</div>
-                <div>{reviewById.regDate}</div>
-            </CreatorUser>
-            {review && <ReviewBookForm reviewById={reviewById} />}
-            <Edit>
-                <EditBoxForm id={reviewById._id} review={review} />
-            </Edit>
-            <RatingStar>
-                <Rating rating={reviewById.rating} />
-            </RatingStar>
-            <Content dangerouslySetInnerHTML={{ __html: reviewById.content }} />
+            {review ? (
+                <>
+                    <DetailTitle>{reviewById.title}</DetailTitle>
+                    <CreatorUser>
+                        <div>{reviewById.userId}</div>
+                        <div>{reviewById.regDate}</div>
+                    </CreatorUser>
+                    <ReviewBookForm reviewById={reviewById} />
+                    <Edit>
+                        <EditBoxForm id={reviewById._id} review={review} />
+                    </Edit>
+                    <RatingStar>
+                        <Rating rating={reviewById.rating} />
+                    </RatingStar>
+                    <Content
+                        dangerouslySetInnerHTML={{ __html: reviewById.content }}
+                    />
+                </>
+            ) : (
+                <>
+                    <DetailTitle>{freeBoardById.title}</DetailTitle>
+                    <CreatorUser>
+                        <div>{freeBoardById.userId}</div>
+                        <div>{freeBoardById.regDate}</div>
+                    </CreatorUser>
+                    <Edit>
+                        <EditBoxForm id={freeBoardById._id} review={review} />
+                    </Edit>
+
+                    <Content
+                        dangerouslySetInnerHTML={{
+                            __html: freeBoardById.content,
+                        }}
+                    />
+                </>
+            )}
         </Container>
     );
 };

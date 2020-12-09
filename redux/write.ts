@@ -4,7 +4,7 @@ type InitialState = {
     title: string;
     content: string;
     rating?: string;
-    thumb?: string;
+    thumb?: FormDataEntryValue;
     regDate: string;
 };
 

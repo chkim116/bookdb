@@ -1,6 +1,7 @@
 import React from "react";
 import { ReviewPost } from "../../../../@types/types";
 import WriteForm from "../../../Common/WriteForm";
+
 type Props = {
     reviewById: ReviewPost;
 };

@@ -4,8 +4,8 @@ import faker from "faker/locale/ko";
 import { Title } from "../../../styles/CommonStyle";
 import BannerImg from "../../Common/BannerImg";
 import PostButton from "../../Common/PostButton";
-import { Board } from "../../../@types/types";
 import FreeBoardForm from "../../Common/FreeBoardForm";
+import { FreeBoard } from "../../../redux/freeBoard";
 
 const Container = styled.div`
     margin: 0 auto;
@@ -47,20 +47,11 @@ const BoardHead = styled.ul`
     }
 `;
 
-const FreeBoard = () => {
-    const createBoard = (): Board => {
-        return {
-            num: faker.random.number(),
-            text: faker.lorem.sentences(),
-            title: faker.lorem.word(),
-            img: faker.image.image(),
-            user: faker.name.findName(),
-            createdDate: new Date().toLocaleDateString(),
-        };
-    };
+type Props = {
+    freeBoards: FreeBoard[];
+};
 
-    const boards: Board[] = new Array(10).fill(undefined).map(createBoard);
-
+const freeBoard = ({ freeBoards }: Props) => {
     return (
         <Container>
             <BannerImg src={faker.image.abstract(1200, 400)} />
@@ -74,10 +65,10 @@ const FreeBoard = () => {
                     <li>작성일</li>
                 </BoardHead>
 
-                <FreeBoardForm boards={boards}></FreeBoardForm>
+                <FreeBoardForm freeBoards={freeBoards}></FreeBoardForm>
             </BoardContainer>
         </Container>
     );
 };
 
-export default FreeBoard;
+export default freeBoard;

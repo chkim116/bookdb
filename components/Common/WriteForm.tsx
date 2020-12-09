@@ -20,6 +20,7 @@ import faker from "faker";
 import { loadRequest } from "../../redux/loading";
 import Rating from "./Rating";
 import {
+    FreeBoard,
     freeBoardWriteSubmit,
     freeBoardWriteUpdate,
 } from "../../redux/freeBoard";
@@ -96,12 +97,18 @@ const ResultForm = styled.div`
 `;
 
 type Props = {
-    review?: boolean;
+    review: boolean;
+    update: boolean;
     reviewById?: ReviewPost;
-    update?: boolean;
+    freeBoardById?: FreeBoard;
 };
 
-const ReviewForm = ({ review, reviewById, update }: Props) => {
+const WriteCommonForm = ({
+    review,
+    reviewById,
+    update,
+    freeBoardById,
+}: Props) => {
     const router = useRouter();
     const [searchText, onChange, setSearchText] = useInput("");
     const [write, onWrite] = useFormInput();
@@ -115,6 +122,7 @@ const ReviewForm = ({ review, reviewById, update }: Props) => {
     const results: BookData[] = useSelector(
         (state: RootState) => state.review.searchData
     );
+
     const selectBook = useSelector(
         (state: RootState) => state.review.selectedBook
     );
@@ -125,7 +133,7 @@ const ReviewForm = ({ review, reviewById, update }: Props) => {
             e.preventDefault();
             dispatch(loadRequest());
             if (review) {
-                update !== undefined
+                update
                     ? dispatch(
                           reviewWriteUpdate({
                               title: title ? title : reviewById.title,
@@ -144,7 +152,7 @@ const ReviewForm = ({ review, reviewById, update }: Props) => {
                       );
                 router.push("/board/review");
             } else {
-                update !== undefined
+                update
                     ? dispatch(
                           freeBoardWriteUpdate({
                               title: title ? title : freeBoardById.title,
@@ -152,13 +160,13 @@ const ReviewForm = ({ review, reviewById, update }: Props) => {
                                   ? content
                                   : freeBoardById.content,
                               id: router.query.id,
+                              regDate: new Date().toLocaleDateString(),
                           })
                       )
                     : dispatch(
                           freeBoardWriteSubmit({
                               title,
                               content,
-                              thumb,
                               regDate: new Date().toLocaleDateString(),
                           })
                       );
@@ -270,14 +278,34 @@ const ReviewForm = ({ review, reviewById, update }: Props) => {
                     ) : (
                         <> </>
                     )}
-                    <Title
-                        type="text"
-                        onChange={onWrite}
-                        name="title"
-                        placeholder="제목"
-                        defaultValue={update && reviewById.title}
-                    />
-                    <RichTextEditor value={update && reviewById.content} />
+                    {review ? (
+                        <Title
+                            type="text"
+                            onChange={onWrite}
+                            autoComplete="off"
+                            name="title"
+                            placeholder="제목"
+                            defaultValue={update ? reviewById.title : ""}
+                        />
+                    ) : (
+                        <Title
+                            type="text"
+                            onChange={onWrite}
+                            name="title"
+                            autoComplete="off"
+                            placeholder="제목"
+                            defaultValue={update ? freeBoardById.title : ""}
+                        />
+                    )}
+                    {review ? (
+                        <RichTextEditor
+                            value={update ? reviewById.content : ""}
+                        />
+                    ) : (
+                        <RichTextEditor
+                            value={update ? freeBoardById.content : ""}
+                        />
+                    )}
                     <WriteSubmit>
                         <Button
                             onSubmit={onSubmit}
@@ -296,4 +324,4 @@ const ReviewForm = ({ review, reviewById, update }: Props) => {
     );
 };
 
-export default ReviewForm;
+export default WriteCommonForm;

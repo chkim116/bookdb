@@ -36,6 +36,7 @@ const initialState: ReviewState = {
         regDate: "",
         creator: "",
         userId: "",
+        password: "",
         selectedBook: {
             title: "",
             author: "",
@@ -52,6 +53,7 @@ const initialState: ReviewState = {
             regDate: "",
             creator: "",
             userId: "",
+            password: "",
             selectedBook: {
                 title: "",
                 author: "",
