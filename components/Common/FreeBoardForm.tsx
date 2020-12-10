@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import Link from "next/link";
 import { Interview } from "../../@types/types";
 import { FreeBoard } from "../../redux/freeBoard";
-import faker from "faker";
+import EditBoxForm from "./EditBox";
 
 const BoardInfo = styled.div<Components>`
     display: flex;
@@ -32,19 +32,28 @@ const BoardInfo = styled.div<Components>`
 
 const BoardDetail = styled.div`
     display: flex;
-    flex: 2;
-    justify-content: space-between;
     align-items: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     cursor: pointer;
-
     div:nth-of-type(2) {
         margin-top: 12px;
-        flex: 2;
     }
     h3,
     p {
         margin-left: 10px;
         text-align: left;
+    }
+`;
+
+const BoardDetailContent = styled.div`
+    max-width: 640px;
+    h3,
+    p {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 `;
 
@@ -102,28 +111,31 @@ const FreeBoardForm = ({ freeBoards, interview }: Props) => {
                           <BoardNum>{b.num}</BoardNum>
                           <Link href={`/board/freeboard/detail/${b._id}`}>
                               <BoardDetail>
-                                  <BoardThmb>
-                                      <img
-                                          src={
-                                              b.thumb
-                                                  ? b.thumb
-                                                  : faker.image.imageUrl()
-                                          }
-                                          alt="게시글 썸네일 이미지"
-                                      />
-                                  </BoardThmb>
-                                  <div>
+                                  {b.thumb !== "" ? (
+                                      <BoardThmb>
+                                          <img
+                                              src={b.thumb}
+                                              alt="게시글 썸네일 이미지"
+                                          />
+                                      </BoardThmb>
+                                  ) : (
+                                      <> </>
+                                  )}
+                                  <BoardDetailContent>
                                       <h3>{b.title}</h3>
                                       <p>
                                           {b.content
                                               .replace(/<[^>]*>?/gm, "")
                                               .slice(0, 200)}
                                       </p>
-                                  </div>
+                                  </BoardDetailContent>
                               </BoardDetail>
                           </Link>
                           <div>{b.userId}</div>
-                          <div>{b.regDate}</div>
+                          <div>
+                              <div>{b.regDate}</div>
+                              <EditBoxForm id={b._id} />
+                          </div>
                       </BoardInfo>
                   ))}
         </>

@@ -56,7 +56,6 @@ const Nav = () => {
         } else {
             dispatch(getSearchFailure({ message: "입력 값이 없습니다." }));
         }
-        console.log(searchText);
     }, [searchText]);
 
     const onSubmit = useCallback(

@@ -29,22 +29,8 @@ const BoardHead = styled.ul`
     background: ${(props) => props.theme.blue};
     color: ${(props) => props.theme.white};
     padding: 0 12px;
-    li {
-        height: 45px;
-        width: 120px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    li:nth-of-type(2) {
-        flex: 2;
-        margin: 0 10px;
-    }
-
-    li:nth-of-type(3) {
-        margin: 0 10px;
-    }
+    height: 38px;
+    line-height: 38px;
 `;
 
 type Props = {
@@ -59,10 +45,9 @@ const freeBoard = ({ freeBoards }: Props) => {
             <PostButton />
             <BoardContainer>
                 <BoardHead>
-                    <li>글번호</li>
-                    <li>제목</li>
-                    <li>작성자</li>
-                    <li>작성일</li>
+                    <li>
+                        자유게시판은 로그인하지 않아도 마음껏 등록이 가능합니다!
+                    </li>
                 </BoardHead>
 
                 <FreeBoardForm freeBoards={freeBoards}></FreeBoardForm>
