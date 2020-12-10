@@ -1,16 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-
-export type FreeBoard = {
-    title: string;
-    regDate: string;
-    content: string;
-    userId: string;
-    thumb: string;
-    _id: string;
-    count: number;
-    num: number;
-    password: string;
-};
+import { FreeBoard } from "../@types/types";
 
 type InitialState = {
     freeBoardById: FreeBoard;

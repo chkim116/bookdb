@@ -7,6 +7,7 @@ import { RootState } from "../../../../redux";
 import { getFreeBoardByIdRequest } from "../../../../redux/freeBoard";
 import wrapper from "../../../../store/configureStore";
 import { Container } from "../../../../styles/CommonStyle";
+import theme from "../../../../styles/theme";
 
 const index = () => {
     const { freeBoardById } = useSelector(
@@ -14,7 +15,7 @@ const index = () => {
     );
 
     return (
-        <Container>
+        <Container color={theme.white}>
             <FreeBoardDetail freeBoardById={freeBoardById} />
         </Container>
     );

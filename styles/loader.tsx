@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 
 const Loadering = styled.div`
+    z-index: 1000000;
     width: 100%;
     position: fixed;
     height: 100vh;

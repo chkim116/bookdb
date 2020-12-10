@@ -1,5 +1,5 @@
 import React from "react";
-import { BoardCard, onClick, ReviewPost } from "../../@types/types";
+import { BoardCard, ReviewPost } from "../../@types/types";
 import styled from "@emotion/styled";
 import Link from "next/link";
 import { Button } from "../../styles/CommonStyle";

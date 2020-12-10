@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { BoardCard, Interview } from "../../@types/types";
-import FreeBoardForm from "../Common/FreeBoardForm";
 import { Button, Title } from "../../styles/CommonStyle";
 import theme from "../../styles/theme";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 import BookSliders from "./BookSliders";
+import InterviewForm from "./InterviewForm";
 
 const Container = styled.div`
     padding: 12px;
@@ -102,7 +102,7 @@ const MainPage = ({
                 </Button>
             </More>
             <Board>
-                <FreeBoardForm interview={interview}></FreeBoardForm>
+                <InterviewForm interview={interview}></InterviewForm>
             </Board>
         </Container>
     );

@@ -42,7 +42,11 @@ const UserForm = styled.div`
     }
 `;
 
-const Nav = () => {
+type Props = {
+    isLogin: boolean;
+};
+
+const Nav = ({ isLogin }: Props) => {
     const [searchText, onChange, setSearchText] = useInput("");
     const router = useRouter();
     const dispatch = useDispatch();
@@ -80,12 +84,18 @@ const Nav = () => {
                     onSubmit={onSubmit}
                 />
                 <UserForm>
-                    <Link href="/login">
-                        <div>로그인</div>
-                    </Link>
-                    <Link href="/register">
-                        <div>회원가입</div>
-                    </Link>
+                    {isLogin ? (
+                        <div>로그아웃</div>
+                    ) : (
+                        <>
+                            <Link href="/login">
+                                <div>로그인</div>
+                            </Link>
+                            <Link href="/register">
+                                <div>회원가입</div>
+                            </Link>
+                        </>
+                    )}
                 </UserForm>
             </MainHeader>
             <NavList />

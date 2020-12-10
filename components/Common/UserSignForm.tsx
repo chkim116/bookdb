@@ -5,6 +5,7 @@ import login from "../../images/login.jpg";
 import theme from "../../styles/theme";
 import Link from "next/link";
 import { useRouter } from "next/dist/client/router";
+import { onFormChange, onSubmit } from "../../@types/types";
 
 const Container = styled.div`
     position: fixed;
@@ -79,9 +80,12 @@ const Back = styled.button`
 
 type Props = {
     register: boolean;
+    onRegister?: onSubmit;
+    onLogin?: onSubmit;
+    onChange?: onFormChange;
 };
 
-const UserSignForm = ({ register }: Props) => {
+const UserSignForm = ({ register, onRegister, onLogin, onChange }: Props) => {
     const router = useRouter();
     const onGoBack = () => {
         router.back();
@@ -89,14 +93,16 @@ const UserSignForm = ({ register }: Props) => {
     return (
         <Container>
             <img src={login} alt="배경사진" />
-            <LoginForm>
+            <LoginForm
+                onSubmit={register ? onRegister : onLogin}
+                onChange={onChange}>
                 <h2>{register ? "회원가입" : "로그인"}</h2>
                 <div>
                     <Input
                         width="250px"
                         type="email"
                         placeholder="아이디 입력 / 이메일 *"
-                        name="userId"
+                        name="email"
                     />
                     <Input
                         width="250px"
@@ -115,7 +121,7 @@ const UserSignForm = ({ register }: Props) => {
                             <Input
                                 width="250px"
                                 type="text"
-                                name="nickName"
+                                name="nickname"
                                 placeholder="닉네임 *"
                             />
                         </>

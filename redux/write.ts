@@ -1,14 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-type InitialState = {
+type Write = {
     title: string;
     content: string;
     rating?: string;
-    thumb?: FormDataEntryValue;
+    thumb?: string;
     regDate: string;
 };
 
-const initialState: InitialState = {
+const initialState: Write = {
     title: "",
     content: "",
     rating: "",

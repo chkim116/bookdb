@@ -4,8 +4,8 @@ import faker from "faker/locale/ko";
 import { Title } from "../../../styles/CommonStyle";
 import BannerImg from "../../Common/BannerImg";
 import PostButton from "../../Common/PostButton";
-import FreeBoardForm from "../../Common/FreeBoardForm";
-import { FreeBoard } from "../../../redux/freeBoard";
+import { FreeBoard } from "../../../@types/types";
+import FreeBoardForm from "./FreeBoardForm";
 
 const Container = styled.div`
     margin: 0 auto;

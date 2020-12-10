@@ -1,5 +1,5 @@
 import React from "react";
-import { FreeBoard } from "../../../../redux/freeBoard";
+import { FreeBoard } from "../../../../@types/types";
 import DetailForm from "../../../Common/DetailForm";
 
 type Props = {
