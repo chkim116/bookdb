@@ -1,11 +1,11 @@
 import "../styles/globals.css";
+import "quill/dist/quill.snow.css";
 import styled from "@emotion/styled";
 import { ThemeProvider } from "@emotion/react";
 import theme from "../styles/theme";
 import Nav from "../components/Layouts/Nav";
 import FooterForm from "../components/Layouts/Footer";
 import type { AppProps } from "next/app";
-import "../node_modules/quill/dist/quill.snow.css";
 import wrapper from "../store/configureStore";
 import withReduxSaga from "next-redux-saga";
 import Axios from "axios";

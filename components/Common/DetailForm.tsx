@@ -65,7 +65,7 @@ const DetailForm = ({
     onEdit,
 }: Props) => {
     return (
-        <Container>
+        <Container className="ql-container ql-editor">
             {review ? (
                 <>
                     <DetailTitle>{reviewById.title}</DetailTitle>

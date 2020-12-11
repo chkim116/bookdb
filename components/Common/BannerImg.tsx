@@ -4,6 +4,7 @@ import styled from "@emotion/styled";
 const BoardImg = styled.div`
     width: 100%;
     text-align: center;
+    max-height: 420px;
     padding-top: 12px;
 `;
 

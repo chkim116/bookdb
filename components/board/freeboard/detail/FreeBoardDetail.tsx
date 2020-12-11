@@ -10,7 +10,7 @@ type Props = {
 
 const FreeBoardDetail = ({ freeBoardById, onDelete, onEdit }: Props) => {
     return (
-        <div>
+        <div className="ql-snow">
             <DetailForm
                 freeBoardById={freeBoardById}
                 onDelete={onDelete}

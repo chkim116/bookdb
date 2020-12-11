@@ -6,6 +6,7 @@ import { Title } from "../../../styles/CommonStyle";
 import faker from "faker";
 import BannerImg from "../../Common/BannerImg";
 import PostButton from "../../Common/PostButton";
+import banner from "../../../images/banner.jpg";
 
 const Container = styled.div`
     max-width: ${(props) => props.theme.maxWidth};
@@ -22,7 +23,7 @@ type Props = {
 const Review = ({ reviewPost, onDelete, onEdit }: Props) => {
     return (
         <Container>
-            <BannerImg src={faker.image.abstract(1200, 400)} />
+            <BannerImg src={banner} />
             <Title>작품 리뷰</Title>
             <PostButton review={true} />
             <BoardForm

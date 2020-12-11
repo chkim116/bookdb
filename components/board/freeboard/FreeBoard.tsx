@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "@emotion/styled";
-import faker from "faker/locale/ko";
 import { Title } from "../../../styles/CommonStyle";
 import BannerImg from "../../Common/BannerImg";
 import PostButton from "../../Common/PostButton";
 import { FreeBoard, onClick } from "../../../@types/types";
 import FreeBoardForm from "./FreeBoardForm";
+import freebanner from "../../../images/freebanner.jpg";
 
 const Container = styled.div`
     margin: 0 auto;
@@ -42,7 +42,7 @@ type Props = {
 const freeBoard = ({ freeBoards, onDelete, onEdit }: Props) => {
     return (
         <Container>
-            <BannerImg src={faker.image.abstract(1200, 400)} />
+            <BannerImg src={freebanner} />
             <Title>자유게시판</Title>
             <PostButton />
             <BoardContainer>

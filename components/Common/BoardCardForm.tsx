@@ -6,6 +6,7 @@ import { Button } from "../../styles/CommonStyle";
 import EditBoxForm from "../Common/EditBox";
 import faker from "faker";
 import { css } from "@emotion/react";
+import Rating from "./Rating";
 
 const Container = styled.article<Components>`
     max-width: ${(props) => props.theme.maxWidth};
@@ -128,6 +129,7 @@ const BoardForm = ({ list, review, reviewPost, onDelete, onEdit }: Props) => {
                                           />
                                       </BoardImg>
                                       <Auth>{v.selectedBook.author}</Auth>
+                                      <Rating rating={v.rating} />
                                       <Content
                                           dangerouslySetInnerHTML={{
                                               __html:

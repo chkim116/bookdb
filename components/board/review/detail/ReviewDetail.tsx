@@ -10,13 +10,13 @@ type Props = {
 
 const ReviewDetail = ({ reviewById, onDelete, onEdit }: Props) => {
     return (
-        <>
+        <div className="ql-snow">
             <DetailForm
                 reviewById={reviewById}
                 onDelete={onDelete}
                 onEdit={onEdit}
                 review={true}></DetailForm>
-        </>
+        </div>
     );
 };
 
