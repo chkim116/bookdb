@@ -125,6 +125,7 @@ const BoardForm = ({ list, review, reviewPost, onDelete, onEdit }: Props) => {
                               <a>
                                   <BoardCardForm review={review}>
                                       <BoardTitle>{v.title}</BoardTitle>
+                                      <div>조회수 {v.count}</div>
                                       <BoardImg review={review}>
                                           <img
                                               src={v.selectedBook.image}

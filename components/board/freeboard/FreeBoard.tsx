@@ -29,6 +29,7 @@ const BoardHead = styled.ul`
     background: ${(props) => props.theme.blue};
     color: ${(props) => props.theme.white};
     padding: 0 12px;
+    width: 100%;
     height: 38px;
     line-height: 38px;
 `;

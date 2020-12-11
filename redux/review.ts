@@ -38,6 +38,7 @@ const initialState: ReviewState = {
         creator: "",
         userId: "",
         password: "",
+        count: 0,
         selectedBook: {
             title: "",
             author: "",
@@ -55,6 +56,7 @@ const initialState: ReviewState = {
             creator: "",
             userId: "",
             password: "",
+            count: 0,
             selectedBook: {
                 title: "",
                 author: "",
@@ -123,17 +125,18 @@ const review = createSlice({
             state,
             { payload }: PayloadAction<ReviewPost>
         ) => {
-            state.reviewById._id = payload._id;
-            state.reviewById.title = payload.title;
-            state.reviewById.content = payload.content;
-            state.reviewById.regDate = payload.regDate;
-            state.reviewById.creator = payload.creator;
-            state.reviewById.rating = payload.rating;
-            state.reviewById.userId = payload.userId;
-            state.reviewById.selectedBook.title = payload.selectedBook.title;
-            state.reviewById.selectedBook.author = payload.selectedBook.author;
-            state.reviewById.selectedBook.image = payload.selectedBook.image;
-            state.reviewById.selectedBook.isbn = payload.selectedBook.isbn;
+            state.reviewById = payload;
+            // state.reviewById._id = payload._id;
+            // state.reviewById.title = payload.title;
+            // state.reviewById.content = payload.content;
+            // state.reviewById.regDate = payload.regDate;
+            // state.reviewById.creator = payload.creator;
+            // state.reviewById.rating = payload.rating;
+            // state.reviewById.userId = payload.userId;
+            // state.reviewById.selectedBook.title = payload.selectedBook.title;
+            // state.reviewById.selectedBook.author = payload.selectedBook.author;
+            // state.reviewById.selectedBook.image = payload.selectedBook.image;
+            // state.reviewById.selectedBook.isbn = payload.selectedBook.isbn;
         },
         getReviewByIdFailure: (state, { payload }) => {
             state.isReviewErr = payload;

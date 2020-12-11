@@ -100,6 +100,7 @@ export type ReviewPost = {
     userId: string;
     password?: string;
     rating?: string;
+    count: number;
     selectedBook: {
         title: string;
         author: string;

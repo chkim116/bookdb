@@ -1,12 +1,13 @@
-import React from "react";
+import React, { useCallback } from "react";
 import styled from "@emotion/styled";
 import Rating from "./Rating";
-import { Title } from "../../styles/CommonStyle";
+import { Button, Title } from "../../styles/CommonStyle";
 import { FreeBoard, onClick, ReviewPost } from "../../@types/types";
 import ReviewBookForm from "../board/review/detail/ReviewBook";
 import EditBoxForm from "./EditBox";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux";
+import { useRouter } from "next/dist/client/router";
 
 const Container = styled.div`
     width: 100%;
@@ -52,6 +53,12 @@ const Edit = styled.div`
     margin-left: auto;
 `;
 
+const GoBack = styled.div`
+    width: 100%;
+    margin: 24px;
+    text-align: center;
+`;
+
 type Props = {
     reviewById?: ReviewPost;
     review: boolean;
@@ -67,64 +74,78 @@ const DetailForm = ({
     onEdit,
 }: Props) => {
     const { user } = useSelector((state: RootState) => state.auth);
+    const router = useRouter();
+    const onGoBack = useCallback(() => {
+        router.back();
+    }, []);
     return (
-        <Container className="ql-container ql-editor">
-            {review ? (
-                <>
-                    <DetailTitle>{reviewById.title}</DetailTitle>
-                    <CreatorUser>
-                        <div>{reviewById.userId}</div>
-                        <div>{reviewById.regDate}</div>
-                    </CreatorUser>
-                    <ReviewBookForm reviewById={reviewById} />
-                    {user?.review.map(
-                        (r: string) =>
-                            r === reviewById._id && (
-                                <Edit>
-                                    <EditBoxForm
-                                        id={reviewById._id}
-                                        onDelete={onDelete}
-                                        onEdit={onEdit}
-                                    />
-                                </Edit>
-                            )
-                    )}
-                    <RatingStar>
-                        <Rating rating={reviewById.rating} />
-                    </RatingStar>
-                    <Content
-                        dangerouslySetInnerHTML={{ __html: reviewById.content }}
-                    />
-                </>
-            ) : (
-                <>
-                    <DetailTitle>{freeBoardById.title}</DetailTitle>
-                    <CreatorUser>
-                        <div>{freeBoardById.userId}</div>
-                        <div>{freeBoardById.regDate}</div>
-                        <div>조회수 {freeBoardById.count}</div>
-                    </CreatorUser>
-                    {user?.board.map(
-                        (f: string) =>
-                            f === freeBoardById._id && (
-                                <Edit>
-                                    <EditBoxForm
-                                        id={freeBoardById._id}
-                                        onDelete={onDelete}
-                                        onEdit={onEdit}
-                                    />
-                                </Edit>
-                            )
-                    )}
+        <>
+            <GoBack>
+                <Button type="button" onClick={onGoBack}>
+                    뒤로가기
+                </Button>
+            </GoBack>
+            <Container className="ql-container ql-editor">
+                {review ? (
+                    <>
+                        <DetailTitle>{reviewById.title}</DetailTitle>
+                        <CreatorUser>
+                            <div>{reviewById.userId}</div>
+                            <div>{reviewById.regDate}</div>
+                            <div>조회수 {reviewById.count}</div>
+                        </CreatorUser>
+                        <ReviewBookForm reviewById={reviewById} />
+                        {user?.review.map(
+                            (r: string) =>
+                                r === reviewById._id && (
+                                    <Edit>
+                                        <EditBoxForm
+                                            id={reviewById._id}
+                                            onDelete={onDelete}
+                                            onEdit={onEdit}
+                                        />
+                                    </Edit>
+                                )
+                        )}
+                        <RatingStar>
+                            <Rating rating={reviewById.rating} />
+                        </RatingStar>
+                        <Content
+                            dangerouslySetInnerHTML={{
+                                __html: reviewById.content,
+                            }}
+                        />
+                    </>
+                ) : (
+                    <>
+                        <DetailTitle>{freeBoardById.title}</DetailTitle>
+                        <CreatorUser>
+                            <div>{freeBoardById.userId}</div>
+                            <div>{freeBoardById.regDate}</div>
+                            <div>조회수 {freeBoardById.count}</div>
+                        </CreatorUser>
+                        {user?.board.map(
+                            (f: string) =>
+                                f === freeBoardById._id && (
+                                    <Edit>
+                                        <EditBoxForm
+                                            id={freeBoardById._id}
+                                            onDelete={onDelete}
+                                            onEdit={onEdit}
+                                        />
+                                    </Edit>
+                                )
+                        )}
 
-                    <Content
-                        dangerouslySetInnerHTML={{
-                            __html: freeBoardById.content,
-                        }}
-                    />
-                </>
-            )}
-        </Container>
+                        <Content
+                            dangerouslySetInnerHTML={{
+                                __html: freeBoardById.content,
+                            }}
+                        />
+                    </>
+                )}
+            </Container>
+        </>
     );
 };
 
