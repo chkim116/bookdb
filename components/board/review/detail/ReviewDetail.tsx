@@ -1,15 +1,21 @@
 import React from "react";
-import { ReviewPost } from "../../../../@types/types";
+import { onClick, ReviewPost } from "../../../../@types/types";
 import DetailForm from "../../../Common/DetailForm";
 
 type Props = {
     reviewById: ReviewPost;
+    onDelete: onClick;
+    onEdit: onClick;
 };
 
-const ReviewDetail = ({ reviewById }: Props) => {
+const ReviewDetail = ({ reviewById, onDelete, onEdit }: Props) => {
     return (
         <>
-            <DetailForm reviewById={reviewById} review={true}></DetailForm>
+            <DetailForm
+                reviewById={reviewById}
+                onDelete={onDelete}
+                onEdit={onEdit}
+                review={true}></DetailForm>
         </>
     );
 };

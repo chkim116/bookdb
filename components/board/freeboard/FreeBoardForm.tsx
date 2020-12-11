@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import Link from "next/link";
-import { FreeBoard } from "../../../@types/types";
+import { FreeBoard, onClick } from "../../../@types/types";
 import EditBoxForm from "../../Common/EditBox";
 
 const BoardInfo = styled.div`
@@ -69,8 +69,10 @@ const BoardNum = styled.div`
 
 type Props = {
     freeBoards?: FreeBoard[];
+    onDelete: onClick;
+    onEdit: onClick;
 };
-const FreeBoardForm = ({ freeBoards }: Props) => {
+const FreeBoardForm = ({ freeBoards, onDelete, onEdit }: Props) => {
     return (
         <>
             {freeBoards.map((b) => (
@@ -102,7 +104,11 @@ const FreeBoardForm = ({ freeBoards }: Props) => {
                         <div>{b.userId}</div>
                         <div>
                             <div>{b.regDate}</div>
-                            <EditBoxForm id={b._id} />
+                            <EditBoxForm
+                                onDelete={onDelete}
+                                onEdit={onEdit}
+                                id={b._id}
+                            />
                         </div>
                     </BoardUser>
                 </BoardInfo>

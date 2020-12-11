@@ -1,10 +1,7 @@
-import React, { useCallback } from "react";
+import React from "react";
 import styled from "@emotion/styled";
-import { useDispatch } from "react-redux";
-import { useRouter } from "next/dist/client/router";
-import { loadRequest } from "../../redux/loading";
-import { delReviewRequest } from "../../redux/review";
-import { delFreeBoardRequest } from "../../redux/freeBoard";
+
+import { onClick } from "../../@types/types";
 
 const EditBox = styled.div`
     display: flex;
@@ -32,45 +29,12 @@ const EditBox = styled.div`
 `;
 
 type Props = {
-    review?: boolean;
+    onDelete: onClick;
+    onEdit: onClick;
     id: string;
 };
 
-const EditBoxForm = ({ id, review }: Props) => {
-    const dispatch = useDispatch();
-    const router = useRouter();
-
-    const onDelete = useCallback(
-        (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-            const { id } = e.currentTarget.dataset;
-
-            if (window.confirm("삭제하십니까?")) {
-                if (review) {
-                    dispatch(loadRequest());
-                    dispatch(delReviewRequest(id));
-                    router.push(`/board/review`);
-                } else {
-                    dispatch(loadRequest());
-                    dispatch(delFreeBoardRequest(id));
-                    router.push(`/board/freeboard`);
-                }
-            }
-        },
-        []
-    );
-
-    const onEdit = useCallback(
-        (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-            const { id } = e.currentTarget.dataset;
-            if (review) {
-                router.push(`/board/review/edit/${id}`);
-            } else {
-                router.push(`/board/freeboard/edit/${id}`);
-            }
-        },
-        []
-    );
-
+const EditBoxForm = ({ id, onDelete, onEdit }: Props) => {
     return (
         <EditBox>
             <div data-id={id} onClick={onDelete}>

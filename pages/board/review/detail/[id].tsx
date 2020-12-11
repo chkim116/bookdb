@@ -1,22 +1,53 @@
 import Axios from "axios";
 import { GetServerSideProps } from "next";
-import React from "react";
-import { useSelector } from "react-redux";
+import { useRouter } from "next/dist/client/router";
+import React, { useCallback } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { END } from "redux-saga";
 import ReviewDetail from "../../../../components/board/review/detail/ReviewDetail";
 import { RootState } from "../../../../redux";
 import { authRequest } from "../../../../redux/auth";
-import { getReviewByIdRequest } from "../../../../redux/review";
+import { loadRequest } from "../../../../redux/loading";
+import {
+    delReviewRequest,
+    getReviewByIdRequest,
+} from "../../../../redux/review";
 import wrapper from "../../../../store/configureStore";
 import { Container } from "../../../../styles/CommonStyle";
 import theme from "../../../../styles/theme";
 
 const index = () => {
     const { reviewById } = useSelector((state: RootState) => state.review);
+    const dispatch = useDispatch();
+    const router = useRouter();
+
+    const onDelete = useCallback(
+        (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+            const { id } = e.currentTarget.dataset;
+
+            if (window.confirm("삭제하십니까?")) {
+                dispatch(loadRequest());
+                dispatch(delReviewRequest(id));
+                router.push(`/board/review`);
+            }
+        },
+        [dispatch, router]
+    );
+
+    const onEdit = useCallback(
+        (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+            const { id } = e.currentTarget.dataset;
+            router.push(`/board/review/edit/${id}`);
+        },
+        [router]
+    );
 
     return (
         <Container color={theme.white}>
-            <ReviewDetail reviewById={reviewById}></ReviewDetail>
+            <ReviewDetail
+                reviewById={reviewById}
+                onDelete={onDelete}
+                onEdit={onEdit}></ReviewDetail>
         </Container>
     );
 };

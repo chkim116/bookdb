@@ -124,6 +124,9 @@ export type User = {
 };
 
 export type onClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+export type onChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLFormElement>
+) => void;
 export type onSubmit = (
     e: React.FormEvent<HTMLFormElement | HTMLButtonElement>
 ) => void;

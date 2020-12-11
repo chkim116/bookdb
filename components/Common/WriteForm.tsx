@@ -1,30 +1,21 @@
-import React, { useCallback, useEffect } from "react";
+import React from "react";
 import styled from "@emotion/styled";
 import { Button, Input } from "../../styles/CommonStyle";
 import theme from "../../styles/theme";
 import { useRouter } from "next/dist/client/router";
 import { RichTextEditor } from "./RichTextEditor";
-import { useInput, useFindId, useFormInput } from "@cooksmelon/event";
-import { useDispatch, useSelector } from "react-redux";
-import {
-    getSelectBookFailure,
-    getSelectBookRequest,
-    reviewWriteSubmit,
-    reviewWriteUpdate,
-    selectBookRequest,
-} from "../../redux/review";
 import { SearchBookList, SearchResults } from "../Layouts/SearchForm";
-import { BookData, ReviewPost } from "../../@types/types";
-import { RootState } from "../../redux";
-import faker from "faker";
-import { loadRequest } from "../../redux/loading";
-import Rating from "./Rating";
 import {
+    BookData,
     FreeBoard,
-    freeBoardWriteSubmit,
-    freeBoardWriteUpdate,
-} from "../../redux/freeBoard";
-import { writeTitle } from "../../redux/write";
+    onChange,
+    onClick,
+    onFormChange,
+    onSubmit,
+    ReviewPost,
+} from "../../@types/types";
+import faker from "faker";
+import Rating from "./Rating";
 
 const Container = styled.div`
     width: 100%;
@@ -101,6 +92,13 @@ type Props = {
     update: boolean;
     reviewById?: ReviewPost;
     freeBoardById?: FreeBoard;
+    selectBook?: BookData;
+    results?: BookData[];
+    onChange?: onFormChange;
+    onFindId?: onClick;
+    onWrite: onChange;
+    onSubmit: onSubmit;
+    searchText?: string | number;
 };
 
 const WriteCommonForm = ({
@@ -108,100 +106,15 @@ const WriteCommonForm = ({
     reviewById,
     update,
     freeBoardById,
+    selectBook,
+    results,
+    onChange,
+    onFindId,
+    onWrite,
+    onSubmit,
+    searchText,
 }: Props) => {
     const router = useRouter();
-    const [searchText, onChange, setSearchText] = useInput("");
-    const [write, onWrite] = useFormInput();
-    const [findId, onFindId] = useFindId();
-    const dispatch = useDispatch();
-
-    const { title, content, selectedBook, rating } = useSelector(
-        (state: RootState) => state.write
-    );
-
-    const results: BookData[] = useSelector(
-        (state: RootState) => state.review.searchData
-    );
-
-    const selectBook = useSelector(
-        (state: RootState) => state.review.selectedBook
-    );
-
-    // 폼 제출 시 (리뷰 글쓰기&자유게시판 글쓰기)
-    const onSubmit = useCallback(
-        (e: React.FormEvent<HTMLButtonElement | HTMLFormElement>) => {
-            e.preventDefault();
-            dispatch(loadRequest());
-            if (review) {
-                update
-                    ? dispatch(
-                          reviewWriteUpdate({
-                              title: title ? title : reviewById.title,
-                              content: content ? content : reviewById.content,
-                              id: router.query.id,
-                          })
-                      )
-                    : dispatch(
-                          reviewWriteSubmit({
-                              title,
-                              content,
-                              regDate: new Date().toLocaleDateString(),
-                              rating,
-                              selectedBook,
-                          })
-                      );
-                router.push("/board/review");
-            } else {
-                update
-                    ? dispatch(
-                          freeBoardWriteUpdate({
-                              title: title ? title : freeBoardById.title,
-                              content: content
-                                  ? content
-                                  : freeBoardById.content,
-                              id: router.query.id,
-                              regDate: new Date().toLocaleDateString(),
-                          })
-                      )
-                    : dispatch(
-                          freeBoardWriteSubmit({
-                              title,
-                              content,
-                              regDate: new Date().toLocaleDateString(),
-                          })
-                      );
-                router.push("/board/freeboard");
-            }
-        },
-        [title, content, dispatch, review, update]
-    );
-
-    // content 작성 로직은 RichTextEditor.tsx에 있습니다.
-    useEffect(() => {
-        dispatch(writeTitle(write));
-    }, [write]);
-
-    // 리뷰할 책 검색
-    useEffect(() => {
-        if (searchText !== "") {
-            dispatch(getSelectBookRequest({ searchText }));
-        } else {
-            dispatch(getSelectBookFailure({ message: "입력 값이 없습니다." }));
-        }
-    }, [searchText]);
-
-    // 리뷰할 책 선택
-    useEffect(() => {
-        const find = findId.replace(/<[^>]*>?/gm, "").split("&&");
-        const selectedBook = {
-            title: find[0],
-            author: find[1],
-            image: find[2],
-            isbn: find[3],
-        };
-        dispatch(selectBookRequest(selectedBook));
-        setSearchText("");
-    }, [findId]);
 
     const onGoBack = () => {
         router.back();

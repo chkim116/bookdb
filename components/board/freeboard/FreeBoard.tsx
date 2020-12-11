@@ -4,7 +4,7 @@ import faker from "faker/locale/ko";
 import { Title } from "../../../styles/CommonStyle";
 import BannerImg from "../../Common/BannerImg";
 import PostButton from "../../Common/PostButton";
-import { FreeBoard } from "../../../@types/types";
+import { FreeBoard, onClick } from "../../../@types/types";
 import FreeBoardForm from "./FreeBoardForm";
 
 const Container = styled.div`
@@ -35,9 +35,11 @@ const BoardHead = styled.ul`
 
 type Props = {
     freeBoards: FreeBoard[];
+    onDelete: onClick;
+    onEdit: onClick;
 };
 
-const freeBoard = ({ freeBoards }: Props) => {
+const freeBoard = ({ freeBoards, onDelete, onEdit }: Props) => {
     return (
         <Container>
             <BannerImg src={faker.image.abstract(1200, 400)} />
@@ -50,7 +52,10 @@ const freeBoard = ({ freeBoards }: Props) => {
                     </li>
                 </BoardHead>
 
-                <FreeBoardForm freeBoards={freeBoards}></FreeBoardForm>
+                <FreeBoardForm
+                    freeBoards={freeBoards}
+                    onDelete={onDelete}
+                    onEdit={onEdit}></FreeBoardForm>
             </BoardContainer>
         </Container>
     );

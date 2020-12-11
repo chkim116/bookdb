@@ -2,7 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import Rating from "./Rating";
 import { Title } from "../../styles/CommonStyle";
-import { FreeBoard, ReviewPost } from "../../@types/types";
+import { FreeBoard, onClick, ReviewPost } from "../../@types/types";
 import ReviewBookForm from "../board/review/detail/ReviewBook";
 import EditBoxForm from "./EditBox";
 
@@ -54,8 +54,16 @@ type Props = {
     reviewById?: ReviewPost;
     review: boolean;
     freeBoardById?: FreeBoard;
+    onDelete: onClick;
+    onEdit: onClick;
 };
-const DetailForm = ({ reviewById, freeBoardById, review }: Props) => {
+const DetailForm = ({
+    reviewById,
+    freeBoardById,
+    review,
+    onDelete,
+    onEdit,
+}: Props) => {
     return (
         <Container>
             {review ? (
@@ -67,7 +75,11 @@ const DetailForm = ({ reviewById, freeBoardById, review }: Props) => {
                     </CreatorUser>
                     <ReviewBookForm reviewById={reviewById} />
                     <Edit>
-                        <EditBoxForm id={reviewById._id} review={review} />
+                        <EditBoxForm
+                            id={reviewById._id}
+                            onDelete={onDelete}
+                            onEdit={onEdit}
+                        />
                     </Edit>
                     <RatingStar>
                         <Rating rating={reviewById.rating} />
@@ -85,7 +97,11 @@ const DetailForm = ({ reviewById, freeBoardById, review }: Props) => {
                         <div>조회수 {freeBoardById.count}</div>
                     </CreatorUser>
                     <Edit>
-                        <EditBoxForm id={freeBoardById._id} review={review} />
+                        <EditBoxForm
+                            id={freeBoardById._id}
+                            onDelete={onDelete}
+                            onEdit={onEdit}
+                        />
                     </Edit>
 
                     <Content
