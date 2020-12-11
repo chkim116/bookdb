@@ -9,6 +9,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { loadRequest, loadSuccess } from "../../redux/loading";
 import { RootState } from "../../redux";
 import Loader from "../../styles/loader";
+import wrapper from "../../store/configureStore";
+import { authRequest } from "../../redux/auth";
+import { END } from "redux-saga";
 
 const checkRouter = (id: string | string[]): string => {
     if (id === Paths.WEEK) {
@@ -59,24 +62,19 @@ const index = ({ list }: Props) => {
     );
 };
 
-export const getStaticPaths: GetStaticPaths = async () => {
-    return {
-        paths: [
-            {
-                params: { id: Paths.WEEK },
-            },
-            {
-                params: { id: Paths.MONTHLY },
-            },
-            {
-                params: { id: Paths.YEARS },
-            },
-        ],
-        fallback: false,
-    };
-};
+export const getServerSideProps = wrapper.getServerSideProps(async (ctx) => {
+    const { store, params } = ctx;
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
+    const cookie = ctx.req.headers.cookie;
+    Axios.defaults.headers.Cookie = "";
+
+    if (ctx.req && cookie) {
+        Axios.defaults.headers.Cookie = cookie;
+    }
+    store.dispatch(authRequest());
+    store.dispatch(END);
+    await store.sagaTask.toPromise();
+
     const list: BoardCard[] = await Axios.post("/crawling/best", params).then(
         (res) => res.data
     );
@@ -85,6 +83,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
             list: list,
         },
     };
-};
+});
 
 export default index;
