@@ -5,7 +5,7 @@ import theme from "../styles/theme";
 import Nav from "../components/Layouts/Nav";
 import FooterForm from "../components/Layouts/Footer";
 import type { AppProps } from "next/app";
-
+import "../node_modules/quill/dist/quill.snow.css";
 import wrapper from "../store/configureStore";
 import withReduxSaga from "next-redux-saga";
 import Axios from "axios";
@@ -15,7 +15,10 @@ import Loader from "../styles/loader";
 
 const AppLayouts = styled.main`
     width: 100%;
+    --webkit-font-smoothing: antialiased;
     margin: 0 auto;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+        Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
     display: flex;
     flex-direction: column;
 `;

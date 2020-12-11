@@ -199,6 +199,7 @@ const WriteCommonForm = ({
                             name="title"
                             placeholder="제목"
                             defaultValue={update ? reviewById.title : ""}
+                            required
                         />
                     ) : (
                         <Title
@@ -208,6 +209,7 @@ const WriteCommonForm = ({
                             autoComplete="off"
                             placeholder="제목"
                             defaultValue={update ? freeBoardById.title : ""}
+                            required
                         />
                     )}
                     {review ? (

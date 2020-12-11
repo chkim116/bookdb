@@ -1,10 +1,9 @@
-import { useFindId, useFormInput, useInput } from "@cooksmelon/event";
+import { useFormInput } from "@cooksmelon/event";
 import Axios from "axios";
 import { useRouter } from "next/dist/client/router";
 import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { END } from "redux-saga";
-import { BookData } from "../../../../@types/types";
 import ReviewEditForm from "../../../../components/board/review/edit/ReviewEditForm";
 import { RootState } from "../../../../redux";
 import { authRequest } from "../../../../redux/auth";
@@ -72,15 +71,15 @@ const index = () => {
 export const getServerSideProps = wrapper.getServerSideProps(async (ctx) => {
     const { store } = ctx;
 
-    const cookie = ctx.req.headers.cookie;
+    const cookie = ctx.req?.headers?.cookie;
     Axios.defaults.headers.Cookie = "";
 
     if (ctx.req && cookie) {
         Axios.defaults.headers.Cookie = cookie;
+        store.dispatch(authRequest());
+        store.dispatch(END);
+        await store.sagaTask.toPromise();
     }
-    store.dispatch(authRequest());
-    store.dispatch(END);
-    await store.sagaTask.toPromise();
 });
 
 export default index;

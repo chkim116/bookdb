@@ -103,12 +103,14 @@ const UserSignForm = ({ register, onRegister, onLogin, onChange }: Props) => {
                         type="email"
                         placeholder="아이디 입력 / 이메일 *"
                         name="email"
+                        required
                     />
                     <Input
                         width="250px"
                         type="password"
                         placeholder="비밀번호 입력 *"
                         name="password"
+                        required
                     />
                     {register && (
                         <>
@@ -117,12 +119,14 @@ const UserSignForm = ({ register, onRegister, onLogin, onChange }: Props) => {
                                 type="password"
                                 name="verifyPassword"
                                 placeholder="비밀번호 확인 *"
+                                required
                             />
                             <Input
                                 width="250px"
                                 type="text"
                                 name="nickname"
                                 placeholder="닉네임 *"
+                                required
                             />
                         </>
                     )}

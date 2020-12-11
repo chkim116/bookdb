@@ -41,6 +41,10 @@ const index = () => {
     const onSubmit = useCallback(
         (e: React.FormEvent<HTMLButtonElement | HTMLFormElement>) => {
             e.preventDefault();
+            if (title === "" || content === "" || rating === "") {
+                return alert("본문을 다 입력해주세요");
+            }
+
             dispatch(loadRequest());
             dispatch(
                 reviewWriteSubmit({
@@ -101,15 +105,15 @@ const index = () => {
 export const getServerSideProps = wrapper.getServerSideProps(async (ctx) => {
     const { store } = ctx;
 
-    const cookie = ctx.req.headers.cookie;
+    const cookie = ctx.req?.headers?.cookie;
     Axios.defaults.headers.Cookie = "";
 
     if (ctx.req && cookie) {
         Axios.defaults.headers.Cookie = cookie;
+        store.dispatch(authRequest());
+        store.dispatch(END);
+        await store.sagaTask.toPromise();
     }
-    store.dispatch(authRequest());
-    store.dispatch(END);
-    await store.sagaTask.toPromise();
 });
 
 export default index;

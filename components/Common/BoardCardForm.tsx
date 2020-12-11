@@ -5,7 +5,6 @@ import Link from "next/link";
 import { Button } from "../../styles/CommonStyle";
 import EditBoxForm from "../Common/EditBox";
 import faker from "faker";
-import Rating from "./Rating";
 import { css } from "@emotion/react";
 
 const Container = styled.article<Components>`
@@ -26,6 +25,12 @@ const Container = styled.article<Components>`
     gap: 12px;
     padding: 36px 0;
     margin: 36px auto;
+`;
+
+const ReviewForm = styled.div`
+    &:hover {
+        ${(props) => props.theme.boxShadow};
+    }
 `;
 
 const BoardCardForm = styled.div<Components>`
@@ -83,6 +88,11 @@ const BoardImg = styled.div<Components>`
 
 const Content = styled.div`
     text-align: left;
+    max-height: 400px;
+    overflow: hidden;
+    img {
+        max-width: 100%;
+    }
 `;
 
 const Auth = styled.div`
@@ -106,7 +116,7 @@ const BoardForm = ({ list, review, reviewPost, onDelete, onEdit }: Props) => {
         <Container review={review ? true : false}>
             {review
                 ? reviewPost.map((v) => (
-                      <div key={v._id}>
+                      <ReviewForm key={v._id}>
                           <Link href={`/board/review/detail/${v._id}`}>
                               <a>
                                   <BoardCardForm review={review}>
@@ -118,18 +128,16 @@ const BoardForm = ({ list, review, reviewPost, onDelete, onEdit }: Props) => {
                                           />
                                       </BoardImg>
                                       <Auth>{v.selectedBook.author}</Auth>
-                                      <Rating rating={v.rating} />
-                                      <Content>
-                                          {v.content.replace(/<[^>]*>?/gm, "")
-                                              .length > 200
-                                              ? `${v.content
-                                                    .replace(/<[^>]*>?/gm, "")
-                                                    .slice(0, 200)}...`
-                                              : v.content.replace(
-                                                    /<[^>]*>?/gm,
-                                                    ""
-                                                )}
-                                      </Content>
+                                      <Content
+                                          dangerouslySetInnerHTML={{
+                                              __html:
+                                                  v.content.length > 300
+                                                      ? `${v.content.slice(
+                                                            0,
+                                                            300
+                                                        )}...`
+                                                      : v.content,
+                                          }}></Content>
                                   </BoardCardForm>
                               </a>
                           </Link>
@@ -138,7 +146,7 @@ const BoardForm = ({ list, review, reviewPost, onDelete, onEdit }: Props) => {
                               onDelete={onDelete}
                               onEdit={onEdit}
                           />
-                      </div>
+                      </ReviewForm>
                   ))
                 : list.map((v: BoardCard) => (
                       <div key={faker.random.uuid()}>

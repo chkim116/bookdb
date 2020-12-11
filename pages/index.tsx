@@ -75,22 +75,22 @@ export default function Home({ interview, list }: Props) {
 export const getServerSideProps = wrapper.getServerSideProps(async (ctx) => {
     const { store } = ctx;
 
-    const cookie = ctx.req.headers.cookie;
-    Axios.defaults.headers.Cookie = "";
-
-    if (ctx.req && cookie) {
-        Axios.defaults.headers.Cookie = cookie;
-    }
-    store.dispatch(authRequest());
-    store.dispatch(END);
-    await store.sagaTask.toPromise();
-
     const interview: Interview[] = await Axios.get("/crawling/interview").then(
         (res) => res.data
     );
     const list: BoardCard[] = await Axios.get("/crawling/steady").then(
         (res) => res.data
     );
+
+    const cookie = ctx.req?.headers?.cookie;
+    Axios.defaults.headers.Cookie = "";
+
+    if (ctx.req && cookie) {
+        Axios.defaults.headers.Cookie = cookie;
+        store.dispatch(authRequest());
+        store.dispatch(END);
+        await store.sagaTask.toPromise();
+    }
 
     return {
         props: {

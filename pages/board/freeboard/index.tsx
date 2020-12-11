@@ -54,16 +54,16 @@ const index = () => {
 export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps(
     async (ctx) => {
         const { store } = ctx;
-        const cookie = ctx.req.headers.cookie;
+
+        const cookie = ctx.req?.headers?.cookie;
         Axios.defaults.headers.Cookie = "";
 
         if (ctx.req && cookie) {
             Axios.defaults.headers.Cookie = cookie;
+            store.dispatch(authRequest());
         }
-        store.dispatch(authRequest());
         store.dispatch(getFreeBoardRequest());
         store.dispatch(END);
-
         await store.sagaTask.toPromise();
     }
 );

@@ -13,6 +13,8 @@ import { authRequest, logoutRequest } from "../../redux/auth";
 
 const Container = styled.div`
     margin: 0 auto;
+    font-family: sohne, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    --webkit-font-smoothing: antialiased;
 `;
 
 const Logo = styled.div`
@@ -73,6 +75,9 @@ const Nav = () => {
     const onSubmit = useCallback(
         (e: FormEvent<HTMLButtonElement | HTMLFormElement>) => {
             e.preventDefault();
+            if (!searchText) {
+                return alert("검색 값을 입력해주세요");
+            }
             setSearchText("");
             router.push(`/search?query=${searchText}`);
         },

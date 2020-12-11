@@ -1,4 +1,5 @@
 import Axios from "axios";
+
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/dist/client/router";
 import React, { useCallback } from "react";
@@ -55,13 +56,14 @@ const index = () => {
 export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps(
     async (ctx) => {
         const { store, params } = ctx;
-        const cookie = ctx.req.headers.cookie;
+
+        const cookie = ctx.req?.headers?.cookie;
         Axios.defaults.headers.Cookie = "";
 
         if (ctx.req && cookie) {
             Axios.defaults.headers.Cookie = cookie;
+            store.dispatch(authRequest());
         }
-        store.dispatch(authRequest());
         store.dispatch(getReviewByIdRequest(params.id));
         store.dispatch(END);
         await store.sagaTask.toPromise();

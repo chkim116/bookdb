@@ -13,7 +13,7 @@ import { Container } from "../../styles/CommonStyle";
 
 const index = () => {
     const router = useRouter();
-    const [form, onChange, setForm] = useFormInput();
+    const [form, onChange] = useFormInput();
     const dispatch = useDispatch();
     const { isLogin, isLoginErr } = useSelector(
         (state: RootState) => state.auth
@@ -36,7 +36,7 @@ const index = () => {
 
     useEffect(() => {
         if (isLoginErr) {
-            alert(`로그인 에러 ${isLoginErr}`);
+            alert(`로그인 에러, 새로고침 후 시도해주세요`);
         }
     }, [isLoginErr]);
 
@@ -50,15 +50,15 @@ const index = () => {
 export const getServerSideProps = wrapper.getServerSideProps(async (ctx) => {
     const { store } = ctx;
 
-    const cookie = ctx.req.headers.cookie;
+    const cookie = ctx.req?.headers?.cookie;
     Axios.defaults.headers.Cookie = "";
 
     if (ctx.req && cookie) {
         Axios.defaults.headers.Cookie = cookie;
+        store.dispatch(authRequest());
+        store.dispatch(END);
+        await store.sagaTask.toPromise();
     }
-    store.dispatch(authRequest());
-    store.dispatch(END);
-    await store.sagaTask.toPromise();
 });
 
 export default index;

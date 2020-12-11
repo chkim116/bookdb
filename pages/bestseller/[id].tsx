@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { GetStaticPaths, GetStaticProps } from "next";
 import BestSellerForm from "../../components/bestseller/BestSellerForm";
 import { useRouter } from "next/dist/client/router";
 import { Container } from "../../styles/CommonStyle";

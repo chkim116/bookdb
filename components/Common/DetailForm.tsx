@@ -41,7 +41,7 @@ const Content = styled.div`
     min-height: 500px;
 
     img {
-        width: 100%;
+        max-width: 100%;
     }
 `;
 
