@@ -9,6 +9,7 @@ import { RootState } from "../../redux";
 import { BookData } from "../../@types/types";
 import { FormEvent, useCallback, useEffect } from "react";
 import { getSearchFailure, getSearchRequest } from "../../redux/search";
+import { authRequest, logoutRequest } from "../../redux/auth";
 
 const Container = styled.div`
     margin: 0 auto;
@@ -42,17 +43,24 @@ const UserForm = styled.div`
     }
 `;
 
-type Props = {
-    isLogin: boolean;
-};
-
-const Nav = ({ isLogin }: Props) => {
+const Nav = () => {
     const [searchText, onChange, setSearchText] = useInput("");
     const router = useRouter();
     const dispatch = useDispatch();
+    const { isLogin, isAuth } = useSelector((state: RootState) => state.auth);
     const results: BookData[] = useSelector(
         (state: RootState) => state.search.searchData
     );
+
+    const onLogout = useCallback(() => {
+        dispatch(logoutRequest());
+    }, [dispatch]);
+
+    useEffect(() => {
+        if (!isAuth) {
+            dispatch(authRequest());
+        }
+    }, []);
 
     useEffect(() => {
         if (searchText !== "") {
@@ -60,7 +68,7 @@ const Nav = ({ isLogin }: Props) => {
         } else {
             dispatch(getSearchFailure({ message: "입력 값이 없습니다." }));
         }
-    }, [searchText]);
+    }, [searchText, dispatch]);
 
     const onSubmit = useCallback(
         (e: FormEvent<HTMLButtonElement | HTMLFormElement>) => {
@@ -85,7 +93,7 @@ const Nav = ({ isLogin }: Props) => {
                 />
                 <UserForm>
                     {isLogin ? (
-                        <div>로그아웃</div>
+                        <div onClick={onLogout}>로그아웃</div>
                     ) : (
                         <>
                             <Link href="/login">

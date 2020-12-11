@@ -88,7 +88,9 @@ const auth = createSlice({
         logoutRequest: (state) => {
             state.isLogoutErr = null;
         },
-        logoutSuccess: (state) => {},
+        logoutSuccess: (state) => {
+            state.isLogin = false;
+        },
         logoutFailure: (state, { payload }) => {
             state.isLogoutErr = payload;
         },
@@ -99,6 +101,7 @@ const auth = createSlice({
         authSuccess: (state, { payload }) => {
             state.isAuth = true;
             state.user = payload;
+            state.isLogin = true;
         },
         authFailure: (state, { payload }) => {
             state.isAuth = false;
