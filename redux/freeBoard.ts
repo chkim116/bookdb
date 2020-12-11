@@ -5,6 +5,7 @@ type InitialState = {
     freeBoardById: FreeBoard;
     freeBoards: FreeBoard[];
     isFreeBoardErr: string | null;
+    freeBoardRouter: string;
 };
 
 const initialState: InitialState = {
@@ -33,6 +34,7 @@ const initialState: InitialState = {
         },
     ],
     isFreeBoardErr: null,
+    freeBoardRouter: "",
 };
 
 const freeBoard = createSlice({
@@ -66,6 +68,9 @@ const freeBoard = createSlice({
         },
 
         freeBoardWriteSubmit: (state, { payload }) => {},
+        freeBoardRouter: (state, { payload }) => {
+            state.freeBoardRouter = payload;
+        },
         freeBoardWriteUpdate: (state, { payload }) => {},
 
         delFreeBoardRequest: (state, { payload }) => {
@@ -91,6 +96,7 @@ export const {
     getFreeBoardByIdFailure,
     freeBoardWriteSubmit,
     freeBoardWriteUpdate,
+    freeBoardRouter,
     delFreeBoardRequest,
     delFreeBoardSuccess,
     delFreeBoardFailure,

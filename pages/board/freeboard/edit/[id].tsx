@@ -50,10 +50,9 @@ const index = () => {
                     title: title ? title : freeBoardById.title,
                     content: content ? content : freeBoardById.content,
                     id,
-                    regDate: new Date().toLocaleDateString(),
                 })
             );
-            router.push("/board/freeboard");
+            router.push(`/board/freeboard/detail/${freeBoardById._id}`);
         },
         [title, content, dispatch, router, id, freeBoardById]
     );

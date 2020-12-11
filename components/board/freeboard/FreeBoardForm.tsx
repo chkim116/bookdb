@@ -3,6 +3,8 @@ import styled from "@emotion/styled";
 import Link from "next/link";
 import { FreeBoard, onClick } from "../../../@types/types";
 import EditBoxForm from "../../Common/EditBox";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../redux";
 
 const BoardInfo = styled.div`
     display: flex;
@@ -73,6 +75,7 @@ type Props = {
     onEdit: onClick;
 };
 const FreeBoardForm = ({ freeBoards, onDelete, onEdit }: Props) => {
+    const { user } = useSelector((state: RootState) => state.auth);
     return (
         <>
             {freeBoards.map((b) => (
@@ -104,11 +107,16 @@ const FreeBoardForm = ({ freeBoards, onDelete, onEdit }: Props) => {
                         <div>{b.userId}</div>
                         <div>
                             <div>{b.regDate}</div>
-                            <EditBoxForm
-                                onDelete={onDelete}
-                                onEdit={onEdit}
-                                id={b._id}
-                            />
+                            {user?.board?.map(
+                                (f: string) =>
+                                    f === b._id && (
+                                        <EditBoxForm
+                                            onDelete={onDelete}
+                                            onEdit={onEdit}
+                                            id={b._id}
+                                        />
+                                    )
+                            )}
                         </div>
                     </BoardUser>
                 </BoardInfo>

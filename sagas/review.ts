@@ -15,6 +15,7 @@ import {
     getSelectBookFailure,
     getSelectBookRequest,
     getSelectBookSuccess,
+    reviewRouter,
     reviewWriteSubmit,
     reviewWriteUpdate,
     selectBookFailure,
@@ -32,7 +33,7 @@ function getSearch(text: SearchPayload) {
 }
 
 function postSubmit(text: WriteText) {
-    return Axios.post("/review/post", text);
+    return Axios.post("/review/post", text).then((res) => res.data);
 }
 
 function postUpdate(text: WriteText) {
@@ -79,9 +80,9 @@ function* isSelected({ payload }: PayloadAction<SelectedBook>) {
 }
 
 function* reviewSubmit({ payload }: PayloadAction<WriteText>) {
-    console.log(payload);
     try {
-        yield call(postSubmit, payload);
+        const review = yield call(postSubmit, payload);
+        yield put(reviewRouter(review._id));
         yield put(loadSuccess());
     } catch (err) {
         console.log(err);

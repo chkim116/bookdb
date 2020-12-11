@@ -19,6 +19,11 @@ const index = () => {
 
     const [write, onWrite] = useFormInput();
     const { title, content } = useSelector((state: RootState) => state.write);
+    const { user } = useSelector((state: RootState) => state.auth);
+    const { isDone } = useSelector((state: RootState) => state.loading);
+    const { freeBoardRouter } = useSelector(
+        (state: RootState) => state.freeBoard
+    );
 
     useEffect(() => {
         dispatch(writeTitle(write));
@@ -37,13 +42,19 @@ const index = () => {
                     title,
                     content,
                     regDate: new Date().toLocaleDateString(),
+                    id: user.id ? user.id : "",
+                    nickname: user.nickname ? user.nickname : "",
                 })
             );
-
-            router.push("/board/freeboard");
         },
-        [title, content, dispatch, router]
+        [title, content, dispatch, router, freeBoardRouter]
     );
+
+    useEffect(() => {
+        if (isDone) {
+            router.push(`/board/freeboard/detail/${freeBoardRouter}`);
+        }
+    }, [isDone]);
 
     return (
         <Container>

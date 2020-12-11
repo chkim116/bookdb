@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { END } from "redux-saga";
 import { BookData } from "../../../../@types/types";
 import ReviewWrite from "../../../../components/board/review/write/ReviewWrite";
+import PleaseLogin from "../../../../components/Common/PleaseLogin";
 import { RootState } from "../../../../redux";
 import { authRequest } from "../../../../redux/auth";
 import { loadRequest } from "../../../../redux/loading";
@@ -26,7 +27,8 @@ const index = () => {
     const [searchText, onChange, setSearchText] = useInput("");
     const [write, onWrite] = useFormInput();
     const [findId, onFindId] = useFindId();
-
+    const { user } = useSelector((state: RootState) => state.auth);
+    const { isDone } = useSelector((state: RootState) => state.loading);
     const { title, content, rating } = useSelector(
         (state: RootState) => state.write
     );
@@ -36,6 +38,7 @@ const index = () => {
     const results: BookData[] = useSelector(
         (state: RootState) => state.review.searchData
     );
+    const { reviewRouter } = useSelector((state: RootState) => state.review);
 
     // 폼 제출 시 (리뷰 글쓰기&자유게시판 글쓰기)
     const onSubmit = useCallback(
@@ -53,12 +56,19 @@ const index = () => {
                     regDate: new Date().toLocaleDateString(),
                     rating,
                     selectedBook: selectBook,
+                    id: user.id ? user.id : "",
+                    nickname: user.nickname ? user.nickname : "",
                 })
             );
-            router.push("/board/review");
         },
-        [title, content, dispatch, router, selectBook, rating]
+        [title, content, dispatch, reviewRouter, selectBook, rating]
     );
+
+    useEffect(() => {
+        if (isDone) {
+            router.push(`/board/review/detail/${reviewRouter}`);
+        }
+    }, [isDone]);
 
     // content 작성 로직은 RichTextEditor.tsx에 있습니다.
     useEffect(() => {
@@ -89,15 +99,19 @@ const index = () => {
 
     return (
         <Container color={theme.white}>
-            <ReviewWrite
-                onChange={onChange}
-                onSubmit={onSubmit}
-                onWrite={onWrite}
-                onFindId={onFindId}
-                selectBook={selectBook}
-                results={results}
-                searchText={searchText}
-            />
+            {user.id ? (
+                <ReviewWrite
+                    onChange={onChange}
+                    onSubmit={onSubmit}
+                    onWrite={onWrite}
+                    onFindId={onFindId}
+                    selectBook={selectBook}
+                    results={results}
+                    searchText={searchText}
+                />
+            ) : (
+                <PleaseLogin />
+            )}
         </Container>
     );
 };

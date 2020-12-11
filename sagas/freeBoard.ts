@@ -13,6 +13,7 @@ import {
     getFreeBoardRequest,
     getFreeBoardSuccess,
     getFreeBoardFailure,
+    freeBoardRouter,
 } from "../redux/freeBoard";
 import { WriteText } from "../@types/types";
 import { loadFailure, loadSuccess } from "../redux/loading";
@@ -20,7 +21,7 @@ import { loadFailure, loadSuccess } from "../redux/loading";
 // ajax
 
 function postSubmit(text: WriteText) {
-    return Axios.post("/board/post", text);
+    return Axios.post("/board/post", text).then((res) => res.data);
 }
 
 function postUpdate(text: WriteText) {
@@ -43,7 +44,8 @@ function deleteFreeBoardPost(id: string) {
 
 function* freeBoardSubmit({ payload }: PayloadAction<WriteText>) {
     try {
-        yield call(postSubmit, payload);
+        const post = yield call(postSubmit, payload);
+        yield put(freeBoardRouter(post._id));
         yield put(loadSuccess());
     } catch (err) {
         console.log(err);

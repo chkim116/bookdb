@@ -7,6 +7,8 @@ import EditBoxForm from "../Common/EditBox";
 import faker from "faker";
 import { css } from "@emotion/react";
 import Rating from "./Rating";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux";
 
 const Container = styled.article<Components>`
     max-width: ${(props) => props.theme.maxWidth};
@@ -113,6 +115,7 @@ type Props = Components & {
 };
 
 const BoardForm = ({ list, review, reviewPost, onDelete, onEdit }: Props) => {
+    const { user } = useSelector((state: RootState) => state.auth);
     return (
         <Container review={review ? true : false}>
             {review
@@ -143,11 +146,16 @@ const BoardForm = ({ list, review, reviewPost, onDelete, onEdit }: Props) => {
                                   </BoardCardForm>
                               </a>
                           </Link>
-                          <EditBoxForm
-                              id={v._id}
-                              onDelete={onDelete}
-                              onEdit={onEdit}
-                          />
+                          {user?.review.map(
+                              (r: string) =>
+                                  r === v._id && (
+                                      <EditBoxForm
+                                          id={v._id}
+                                          onDelete={onDelete}
+                                          onEdit={onEdit}
+                                      />
+                                  )
+                          )}
                       </ReviewForm>
                   ))
                 : list.map((v: BoardCard) => (

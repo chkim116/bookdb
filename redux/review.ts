@@ -8,6 +8,7 @@ export type ReviewState = {
     isReviewErr: string | null;
     reviewById: ReviewPost;
     reviews: ReviewPost[];
+    reviewRouter: string;
 };
 
 const initialState: ReviewState = {
@@ -63,6 +64,7 @@ const initialState: ReviewState = {
         },
     ],
     isReviewErr: null,
+    reviewRouter: "",
 };
 
 const review = createSlice({
@@ -108,7 +110,9 @@ const review = createSlice({
 
         reviewWriteSubmit: (state, { payload }: PayloadAction<WriteText>) => {},
         reviewWriteUpdate: (state, { payload }: PayloadAction<WriteText>) => {},
-
+        reviewRouter: (state, { payload }) => {
+            state.reviewRouter = payload;
+        },
         getReviewByIdRequest: (
             state,
             { payload }: PayloadAction<string | string[]>
@@ -167,7 +171,7 @@ export const {
     getSelectBookRequest,
     getSelectBookSuccess,
     getSelectBookFailure,
-
+    reviewRouter,
     reviewWriteSubmit,
     reviewWriteUpdate,
     getReviewByIdRequest,

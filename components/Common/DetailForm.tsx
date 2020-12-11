@@ -5,6 +5,8 @@ import { Title } from "../../styles/CommonStyle";
 import { FreeBoard, onClick, ReviewPost } from "../../@types/types";
 import ReviewBookForm from "../board/review/detail/ReviewBook";
 import EditBoxForm from "./EditBox";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux";
 
 const Container = styled.div`
     width: 100%;
@@ -64,6 +66,7 @@ const DetailForm = ({
     onDelete,
     onEdit,
 }: Props) => {
+    const { user } = useSelector((state: RootState) => state.auth);
     return (
         <Container className="ql-container ql-editor">
             {review ? (
@@ -74,13 +77,18 @@ const DetailForm = ({
                         <div>{reviewById.regDate}</div>
                     </CreatorUser>
                     <ReviewBookForm reviewById={reviewById} />
-                    <Edit>
-                        <EditBoxForm
-                            id={reviewById._id}
-                            onDelete={onDelete}
-                            onEdit={onEdit}
-                        />
-                    </Edit>
+                    {user?.review.map(
+                        (r: string) =>
+                            r === reviewById._id && (
+                                <Edit>
+                                    <EditBoxForm
+                                        id={reviewById._id}
+                                        onDelete={onDelete}
+                                        onEdit={onEdit}
+                                    />
+                                </Edit>
+                            )
+                    )}
                     <RatingStar>
                         <Rating rating={reviewById.rating} />
                     </RatingStar>
@@ -96,13 +104,18 @@ const DetailForm = ({
                         <div>{freeBoardById.regDate}</div>
                         <div>조회수 {freeBoardById.count}</div>
                     </CreatorUser>
-                    <Edit>
-                        <EditBoxForm
-                            id={freeBoardById._id}
-                            onDelete={onDelete}
-                            onEdit={onEdit}
-                        />
-                    </Edit>
+                    {user?.board.map(
+                        (f: string) =>
+                            f === freeBoardById._id && (
+                                <Edit>
+                                    <EditBoxForm
+                                        id={freeBoardById._id}
+                                        onDelete={onDelete}
+                                        onEdit={onEdit}
+                                    />
+                                </Edit>
+                            )
+                    )}
 
                     <Content
                         dangerouslySetInnerHTML={{

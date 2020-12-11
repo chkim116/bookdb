@@ -27,7 +27,7 @@ const index = () => {
     const { reviewById } = useSelector((state: RootState) => state.review);
     const [write, onWrite] = useFormInput();
     const { title, content } = useSelector((state: RootState) => state.write);
-
+    const { user } = useSelector((state: RootState) => state.auth);
     // 수정할 게시글 불러오기
 
     useEffect(() => {
@@ -52,9 +52,9 @@ const index = () => {
                     id,
                 })
             );
-            router.push("/board/review");
+            router.push(`/board/review/detail/${reviewById._id}`);
         },
-        [title, content, dispatch, id, router]
+        [title, content, dispatch, id, router, reviewById]
     );
 
     return (

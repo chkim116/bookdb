@@ -42,7 +42,9 @@ export type WriteText = {
     password?: string;
     selectedBook?: SelectedBook;
     rating?: string;
-    id?: string | string[];
+    _id?: string;
+    nickname?: string;
+    id: string | string[];
 };
 
 // 자유 게시글
