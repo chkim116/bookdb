@@ -14,6 +14,7 @@ type Props = {
     onFindId: onClick;
     onSubmit: onSubmit;
     selectBook: BookData;
+    onClick: () => void;
     results: BookData[];
     searchText: string | number;
 };
@@ -26,11 +27,13 @@ const ReviewWrite = ({
     results,
     onSubmit,
     searchText,
+    onClick,
 }: Props) => {
     return (
         <WriteCommonForm
             review={true}
             update={false}
+            onClick={onClick}
             onChange={onChange}
             onWrite={onWrite}
             onFindId={onFindId}

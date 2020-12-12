@@ -6,6 +6,9 @@ import {
     delReviewFailure,
     delReviewRequest,
     delReviewSuccess,
+    getRecentPostFailure,
+    getRecentPostRequest,
+    getRecentPostSuccess,
     getReviewByIdFailure,
     getReviewByIdRequest,
     getReviewByIdSuccess,
@@ -25,6 +28,7 @@ import {
 import { SearchPayload } from "../redux/search";
 import { loadFailure, loadSuccess } from "../redux/loading";
 import { WriteText } from "../@types/types";
+import reduxSaga from "redux-saga";
 
 // ajax
 
@@ -46,6 +50,10 @@ function getReviewId(id: string | string[]) {
 
 function getReview() {
     return Axios.get("/review").then((res) => res.data);
+}
+
+function getRecentRequest() {
+    return Axios.get("/review/recent").then((res) => res.data);
 }
 
 function deleteReviewPost(id: string) {
@@ -120,6 +128,16 @@ function* getReviews() {
     }
 }
 
+function* getRecent() {
+    try {
+        const reviews = yield call(getRecentRequest);
+        yield put(getRecentPostSuccess(reviews));
+    } catch (err) {
+        console.log(err);
+        yield put(getRecentPostFailure(err.message));
+    }
+}
+
 function* deleteReview({ payload }: PayloadAction<string>) {
     try {
         yield call(deleteReviewPost, payload);
@@ -158,6 +176,10 @@ function* watchGetReviews() {
     yield takeLatest(getReviewsPostRequest, getReviews);
 }
 
+function* watchGetRecent() {
+    yield takeLatest(getRecentPostRequest, getRecent);
+}
+
 function* watchDelReview() {
     yield takeLatest(delReviewRequest, deleteReview);
 }
@@ -171,5 +193,6 @@ export default function* review(): Generator {
         fork(watchGetReviewById),
         fork(watchGetReviews),
         fork(watchDelReview),
+        fork(watchGetRecent),
     ]);
 }

@@ -1,11 +1,13 @@
 import React from "react";
 import styled from "@emotion/styled";
-import { BoardCard, Interview } from "../../@types/types";
+import { BoardCard, Interview, ReviewPost } from "../../@types/types";
 import { Button, Title } from "../../styles/CommonStyle";
 import theme from "../../styles/theme";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 import BookSliders from "./BookSliders";
 import InterviewForm from "./InterviewForm";
+import BoardForm from "../Common/BoardCardForm";
+import review from "../../sagas/review";
 
 const Container = styled.div`
     padding: 12px;
@@ -69,6 +71,7 @@ const More = styled(Title)`
 type Props = {
     interview: Interview[];
     list: BoardCard[];
+    reviews: ReviewPost[];
     slide: number;
     onNextSlide: () => void;
     onPrevSlide: () => void;
@@ -80,9 +83,12 @@ const MainPage = ({
     slide,
     onNextSlide,
     onPrevSlide,
+    reviews,
 }: Props) => {
     return (
         <Container>
+            <Title align="left">최근 리뷰</Title>
+            <BoardForm reviewPost={reviews} review={true} main={true} />
             <Title align="left">스테디셀러</Title>
             <BestContainer>
                 <Prev onClick={onPrevSlide}>

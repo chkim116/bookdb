@@ -3,7 +3,8 @@ import styled from "@emotion/styled";
 import { Button, Input } from "../../styles/CommonStyle";
 import Link from "next/link";
 import faker from "faker";
-import { BookData } from "../../@types/types";
+import { BookData, onChange, onClick, onSubmit } from "../../@types/types";
+import theme from "../../styles/theme";
 
 const MainSearch = styled.form`
     position: relative;
@@ -57,11 +58,18 @@ export const SearchBookList = styled.div`
 type Props = {
     searchText: string | number;
     results: BookData[];
-    onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-    onSubmit: (e: FormEvent<HTMLFormElement | HTMLButtonElement>) => void;
+    onChange: onChange;
+    onSubmit: onSubmit;
+    onClick: () => void;
 };
 
-const SearchForm = ({ searchText, results, onChange, onSubmit }: Props) => {
+const SearchForm = ({
+    searchText,
+    results,
+    onChange,
+    onSubmit,
+    onClick,
+}: Props) => {
     return (
         <MainSearch onSubmit={onSubmit}>
             <Input
@@ -75,8 +83,19 @@ const SearchForm = ({ searchText, results, onChange, onSubmit }: Props) => {
             <Button onSubmit={onSubmit} width="30px" type="submit">
                 검색
             </Button>
+            {results[0]?.title && (
+                <Button
+                    onClick={onClick}
+                    type="button"
+                    width="30px"
+                    bg={theme.blue}
+                    color={theme.white}>
+                    닫기
+                </Button>
+            )}
+
             <SearchResults>
-                {results.length > 0 && results[0].title !== "" ? (
+                {results[0]?.title ? (
                     results.map((r, index) => (
                         <>
                             <Link

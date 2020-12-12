@@ -40,6 +40,12 @@ const index = () => {
     );
     const { reviewRouter } = useSelector((state: RootState) => state.review);
 
+    // 검색창 닫기
+    const onClick = useCallback(() => {
+        setSearchText((prev) => "");
+        dispatch(getSelectBookFailure({ message: "닫기" }));
+    }, [dispatch]);
+
     // 폼 제출 시 (리뷰 글쓰기&자유게시판 글쓰기)
     const onSubmit = useCallback(
         (e: React.FormEvent<HTMLButtonElement | HTMLFormElement>) => {
@@ -108,6 +114,7 @@ const index = () => {
                     selectBook={selectBook}
                     results={results}
                     searchText={searchText}
+                    onClick={onClick}
                 />
             ) : (
                 <PleaseLogin />

@@ -1,4 +1,3 @@
-import { GetServerSideProps, GetStaticProps } from "next";
 import MainPage from "../components/Home/MainPage";
 import { Container } from "../styles/CommonStyle";
 import Axios from "axios";
@@ -7,6 +6,9 @@ import { useCallback, useEffect, useState } from "react";
 import wrapper from "../store/configureStore";
 import { authRequest } from "../redux/auth";
 import { END } from "redux-saga";
+import { getRecentPostRequest } from "../redux/review";
+import { useSelector } from "react-redux";
+import { RootState } from "../redux";
 
 export type Slide = {
     slide: number;
@@ -23,6 +25,7 @@ export default function Home({ interview, list }: Props) {
     const [boardWidth, setBoardWidth] = useState(0); // 게시글들의 너비
     const [containerWidth, setContainerWidth] = useState(0); // 총 게시글 너비
     const max = Math.floor(boardWidth / containerWidth) + 1; // 이 수와 같으면 앞으로 X
+    const { reviews } = useSelector((state: RootState) => state.review);
     let widths: number = 0;
     let containerW: number = 0;
 
@@ -61,6 +64,7 @@ export default function Home({ interview, list }: Props) {
     return (
         <Container>
             <MainPage
+                reviews={reviews}
                 interview={interview}
                 onNextSlide={onNextSlide}
                 onPrevSlide={onPrevSlide}
@@ -88,9 +92,10 @@ export const getServerSideProps = wrapper.getServerSideProps(async (ctx) => {
     if (ctx.req && cookie) {
         Axios.defaults.headers.Cookie = cookie;
         store.dispatch(authRequest());
-        store.dispatch(END);
-        await store.sagaTask.toPromise();
     }
+    store.dispatch(getRecentPostRequest());
+    store.dispatch(END);
+    await store.sagaTask.toPromise();
 
     return {
         props: {

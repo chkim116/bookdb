@@ -76,7 +76,11 @@ const DetailForm = ({
     const { user } = useSelector((state: RootState) => state.auth);
     const router = useRouter();
     const onGoBack = useCallback(() => {
-        router.back();
+        if (review) {
+            router.push("/board/review");
+        } else {
+            router.push("/board/freeboard");
+        }
     }, []);
     return (
         <>

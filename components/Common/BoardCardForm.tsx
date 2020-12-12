@@ -39,11 +39,11 @@ const ReviewForm = styled.div`
 const BoardCardForm = styled.div<Components>`
     text-align: center;
     padding: 12px;
-    min-height: 300px;
+    max-height: 400px;
     ${(props) =>
         props.review &&
         css`
-            max-width: 450px;
+            max-width: 350px;
             min-width: 235px;
         `}
 
@@ -110,11 +110,19 @@ type Components = {
 type Props = Components & {
     list?: BoardCard[];
     reviewPost?: ReviewPost[];
-    onDelete: onClick;
-    onEdit: onClick;
+    onDelete?: onClick;
+    onEdit?: onClick;
+    main?: boolean;
 };
 
-const BoardForm = ({ list, review, reviewPost, onDelete, onEdit }: Props) => {
+const BoardForm = ({
+    list,
+    review,
+    reviewPost,
+    onDelete,
+    onEdit,
+    main,
+}: Props) => {
     const { user } = useSelector((state: RootState) => state.auth);
     return (
         <Container review={review ? true : false}>
@@ -137,26 +145,29 @@ const BoardForm = ({ list, review, reviewPost, onDelete, onEdit }: Props) => {
                                       <Content
                                           dangerouslySetInnerHTML={{
                                               __html:
-                                                  v.content.length > 300
+                                                  v.content.length > 200
                                                       ? `${v.content.slice(
                                                             0,
-                                                            300
+                                                            200
                                                         )}...`
                                                       : v.content,
                                           }}></Content>
                                   </BoardCardForm>
                               </a>
                           </Link>
-                          {user?.review.map(
-                              (r: string) =>
-                                  r === v._id && (
-                                      <EditBoxForm
-                                          id={v._id}
-                                          onDelete={onDelete}
-                                          onEdit={onEdit}
-                                      />
-                                  )
-                          )}
+                          {!main &&
+                              user?.review.map(
+                                  (r: string) =>
+                                      r === v._id && (
+                                          <div key={v._id}>
+                                              <EditBoxForm
+                                                  id={v._id}
+                                                  onDelete={onDelete}
+                                                  onEdit={onEdit}
+                                              />
+                                          </div>
+                                      )
+                              )}
                       </ReviewForm>
                   ))
                 : list.map((v: BoardCard) => (

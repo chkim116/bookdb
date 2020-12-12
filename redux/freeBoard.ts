@@ -56,13 +56,6 @@ const freeBoard = createSlice({
         },
         getFreeBoardByIdSuccess: (state, { payload }) => {
             state.freeBoardById = payload;
-            // state.freeBoardById.content = payload.content;
-            // state.freeBoardById.regDate = payload.regDate;
-            // state.freeBoardById.title = payload.title;
-            // state.freeBoardById.thumb = payload.thumb;
-            // state.freeBoardById.userId = payload.userId;
-            // state.freeBoardById._id = payload._id;
-            // state.freeBoardById.count = payload.count;
         },
         getFreeBoardByIdFailure: (state, { payload }) => {
             state.isFreeBoardErr = payload;

@@ -6,10 +6,9 @@ import { Title } from "../../styles/CommonStyle";
 import Link from "next/link";
 
 const ResultsContainer = styled.article`
-    max-width: ${(props) => props.theme.maxWidth};
+    max-width: 900px;
     width: 100%;
     margin: 0 auto;
-    background-color: ${(props) => props.theme.white};
     padding: 12px;
 `;
 

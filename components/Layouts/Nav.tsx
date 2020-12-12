@@ -10,6 +10,7 @@ import { BookData } from "../../@types/types";
 import { FormEvent, useCallback, useEffect } from "react";
 import { getSearchFailure, getSearchRequest } from "../../redux/search";
 import { authRequest, logoutRequest } from "../../redux/auth";
+import { getSelectBookFailure } from "../../redux/review";
 
 const Container = styled.div`
     margin: 0 auto;
@@ -84,6 +85,11 @@ const Nav = () => {
         [searchText]
     );
 
+    const onClick = useCallback(() => {
+        setSearchText((prev) => "");
+        dispatch(getSelectBookFailure({ message: "닫기" }));
+    }, [dispatch]);
+
     return (
         <Container>
             <MainHeader>
@@ -95,10 +101,13 @@ const Nav = () => {
                     results={results}
                     onChange={onChange}
                     onSubmit={onSubmit}
+                    onClick={onClick}
                 />
                 <UserForm>
                     {isLogin ? (
-                        <div onClick={onLogout}>로그아웃</div>
+                        <>
+                            <div onClick={onLogout}>로그아웃</div>
+                        </>
                     ) : (
                         <>
                             <Link href="/login">

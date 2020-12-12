@@ -46,6 +46,7 @@ const initialState: Auth = {
                 creator: "",
                 userId: "",
                 password: "",
+                count: 0,
                 selectedBook: {
                     title: "",
                     author: "",

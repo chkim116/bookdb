@@ -87,6 +87,11 @@ const ResultForm = styled.div`
     text-align: center;
 `;
 
+const ResultInput = styled.div`
+    display: flex;
+    align-items: center;
+`;
+
 type Props = {
     review: boolean;
     update: boolean;
@@ -97,6 +102,7 @@ type Props = {
     onChange?: onFormChange;
     onFindId?: onClick;
     onWrite: onChange;
+    onClick?: () => void;
     onSubmit: onSubmit;
     searchText?: string | number;
 };
@@ -113,6 +119,7 @@ const WriteCommonForm = ({
     onWrite,
     onSubmit,
     searchText,
+    onClick,
 }: Props) => {
     const router = useRouter();
 
@@ -125,17 +132,26 @@ const WriteCommonForm = ({
                 <WriteForm onSubmit={onSubmit}>
                     {review && !update && (
                         <ResultForm>
-                            <Input
-                                autoComplete="off"
-                                onChange={onChange}
-                                type="text"
-                                width="250px"
-                                value={searchText}
-                                placeholder="제목으로 책 검색하기"
-                            />
+                            <ResultInput>
+                                <Input
+                                    autoComplete="off"
+                                    onChange={onChange}
+                                    type="text"
+                                    width="250px"
+                                    value={searchText}
+                                    placeholder="제목으로 책 검색하기"
+                                />
+                                {results[0]?.title && (
+                                    <Button
+                                        onClick={onClick}
+                                        width="50px"
+                                        type="button">
+                                        닫기
+                                    </Button>
+                                )}
+                            </ResultInput>
                             <SearchResults>
-                                {results.length > 0 &&
-                                results[0].title !== "" ? (
+                                {results[0]?.title ? (
                                     results.map((r) => (
                                         <SearchBookList
                                             onClick={onFindId}
