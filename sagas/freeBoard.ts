@@ -91,7 +91,7 @@ function* deleteFreeBoard({ payload }: PayloadAction<string>) {
     } catch (err) {
         console.log(err);
         yield put(delFreeBoardFailure(err.message));
-        yield put(loadFailure());
+        yield put(loadFailure(err.message));
     }
 }
 

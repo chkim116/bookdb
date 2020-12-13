@@ -28,7 +28,6 @@ import {
 import { SearchPayload } from "../redux/search";
 import { loadFailure, loadSuccess } from "../redux/loading";
 import { WriteText } from "../@types/types";
-import reduxSaga from "redux-saga";
 
 // ajax
 
@@ -146,7 +145,7 @@ function* deleteReview({ payload }: PayloadAction<string>) {
     } catch (err) {
         console.log(err);
         yield put(delReviewFailure(err.message));
-        yield put(loadFailure());
+        yield put(loadFailure(err.message));
     }
 }
 

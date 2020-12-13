@@ -46,7 +46,7 @@ function* postLogin({ payload }: PayloadAction<SignWriteText>) {
     } catch (err) {
         console.log(err);
         yield put(loginFailure(err.message));
-        yield put(loadFailure());
+        yield put(loadFailure(err.message));
     }
 }
 
@@ -58,7 +58,7 @@ function* postLogout() {
     } catch (err) {
         console.log(err);
         yield put(logoutFailure(err.message));
-        yield put(loadFailure());
+        yield put(loadFailure(err.message));
     }
 }
 
@@ -71,7 +71,7 @@ function* postRegister({ payload }: PayloadAction<SignWriteText>) {
     } catch (err) {
         console.log(err);
         yield put(registerFailure(err.message));
-        yield put(loadFailure());
+        yield put(loadFailure(err.message));
     }
 }
 

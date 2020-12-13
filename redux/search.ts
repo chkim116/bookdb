@@ -42,13 +42,10 @@ const search = createSlice({
     initialState,
     reducers: {
         // 헤더 검색창
-        getSearchRequest: (
-            state,
-            { payload }: PayloadAction<SearchPayload>
-        ) => {
+        getSearchRequest: (state, { payload }) => {
             state = initialState;
         },
-        getSearchSuccess: (state, { payload }: PayloadAction<BookData[]>) => {
+        getSearchSuccess: (state, { payload }) => {
             state.searchData = payload;
         },
         getSearchFailure: (state, { payload }) => {
@@ -59,16 +56,10 @@ const search = createSlice({
         },
 
         // 검색된 목록
-        getSearchResultRequest: (
-            state,
-            { payload }: PayloadAction<SearchPayload>
-        ) => {
+        getSearchResultRequest: (state, { payload }) => {
             state = initialState;
         },
-        getSearchResultSuccess: (
-            state,
-            { payload }: PayloadAction<SearchResults[]>
-        ) => {
+        getSearchResultSuccess: (state, { payload }) => {
             state.searchResults = payload;
         },
         getSearchResultFailure: (state, { payload }) => {

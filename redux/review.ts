@@ -73,16 +73,10 @@ const review = createSlice({
     name: "review",
     initialState,
     reducers: {
-        selectBookRequest: (
-            state,
-            { payload }: PayloadAction<SelectedBook>
-        ) => {
+        selectBookRequest: (state, { payload }) => {
             state.selectedBook = state.selectedBook;
         },
-        selectBookSuccess: (
-            state,
-            { payload }: PayloadAction<SelectedBook>
-        ) => {
+        selectBookSuccess: (state, { payload }) => {
             state.selectedBook = payload;
         },
         selectBookFailure: (state, { payload }) => {
@@ -93,16 +87,10 @@ const review = createSlice({
             state.selectedBook.isbn = "";
         },
 
-        getSelectBookRequest: (
-            state,
-            { payload }: PayloadAction<SearchPayload>
-        ) => {
+        getSelectBookRequest: (state, { payload }) => {
             state = initialState;
         },
-        getSelectBookSuccess: (
-            state,
-            { payload }: PayloadAction<BookData[]>
-        ) => {
+        getSelectBookSuccess: (state, { payload }) => {
             state.searchData = payload;
         },
         getSelectBookFailure: (state, { payload }) => {
@@ -110,21 +98,15 @@ const review = createSlice({
             state.searchData = state.searchData.filter((f) => f.title === "");
         },
 
-        reviewWriteSubmit: (state, { payload }: PayloadAction<WriteText>) => {},
-        reviewWriteUpdate: (state, { payload }: PayloadAction<WriteText>) => {},
+        reviewWriteSubmit: (state, { payload }) => {},
+        reviewWriteUpdate: (state, { payload }) => {},
         reviewRouter: (state, { payload }) => {
             state.reviewRouter = payload;
         },
-        getReviewByIdRequest: (
-            state,
-            { payload }: PayloadAction<string | string[]>
-        ) => {
+        getReviewByIdRequest: (state, { payload }) => {
             state.isReviewErr = null;
         },
-        getReviewByIdSuccess: (
-            state,
-            { payload }: PayloadAction<ReviewPost>
-        ) => {
+        getReviewByIdSuccess: (state, { payload }) => {
             state.reviewById = payload;
         },
         getReviewByIdFailure: (state, { payload }) => {
@@ -134,10 +116,7 @@ const review = createSlice({
         getRecentPostRequest: (state) => {
             state.isReviewErr = null;
         },
-        getRecentPostSuccess: (
-            state,
-            { payload }: PayloadAction<ReviewPost[]>
-        ) => {
+        getRecentPostSuccess: (state, { payload }) => {
             state.reviews = payload;
         },
         getRecentPostFailure: (state, { payload }) => {
@@ -147,10 +126,7 @@ const review = createSlice({
         getReviewsPostRequest: (state) => {
             state.isReviewErr = null;
         },
-        getReviewsPostSuccess: (
-            state,
-            { payload }: PayloadAction<ReviewPost[]>
-        ) => {
+        getReviewsPostSuccess: (state, { payload }) => {
             state.reviews = payload;
         },
         getReviewsPostFailure: (state, { payload }) => {

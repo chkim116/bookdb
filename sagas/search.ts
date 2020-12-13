@@ -41,7 +41,7 @@ function* getSearching({ payload }: PayloadAction<SearchPayload>) {
     } catch (err) {
         console.log(err);
         yield put(getSearchFailure(err.message));
-        yield put(loadFailure());
+        yield put(loadFailure(err.message));
     }
 }
 
@@ -54,7 +54,7 @@ function* getResults({ payload }: PayloadAction<SearchPayload>) {
     } catch (err) {
         console.log(err);
         yield put(getSearchResultFailure(err.message));
-        yield put(loadFailure());
+        yield put(loadFailure(err.message));
     }
 }
 

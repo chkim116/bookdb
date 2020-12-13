@@ -25,7 +25,7 @@ const loading = createSlice({
             state.isLoading = false;
             state.isDone = true;
         },
-        loadFailure: (state, { payload }: PayloadAction<Loading>) => {
+        loadFailure: (state, { payload }) => {
             state.isLoading = false;
             state.isError = payload;
             state.isDone = false;
