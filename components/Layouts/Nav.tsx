@@ -7,10 +7,12 @@ import { useRouter } from "next/dist/client/router";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux";
 import { BookData } from "../../@types/types";
-import { FormEvent, useCallback, useEffect } from "react";
+import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import { getSearchFailure, getSearchRequest } from "../../redux/search";
 import { authRequest, logoutRequest } from "../../redux/auth";
 import { getSelectBookFailure } from "../../redux/review";
+import { useMore, useScroll } from "../../hook";
+import { loadRequest } from "../../redux/loading";
 
 const Container = styled.div`
     margin: 0 auto;
@@ -51,6 +53,7 @@ const Nav = () => {
     const router = useRouter();
     const dispatch = useDispatch();
     const { isLogin, isAuth } = useSelector((state: RootState) => state.auth);
+    const { isLoading } = useSelector((state: RootState) => state.loading);
     const results: BookData[] = useSelector(
         (state: RootState) => state.search.searchData
     );
@@ -65,13 +68,16 @@ const Nav = () => {
         }
     }, []);
 
+    const [onMore, display] = useMore();
+
     useEffect(() => {
         if (searchText !== "") {
-            dispatch(getSearchRequest({ searchText: searchText }));
+            dispatch(loadRequest());
+            dispatch(getSearchRequest({ searchText, display }));
         } else {
             dispatch(getSearchFailure({ message: "입력 값이 없습니다." }));
         }
-    }, [searchText, dispatch]);
+    }, [searchText, dispatch, display]);
 
     const onSubmit = useCallback(
         (e: FormEvent<HTMLButtonElement | HTMLFormElement>) => {
@@ -80,6 +86,7 @@ const Nav = () => {
                 return alert("검색 값을 입력해주세요");
             }
             setSearchText("");
+
             router.push(`/search?query=${searchText}`);
         },
         [searchText]
@@ -102,6 +109,7 @@ const Nav = () => {
                     onChange={onChange}
                     onSubmit={onSubmit}
                     onClick={onClick}
+                    onMore={onMore}
                 />
                 <UserForm>
                     {isLogin ? (

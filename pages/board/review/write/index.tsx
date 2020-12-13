@@ -1,7 +1,7 @@
 import { useFindId, useFormInput, useInput } from "@cooksmelon/event";
 import Axios from "axios";
 import { useRouter } from "next/dist/client/router";
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { END } from "redux-saga";
 import { BookData } from "../../../../@types/types";
@@ -27,6 +27,7 @@ const index = () => {
     const [searchText, onChange, setSearchText] = useInput("");
     const [write, onWrite] = useFormInput();
     const [findId, onFindId] = useFindId();
+    const [display, setDisplaoy] = useState(15);
     const { user } = useSelector((state: RootState) => state.auth);
     const { isDone } = useSelector((state: RootState) => state.loading);
     const { title, content, rating } = useSelector(
@@ -84,7 +85,7 @@ const index = () => {
     // 리뷰할 책 검색
     useEffect(() => {
         if (searchText !== "") {
-            dispatch(getSelectBookRequest({ searchText }));
+            dispatch(getSelectBookRequest({ searchText, display }));
         } else {
             dispatch(getSelectBookFailure({ message: "입력 값이 없습니다." }));
         }

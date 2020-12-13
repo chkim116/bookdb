@@ -1,6 +1,14 @@
 import { PayloadAction } from "@reduxjs/toolkit";
 import Axios from "axios";
-import { all, call, fork, put, takeLatest, throttle } from "redux-saga/effects";
+import {
+    all,
+    call,
+    debounce,
+    fork,
+    put,
+    takeLatest,
+    throttle,
+} from "redux-saga/effects";
 import {
     getSearchFailure,
     getSearchRequest,
@@ -11,6 +19,7 @@ import {
     SearchPayload,
 } from "../redux/search";
 import { BookData, SearchResults } from "../@types/types";
+import { loadFailure, loadSuccess } from "../redux/loading";
 
 function getSearch(text: SearchPayload) {
     return Axios.post("/search", text).then((res) => res.data.items);
@@ -28,9 +37,11 @@ function* getSearching({ payload }: PayloadAction<SearchPayload>) {
         }
         const data: BookData[] = yield call(getSearch, payload);
         yield put(getSearchSuccess(data));
+        yield put(loadSuccess());
     } catch (err) {
         console.log(err);
         yield put(getSearchFailure(err.message));
+        yield put(loadFailure());
     }
 }
 
@@ -39,14 +50,16 @@ function* getResults({ payload }: PayloadAction<SearchPayload>) {
         const data: SearchResults[] = yield call(getResult, payload);
         yield put(getSearchFailure({ message: "이미 검색했으니 끌게요~" }));
         yield put(getSearchResultSuccess(data));
+        yield put(loadSuccess());
     } catch (err) {
         console.log(err);
         yield put(getSearchResultFailure(err.message));
+        yield put(loadFailure());
     }
 }
 
 function* watchGetSearch() {
-    yield throttle(100, getSearchRequest, getSearching);
+    yield debounce(300, getSearchRequest, getSearching);
 }
 
 function* watchSearchResults() {

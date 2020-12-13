@@ -57,17 +57,24 @@ const PubDate = styled.div`
 type Props = {
     results: SearchResults[];
     text: string;
+    lastElement: React.LegacyRef<HTMLDivElement>;
+    viewPort: React.LegacyRef<HTMLDivElement>;
 };
 
-const SearchBoardForm = ({ results, text }: Props) => {
+const SearchBoardForm = ({ results, text, lastElement, viewPort }: Props) => {
     return (
-        <ResultsContainer>
+        <ResultsContainer ref={viewPort}>
             <Title>{text} 검색 결과</Title>
             {results && results.length > 0 ? (
                 results.map((r, index) => (
-                    <Link href={r.link} key={index}>
+                    <Link key={index} href={r.link}>
                         <a target="blank">
-                            <ResultsForm>
+                            <ResultsForm
+                                ref={
+                                    results.length === index + 1
+                                        ? lastElement
+                                        : null
+                                }>
                                 <div>
                                     <img src={r.image} />
                                 </div>

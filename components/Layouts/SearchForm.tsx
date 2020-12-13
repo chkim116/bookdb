@@ -21,6 +21,7 @@ export const SearchResults = styled.div`
     background: ${(props) => props.theme.white};
     max-height: 450px;
     overflow-y: scroll;
+    overflow-x: hidden;
     ::-webkit-scrollbar {
         width: 10px;
         height: 20px;
@@ -31,6 +32,17 @@ export const SearchResults = styled.div`
     ::-webkit-scrollbar-thumb {
         border-radius: 8px;
         background-color: ${(props) => props.theme.gray};
+    }
+`;
+
+const More = styled.div`
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+    padding: 12px 0;
+    border: 1px solid ${(props) => props.theme.border};
+    &:hover {
+        background: ${(props) => props.theme.darkWhite};
     }
 `;
 
@@ -61,6 +73,7 @@ type Props = {
     onChange: onChange;
     onSubmit: onSubmit;
     onClick: () => void;
+    onMore: () => void;
 };
 
 const SearchForm = ({
@@ -69,6 +82,7 @@ const SearchForm = ({
     onChange,
     onSubmit,
     onClick,
+    onMore,
 }: Props) => {
     return (
         <MainSearch onSubmit={onSubmit}>
@@ -83,51 +97,59 @@ const SearchForm = ({
             <Button onSubmit={onSubmit} width="30px" type="submit">
                 검색
             </Button>
-            {results[0]?.title && (
-                <Button
-                    onClick={onClick}
-                    type="button"
-                    width="30px"
-                    bg={theme.blue}
-                    color={theme.white}>
-                    닫기
-                </Button>
+            {searchText && (
+                <>
+                    <Button
+                        onClick={onClick}
+                        type="button"
+                        width="30px"
+                        bg={theme.blue}
+                        color={theme.white}>
+                        닫기
+                    </Button>
+                </>
             )}
 
             <SearchResults>
                 {results[0]?.title ? (
-                    results.map((r, index) => (
-                        <>
-                            <Link
-                                href={`/search?query=${r.title.replace(
-                                    /<[^>]*>?/gm,
-                                    ""
-                                )}`}>
-                                <SearchBookList key={index}>
-                                    <div>
-                                        <img
-                                            src={
-                                                r.image
-                                                    ? r.image
-                                                    : faker.image.abstract(
-                                                          82,
-                                                          120
-                                                      )
-                                            }
-                                        />
-                                    </div>
-                                    <div
-                                        dangerouslySetInnerHTML={{
-                                            __html: r.title,
-                                        }}></div>
-                                    <div
-                                        dangerouslySetInnerHTML={{
-                                            __html: r.author,
-                                        }}></div>
-                                </SearchBookList>
-                            </Link>
-                        </>
-                    ))
+                    <>
+                        {results.map((r, index) => (
+                            <>
+                                <Link
+                                    key={index}
+                                    href={`/search?query=${r.title.replace(
+                                        /<[^>]*>?/gm,
+                                        ""
+                                    )}`}>
+                                    <a>
+                                        <SearchBookList>
+                                            <div>
+                                                <img
+                                                    src={
+                                                        r.image
+                                                            ? r.image
+                                                            : faker.image.abstract(
+                                                                  82,
+                                                                  120
+                                                              )
+                                                    }
+                                                />
+                                            </div>
+                                            <div
+                                                dangerouslySetInnerHTML={{
+                                                    __html: r.title,
+                                                }}></div>
+                                            <div
+                                                dangerouslySetInnerHTML={{
+                                                    __html: r.author,
+                                                }}></div>
+                                        </SearchBookList>
+                                    </a>
+                                </Link>
+                            </>
+                        ))}
+                        <More onClick={onMore}>더보기</More>
+                    </>
                 ) : (
                     <> </>
                 )}

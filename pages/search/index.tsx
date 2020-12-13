@@ -1,32 +1,41 @@
 import Axios from "axios";
 import { useRouter } from "next/dist/client/router";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { END } from "redux-saga";
 import SearchBoardForm from "../../components/search/SearchBoardForm";
+import { useScroll } from "../../hook";
 import { RootState } from "../../redux";
 import { authRequest } from "../../redux/auth";
-import { getSearchFailure, getSearchResultRequest } from "../../redux/search";
+import { loadRequest } from "../../redux/loading";
+import { getSearchResultRequest } from "../../redux/search";
 import wrapper from "../../store/configureStore";
 import { Container } from "../../styles/CommonStyle";
 
 const index = () => {
     const dispatch = useDispatch();
-
     const results = useSelector(
         (state: RootState) => state.search.searchResults
     );
     const router = useRouter();
     const text = Object.values(router.query)[0].toString();
+    const { isLoading } = useSelector((state: RootState) => state.loading);
+    const viewPort = useRef<HTMLDivElement>();
+    const [lastElement, display] = useScroll(viewPort.current, isLoading);
 
     useEffect(() => {
-        dispatch(getSearchFailure({ message: "이미 검색했으니 끌게요~" }));
-        dispatch(getSearchResultRequest({ searchText: text }));
-    }, [router.query]);
+        dispatch(loadRequest());
+        dispatch(getSearchResultRequest({ searchText: text, display }));
+    }, [router.query, display]);
 
     return (
         <Container>
-            <SearchBoardForm results={results} text={text} />
+            <SearchBoardForm
+                viewPort={viewPort}
+                results={results}
+                lastElement={lastElement}
+                text={text}
+            />
         </Container>
     );
 };

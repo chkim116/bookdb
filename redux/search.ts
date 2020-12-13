@@ -9,6 +9,7 @@ export type SearchState = {
 
 export type SearchPayload = {
     searchText: string | number | string[];
+    display: number;
 };
 
 const initialState: SearchState = {
@@ -40,6 +41,7 @@ const search = createSlice({
     name: "search",
     initialState,
     reducers: {
+        // 헤더 검색창
         getSearchRequest: (
             state,
             { payload }: PayloadAction<SearchPayload>
@@ -56,6 +58,7 @@ const search = createSlice({
             );
         },
 
+        // 검색된 목록
         getSearchResultRequest: (
             state,
             { payload }: PayloadAction<SearchPayload>

@@ -157,7 +157,7 @@ function* watchSelectBook() {
 }
 
 function* watchSearchBook() {
-    yield debounce(300, getSelectBookRequest, getSearching);
+    yield debounce(500, getSelectBookRequest, getSearching);
 }
 
 function* watchReviewSubmit() {
