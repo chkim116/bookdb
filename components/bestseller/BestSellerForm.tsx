@@ -29,7 +29,7 @@ const FilterNav = styled.div<any>`
         border: 1px solid ${(props) => props.theme.gray};
 
         ${(props) =>
-            props.selected === "0" &&
+            props.selected === Paths.WEEK &&
             css`
                 &:nth-of-type(1) {
                     pointer-events: none;
@@ -39,7 +39,7 @@ const FilterNav = styled.div<any>`
             `}
 
         ${(props) =>
-            props.selected === "2" &&
+            props.selected === Paths.MONTHLY &&
             css`
                 &:nth-of-type(2) {
                     pointer-events: none;
@@ -49,7 +49,7 @@ const FilterNav = styled.div<any>`
             `}
          
             ${(props) =>
-            props.selected === "3" &&
+            props.selected === Paths.YEARS &&
             css`
                 &:nth-of-type(3) {
                     pointer-events: none;

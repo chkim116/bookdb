@@ -53,7 +53,7 @@ const Nav = () => {
     const router = useRouter();
     const dispatch = useDispatch();
     const { isLogin, isAuth } = useSelector((state: RootState) => state.auth);
-    const { isLoading } = useSelector((state: RootState) => state.loading);
+    const { id } = useSelector((state: RootState) => state.auth.user);
     const results: BookData[] = useSelector(
         (state: RootState) => state.search.searchData
     );
@@ -115,6 +115,9 @@ const Nav = () => {
                     {isLogin ? (
                         <>
                             <div onClick={onLogout}>로그아웃</div>
+                            <Link href={`/mypage/${id}`}>
+                                <div>내 글 보기</div>
+                            </Link>
                         </>
                     ) : (
                         <>

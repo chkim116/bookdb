@@ -8,6 +8,7 @@ import BookSliders from "./BookSliders";
 import InterviewForm from "./InterviewForm";
 import BoardForm from "../Common/BoardCardForm";
 import review from "../../sagas/review";
+import Link from "next/link";
 
 const Container = styled.div`
     padding: 12px;
