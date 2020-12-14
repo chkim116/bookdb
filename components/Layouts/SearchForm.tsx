@@ -69,6 +69,7 @@ export const SearchBookList = styled.div`
 
 type Props = {
     searchText: string | number;
+    isSearch: boolean;
     results: BookData[];
     onChange: onChange;
     onSubmit: onSubmit;
@@ -83,6 +84,7 @@ const SearchForm = ({
     onSubmit,
     onClick,
     onMore,
+    isSearch,
 }: Props) => {
     return (
         <MainSearch onSubmit={onSubmit}>
@@ -97,7 +99,7 @@ const SearchForm = ({
             <Button onSubmit={onSubmit} width="30px" type="submit">
                 검색
             </Button>
-            {searchText && (
+            {isSearch && (
                 <>
                     <Button
                         onClick={onClick}

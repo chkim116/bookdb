@@ -10,8 +10,7 @@ import { BookData } from "../../@types/types";
 import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import { getSearchFailure, getSearchRequest } from "../../redux/search";
 import { authRequest, logoutRequest } from "../../redux/auth";
-import { getSelectBookFailure } from "../../redux/review";
-import { useMore, useScroll } from "../../hook";
+import { useMore } from "../../hook";
 import { loadRequest } from "../../redux/loading";
 
 const Container = styled.div`
@@ -57,7 +56,7 @@ const Nav = () => {
     const results: BookData[] = useSelector(
         (state: RootState) => state.search.searchData
     );
-
+    const isSearch: boolean = useSelector((state: RootState) => state.search);
     const onLogout = useCallback(() => {
         dispatch(logoutRequest());
     }, [dispatch]);
@@ -68,7 +67,12 @@ const Nav = () => {
         }
     }, []);
 
-    const [onMore, display] = useMore();
+    const [onMore, display] = useMore({
+        length: results.length,
+        initial: 10,
+        count: 10,
+        limit: 100,
+    });
 
     useEffect(() => {
         if (searchText !== "") {
@@ -77,7 +81,7 @@ const Nav = () => {
         } else {
             dispatch(getSearchFailure({ message: "입력 값이 없습니다." }));
         }
-    }, [searchText, dispatch, display]);
+    }, [searchText, display]);
 
     const onSubmit = useCallback(
         (e: FormEvent<HTMLButtonElement | HTMLFormElement>) => {
@@ -89,12 +93,12 @@ const Nav = () => {
 
             router.push(`/search?query=${searchText}`);
         },
-        [searchText]
+        [searchText, router]
     );
 
     const onClick = useCallback(() => {
         setSearchText((prev) => "");
-        dispatch(getSelectBookFailure({ message: "닫기" }));
+        dispatch(getSearchFailure({ message: "닫기" }));
     }, [dispatch]);
 
     return (
@@ -104,6 +108,7 @@ const Nav = () => {
                     <Logo>BookDB</Logo>
                 </Link>
                 <SearchForm
+                    isSearch={isSearch}
                     searchText={searchText}
                     results={results}
                     onChange={onChange}
