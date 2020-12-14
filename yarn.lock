@@ -158,23 +158,13 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
-"@cooksmelon/ajax@^1.0.1":
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/@cooksmelon/ajax/-/ajax-1.0.1.tgz#e3c6c2485b32895d8fd40b65b730972b206918ea"
-  integrity sha512-EaRwQyGAA2uGWtoPM2KagMOyXDIodDSucxaCvqsGdZvs2fFXxOKDh4kBrlWL2tgsnApcnTofouwUiHY7Gkx42Q==
+"@cooksmelon/event@^1.0.7":
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/@cooksmelon/event/-/event-1.0.7.tgz#ac3dadf085b279eac506e0cd9a8a1037f43e7945"
+  integrity sha512-ITlWxbsf8DtOC7ov8Tqxr7Mw6x2RsPcqIgxxieNN1GO3E1gdn29oivO020xyu2XI4j3fu8F8Wl5+O6Oa11g+Rg==
   dependencies:
     "@types/react" "^17.0.0"
     "@types/react-dom" "^17.0.0"
-    "@types/react-redux" "^7.1.11"
-    axios "^0.21.0"
-    react "^17.0.1"
-    react-dom "^17.0.1"
-    react-redux "^7.2.2"
-
-"@cooksmelon/event@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@cooksmelon/event/-/event-1.0.3.tgz#16a9450dd2ebfa9a34c7fac881b705652d4a0116"
-  integrity sha512-J7wU+kb+TGGDcftlHoKsUULVSgGe/wOnl3JsH+49oumypKroOoAvgpkz1S/oHEaYdDgB3iBpmQWG4RZ7OcvOyQ==
 
 "@ctrl/tinycolor@^3.1.6":
   version "3.2.0"
@@ -473,7 +463,7 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react-redux@*", "@types/react-redux@^7.1.11":
+"@types/react-redux@*":
   version "7.1.11"
   resolved "https://registry.yarnpkg.com/@types/react-redux/-/react-redux-7.1.11.tgz#a18e8ab3651e8e8cc94798934927937c66021217"
   integrity sha512-OjaFlmqy0CRbYKBoaWF84dub3impqnLJUrz4u8PRjDzaa4n1A2cVmjMV81shwXyAD5x767efhA8STFGJz/r1Zg==
@@ -4293,7 +4283,7 @@ rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
-react-dom@17.0.1, react-dom@^17.0.1:
+react-dom@17.0.1:
   version "17.0.1"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-17.0.1.tgz#1de2560474ec9f0e334285662ede52dbc5426fc6"
   integrity sha512-6eV150oJZ9U2t9svnsspTMrWNyHc6chX0KzDeAOXftRa8bNeOKTTfCJ7KorIwenkHd2xqVTBTCZd79yk/lx/Ug==
@@ -4328,7 +4318,7 @@ react-refresh@0.8.3:
   resolved "https://registry.yarnpkg.com/react-refresh/-/react-refresh-0.8.3.tgz#721d4657672d400c5e3c75d063c4a85fb2d5d68f"
   integrity sha512-X8jZHc7nCMjaCqoU+V2I0cOhNW+QMBwSUkeXnTi8IPe6zaRWfn60ZzvFDZqWPfmSJfjub7dDW1SP0jaHWLu/hg==
 
-react@17.0.1, react@^17.0.1:
+react@17.0.1:
   version "17.0.1"
   resolved "https://registry.yarnpkg.com/react/-/react-17.0.1.tgz#6e0600416bd57574e3f86d92edba3d9008726127"
   integrity sha512-lG9c9UuMHdcAexXtigOZLX8exLWkW0Ku29qPRU8uhF2R9BN96dLCt0psvzPLlHc5OWkgymP3qwTRgbnw5BKx3w==

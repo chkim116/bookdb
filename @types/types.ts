@@ -1,3 +1,5 @@
+import { FormEvent } from "react";
+
 // 베스트 셀러 paths enum
 export enum Paths {
     WEEK = "0",
@@ -128,7 +130,7 @@ export type User = {
 
 export type onClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 export type onChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLFormElement>
+    e: React.ChangeEvent | FormEvent<HTMLInputElement | HTMLFormElement>
 ) => void;
 export type onSubmit = (
     e: React.FormEvent<HTMLFormElement | HTMLButtonElement>

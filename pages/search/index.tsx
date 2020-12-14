@@ -1,6 +1,6 @@
 import Axios from "axios";
 import { useRouter } from "next/dist/client/router";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { END } from "redux-saga";
 import SearchBoardForm from "../../components/search/SearchBoardForm";
@@ -17,14 +17,18 @@ const index = () => {
     const results = useSelector(
         (state: RootState) => state.search.searchResults
     );
+    const { isLoading } = useSelector((state: RootState) => state.loading);
     const router = useRouter();
     const text = Object.values(router.query)[0].toString();
     const viewPort = useRef<HTMLDivElement>();
-    const [lastElement, display] = useScroll(viewPort.current, {
+    const [lastElement, display] = useScroll({
+        viewPort: viewPort.current,
         length: results.length,
         initial: 10,
         count: 10,
         limit: 100,
+        isLoading: isLoading,
+        query: router.query,
     });
 
     useEffect(() => {

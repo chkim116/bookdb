@@ -92,6 +92,17 @@ const ResultInput = styled.div`
     align-items: center;
 `;
 
+const More = styled.div`
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+    padding: 12px 0;
+    border: 1px solid ${(props) => props.theme.border};
+    &:hover {
+        background: ${(props) => props.theme.darkWhite};
+    }
+`;
+
 type Props = {
     review: boolean;
     update: boolean;
@@ -103,6 +114,7 @@ type Props = {
     onFindId?: onClick;
     onWrite: onChange;
     onClick?: () => void;
+    onMore: () => void;
     onSubmit: onSubmit;
     searchText?: string | number;
 };
@@ -120,6 +132,7 @@ const WriteCommonForm = ({
     onSubmit,
     searchText,
     onClick,
+    onMore,
 }: Props) => {
     const router = useRouter();
 
@@ -152,33 +165,36 @@ const WriteCommonForm = ({
                             </ResultInput>
                             <SearchResults>
                                 {results[0]?.title ? (
-                                    results.map((r) => (
-                                        <SearchBookList
-                                            onClick={onFindId}
-                                            data-id={`${r.title}&&${r.author}&&${r.image}&&${r.isbn}`}
-                                            key={faker.random.uuid()}>
-                                            <div>
-                                                <img
-                                                    src={
-                                                        r.image
-                                                            ? r.image
-                                                            : faker.image.abstract(
-                                                                  82,
-                                                                  120
-                                                              )
-                                                    }
-                                                />
-                                            </div>
-                                            <div
-                                                dangerouslySetInnerHTML={{
-                                                    __html: r.title,
-                                                }}></div>
-                                            <div
-                                                dangerouslySetInnerHTML={{
-                                                    __html: r.author,
-                                                }}></div>
-                                        </SearchBookList>
-                                    ))
+                                    <>
+                                        {results.map((r) => (
+                                            <SearchBookList
+                                                onClick={onFindId}
+                                                data-id={`${r.title}&&${r.author}&&${r.image}&&${r.isbn}`}
+                                                key={faker.random.uuid()}>
+                                                <div>
+                                                    <img
+                                                        src={
+                                                            r.image
+                                                                ? r.image
+                                                                : faker.image.abstract(
+                                                                      82,
+                                                                      120
+                                                                  )
+                                                        }
+                                                    />
+                                                </div>
+                                                <div
+                                                    dangerouslySetInnerHTML={{
+                                                        __html: r.title,
+                                                    }}></div>
+                                                <div
+                                                    dangerouslySetInnerHTML={{
+                                                        __html: r.author,
+                                                    }}></div>
+                                            </SearchBookList>
+                                        ))}
+                                        <More onClick={onMore}>더보기</More>
+                                    </>
                                 ) : (
                                     <div> </div>
                                 )}

@@ -7,11 +7,11 @@ import { useRouter } from "next/dist/client/router";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../redux";
 import { BookData } from "../../@types/types";
-import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
+import { FormEvent, useCallback, useEffect } from "react";
 import { getSearchFailure, getSearchRequest } from "../../redux/search";
 import { authRequest, logoutRequest } from "../../redux/auth";
-import { useMore } from "../../hook";
 import { loadRequest } from "../../redux/loading";
+import { useMore } from "../../hook";
 
 const Container = styled.div`
     margin: 0 auto;
@@ -61,18 +61,18 @@ const Nav = () => {
         dispatch(logoutRequest());
     }, [dispatch]);
 
-    useEffect(() => {
-        if (!isAuth) {
-            dispatch(authRequest());
-        }
-    }, []);
-
     const [onMore, display] = useMore({
         length: results.length,
         initial: 10,
         count: 10,
         limit: 100,
     });
+
+    useEffect(() => {
+        if (!isAuth) {
+            dispatch(authRequest());
+        }
+    }, []);
 
     useEffect(() => {
         if (searchText !== "") {

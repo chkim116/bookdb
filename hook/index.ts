@@ -1,30 +1,35 @@
-import { useRouter } from "next/dist/client/router";
 import { useCallback, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../redux";
 
 type Props = {
+    viewPort?: any;
     length: number;
     initial: number;
     count: number;
     limit: number;
+    isLoading?: boolean;
+    query?: any;
 };
 
-export const useScroll = (
-    viewPort: any,
-    { length, initial, count, limit }: Props
-): any => {
+export const useScroll = ({
+    viewPort,
+    length,
+    initial,
+    count,
+    limit,
+    query,
+    isLoading,
+}: Props): any => {
     const [display, setDisplay] = useState(initial);
-    const router = useRouter();
-
-    const { isLoading } = useSelector((state: RootState) => state.loading);
     const lastElement = useCallback(
         (node) => {
-            if (isLoading) return;
-            if (node === null) return;
-            if (viewPort === undefined) return;
-            if (length < display) return;
-            if (display === limit) return;
+            if (
+                isLoading ||
+                length < display ||
+                display === limit ||
+                viewPort === undefined ||
+                node === null
+            )
+                return;
             viewPort = new IntersectionObserver((entries) => {
                 if (entries[0].isIntersecting && display !== limit) {
                     viewPort.disconnect();
@@ -37,22 +42,30 @@ export const useScroll = (
         },
         [isLoading, display, length, limit, viewPort]
     );
-
     useEffect(() => {
         setDisplay((prev) => initial);
-    }, [router.query]);
+    }, [query]);
 
     return [lastElement, display];
 };
 
-export const useMore = ({ length, initial, count, limit }: Props): any => {
+export const useMore = ({
+    length,
+    initial,
+    count,
+    limit,
+    query,
+    isLoading,
+}: Props): any => {
     const [display, setDisplay] = useState(initial);
-
     const onClick = useCallback(() => {
-        if (display === limit) return;
-        if (length < display) return;
+        if (display === limit || length < display || isLoading) return;
         setDisplay((prev: number) => (prev += count));
     }, [display, length, limit]);
+
+    useEffect(() => {
+        setDisplay((prev) => initial);
+    }, [query]);
 
     return [onClick, display];
 };

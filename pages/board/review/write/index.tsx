@@ -1,12 +1,13 @@
 import { useFindId, useFormInput, useInput } from "@cooksmelon/event";
 import Axios from "axios";
 import { useRouter } from "next/dist/client/router";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { END } from "redux-saga";
 import { BookData } from "../../../../@types/types";
 import ReviewWrite from "../../../../components/board/review/write/ReviewWrite";
 import PleaseLogin from "../../../../components/Common/PleaseLogin";
+import { useMore } from "../../../../hook";
 import { RootState } from "../../../../redux";
 import { authRequest } from "../../../../redux/auth";
 import { loadRequest } from "../../../../redux/loading";
@@ -27,7 +28,6 @@ const index = () => {
     const [searchText, onChange, setSearchText] = useInput("");
     const [write, onWrite] = useFormInput();
     const [findId, onFindId] = useFindId();
-    const [display, setDisplaoy] = useState(15);
     const { user } = useSelector((state: RootState) => state.auth);
     const { isDone } = useSelector((state: RootState) => state.loading);
     const { title, content, rating } = useSelector(
@@ -40,6 +40,13 @@ const index = () => {
         (state: RootState) => state.review.searchData
     );
     const { reviewRouter } = useSelector((state: RootState) => state.review);
+
+    const [onMore, display] = useMore({
+        length: results.length,
+        initial: 10,
+        count: 10,
+        limit: 100,
+    });
 
     // 검색창 닫기
     const onClick = useCallback(() => {
@@ -89,7 +96,7 @@ const index = () => {
         } else {
             dispatch(getSelectBookFailure({ message: "입력 값이 없습니다." }));
         }
-    }, [searchText]);
+    }, [searchText, display]);
 
     // 리뷰할 책 선택
     useEffect(() => {
@@ -108,6 +115,7 @@ const index = () => {
         <Container color={theme.white}>
             {user.id ? (
                 <ReviewWrite
+                    onMore={onMore}
                     onChange={onChange}
                     onSubmit={onSubmit}
                     onWrite={onWrite}
