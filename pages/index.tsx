@@ -94,8 +94,6 @@ export const getServerSideProps = wrapper.getServerSideProps(async (ctx) => {
     const cookie = ctx.req?.headers?.cookie;
     Axios.defaults.headers.Cookie = "";
 
-    console.log(ctx.req.headers.cookie);
-
     if (ctx.req && cookie) {
         Axios.defaults.headers.Cookie = cookie;
         store.dispatch(authRequest());
