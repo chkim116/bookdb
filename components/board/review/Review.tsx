@@ -3,7 +3,6 @@ import styled from "@emotion/styled";
 import { onClick, ReviewPost } from "../../../@types/types";
 import BoardForm from "../../Common/BoardCardForm";
 import { Title } from "../../../styles/CommonStyle";
-import faker from "faker";
 import BannerImg from "../../Common/BannerImg";
 import PostButton from "../../Common/PostButton";
 import banner from "../../../images/banner.jpg";

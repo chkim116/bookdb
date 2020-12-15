@@ -36,7 +36,7 @@ const index = () => {
 
     useEffect(() => {
         if (isLoginErr) {
-            alert(`로그인 에러, 새로고침 후 시도해주세요`);
+            alert(`로그인 에러, 다시 시도해주세요`);
         }
     }, [isLoginErr]);
 

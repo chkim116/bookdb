@@ -4,7 +4,6 @@ import styled from "@emotion/styled";
 import Link from "next/link";
 import { Button } from "../../styles/CommonStyle";
 import EditBoxForm from "../Common/EditBox";
-import faker from "faker";
 import { css } from "@emotion/react";
 import Rating from "./Rating";
 import { useSelector } from "react-redux";
@@ -39,10 +38,10 @@ const ReviewForm = styled.div`
 const BoardCardForm = styled.div<Components>`
     text-align: center;
     padding: 12px;
-    max-height: 400px;
     ${(props) =>
         props.review &&
         css`
+            max-height: 400px;
             max-width: 350px;
             min-width: 235px;
         `}
@@ -170,8 +169,8 @@ const BoardForm = ({
                               )}
                       </ReviewForm>
                   ))
-                : list.map((v: BoardCard) => (
-                      <div key={faker.random.uuid()}>
+                : list.map((v: BoardCard, index) => (
+                      <div key={index}>
                           <Rank>{v.id + 1}</Rank>
                           <BoardCardForm>
                               <BoardTitle>{v.title}</BoardTitle>

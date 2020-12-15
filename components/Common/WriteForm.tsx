@@ -14,8 +14,8 @@ import {
     onSubmit,
     ReviewPost,
 } from "../../@types/types";
-import faker from "faker";
 import Rating from "./Rating";
+import book from "../../images/book.jpg";
 
 const Container = styled.div`
     width: 100%;
@@ -166,20 +166,17 @@ const WriteCommonForm = ({
                             <SearchResults>
                                 {results[0]?.title ? (
                                     <>
-                                        {results.map((r) => (
+                                        {results.map((r, index) => (
                                             <SearchBookList
                                                 onClick={onFindId}
                                                 data-id={`${r.title}&&${r.author}&&${r.image}&&${r.isbn}`}
-                                                key={faker.random.uuid()}>
+                                                key={index}>
                                                 <div>
                                                     <img
                                                         src={
                                                             r.image
                                                                 ? r.image
-                                                                : faker.image.abstract(
-                                                                      82,
-                                                                      120
-                                                                  )
+                                                                : book
                                                         }
                                                     />
                                                 </div>

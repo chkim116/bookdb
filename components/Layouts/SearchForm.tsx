@@ -1,10 +1,10 @@
-import React, { ChangeEvent, FormEvent } from "react";
+import React from "react";
 import styled from "@emotion/styled";
 import { Button, Input } from "../../styles/CommonStyle";
 import Link from "next/link";
-import faker from "faker";
-import { BookData, onChange, onClick, onSubmit } from "../../@types/types";
+import { BookData, onChange, onSubmit } from "../../@types/types";
 import theme from "../../styles/theme";
+import book from "../../images/book.jpg";
 
 const MainSearch = styled.form`
     position: relative;
@@ -99,7 +99,7 @@ const SearchForm = ({
             <Button onSubmit={onSubmit} width="30px" type="submit">
                 검색
             </Button>
-            {isSearch && (
+            {isSearch && searchText !== "" && (
                 <>
                     <Button
                         onClick={onClick}
@@ -128,12 +128,7 @@ const SearchForm = ({
                                             <div>
                                                 <img
                                                     src={
-                                                        r.image
-                                                            ? r.image
-                                                            : faker.image.abstract(
-                                                                  82,
-                                                                  120
-                                                              )
+                                                        r.image ? r.image : book
                                                     }
                                                 />
                                             </div>

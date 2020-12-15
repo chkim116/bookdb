@@ -10,17 +10,16 @@ import rootSaga from "../sagas";
 const configureStore = () => {
     const sagaMiddleware = createSagaMiddleware();
     const logger = createLogger();
+    const middlewares = [sagaMiddleware, logger];
     const enhancer =
         process.env.NODE_ENV === "production"
-            ? compose(applyMiddleware())
-            : compose(
-                  composeWithDevTools(applyMiddleware(sagaMiddleware, logger))
-              );
+            ? compose(applyMiddleware(sagaMiddleware))
+            : compose(composeWithDevTools(applyMiddleware(...middlewares)));
     const store = createStore(rootReducer, enhancer);
     store.sagaTask = sagaMiddleware.run(rootSaga);
     return store;
 };
 
-const wrapper = createWrapper(configureStore, { debug: true });
+const wrapper = createWrapper(configureStore, { debug: false });
 
 export default wrapper;

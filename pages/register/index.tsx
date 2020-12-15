@@ -36,7 +36,7 @@ const index = () => {
 
     useEffect(() => {
         if (isRegisterErr) {
-            alert(`회원가입 에러, 새로고침 후 시도해주세요`);
+            alert(`회원가입 에러, 다시 시도해주세요`);
         }
     }, [isRegisterErr]);
 
