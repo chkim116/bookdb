@@ -23,7 +23,7 @@ const AppLayouts = styled.main`
     flex-direction: column;
 `;
 
-Axios.defaults.baseURL = "http://localhost:4000/";
+Axios.defaults.baseURL = process.env.NODE_ENV === "production" ? "https://bookdb-b.herokuapp.com/" : "http://localhost:4000/";
 Axios.defaults.withCredentials = true;
 
 function MyApp({ Component, pageProps }: AppProps) {
