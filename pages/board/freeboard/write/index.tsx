@@ -5,6 +5,7 @@ import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { END } from "redux-saga";
 import FreeBoardWrite from "../../../../components/board/freeboard/write/FreeBoardWrite";
+import { Seo } from "../../../../head/Seo";
 import { RootState } from "../../../../redux";
 import { authRequest } from "../../../../redux/auth";
 import { freeBoardWriteSubmit } from "../../../../redux/freeBoard";
@@ -56,8 +57,15 @@ const index = () => {
         }
     }, [isDone]);
 
+    const data = {
+        title: `자유게시판 글 작성`,
+        description: "글을 써서 다른 사람과 이야기 해보세요!, BookDB",
+        canonical: `${router.asPath}`,
+    };
+
     return (
         <Container>
+            <Seo data={data} />
             <FreeBoardWrite onSubmit={onSubmit} onWrite={onWrite} />
         </Container>
     );

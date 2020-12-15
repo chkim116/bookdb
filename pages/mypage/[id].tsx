@@ -5,6 +5,7 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { END } from "redux-saga";
 import Mypage from "../../components/mypage/Mypage";
+import { Seo } from "../../head/Seo";
 import { RootState } from "../../redux";
 import { authRequest } from "../../redux/auth";
 import wrapper from "../../store/configureStore";
@@ -22,8 +23,15 @@ const index = ({ userPost }: any) => {
         }
     }, [isAuth, isLogin]);
 
+    const data = {
+        title: `마이페이지`,
+        description: "마이 페이지 내 글을 조회해보세요, BookDB",
+        canonical: `${router.asPath}`,
+    };
+
     return (
         <Container>
+            <Seo data={data} />
             {isAuth && isLogin && (
                 <Mypage
                     userPost={userPost}

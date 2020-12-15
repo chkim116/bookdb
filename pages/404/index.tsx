@@ -2,6 +2,7 @@ import React from "react";
 import styled from "@emotion/styled";
 import { Button } from "../../styles/CommonStyle";
 import Link from "next/link";
+import { Seo } from "../../head/Seo";
 
 const Container = styled.div`
     width: 100%;
@@ -25,8 +26,13 @@ const Container = styled.div`
 `;
 
 const index = () => {
+    const data = {
+        title: `404 NotFound`,
+    };
+
     return (
         <Container>
+            <Seo data={data} />
             <div>
                 <div>에러</div>
                 <Link href="/">

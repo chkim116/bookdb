@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { END } from "redux-saga";
 import SearchBoardForm from "../../components/search/SearchBoardForm";
+import { Seo } from "../../head/Seo";
 import { useScroll } from "../../hook";
 import { RootState } from "../../redux";
 import { authRequest } from "../../redux/auth";
@@ -36,8 +37,15 @@ const index = () => {
         dispatch(getSearchResultRequest({ searchText: text, display }));
     }, [router.query, display]);
 
+    const data = {
+        title: `${router.query.query} 검색결과`,
+        description: "책 검색 결과 페이지, BookDB",
+        canonical: `${router.asPath}`,
+    };
+
     return (
         <Container>
+            <Seo data={data} />
             <SearchBoardForm
                 viewPort={viewPort}
                 results={results}

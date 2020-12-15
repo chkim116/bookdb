@@ -5,6 +5,7 @@ import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { END } from "redux-saga";
 import FreeBoard from "../../../components/board/freeboard/FreeBoard";
+import { Seo } from "../../../head/Seo";
 import { RootState } from "../../../redux";
 import { authRequest } from "../../../redux/auth";
 import {
@@ -41,8 +42,16 @@ const index = () => {
         [router]
     );
 
+    const data = {
+        title: `자유게시판`,
+        description:
+            "익명으로도 자유롭게 게시글을 등록할 수 있는 페이지, BookDB",
+        canonical: `${router.asPath}`,
+    };
+
     return (
         <Container>
+            <Seo data={data} />
             <FreeBoard
                 freeBoards={freeBoards}
                 onDelete={onDelete}

@@ -6,6 +6,7 @@ import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { END } from "redux-saga";
 import ReviewDetail from "../../../../components/board/review/detail/ReviewDetail";
+import { Seo } from "../../../../head/Seo";
 import { RootState } from "../../../../redux";
 import { authRequest } from "../../../../redux/auth";
 import { loadRequest } from "../../../../redux/loading";
@@ -43,8 +44,15 @@ const index = () => {
         [router]
     );
 
+    const data = {
+        title: `${reviewById.title}`,
+        description: "리뷰한 게시글 디테일 페이지, BookDB",
+        canonical: `${router.asPath}`,
+    };
+
     return (
         <Container color={theme.white}>
+            <Seo data={data} />
             <ReviewDetail
                 reviewById={reviewById}
                 onDelete={onDelete}

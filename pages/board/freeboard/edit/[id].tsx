@@ -5,6 +5,7 @@ import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { END } from "redux-saga";
 import FreeBoardEditForm from "../../../../components/board/freeboard/edit/FreeBoardEditForm";
+import { Seo } from "../../../../head/Seo";
 import { RootState } from "../../../../redux";
 import { authRequest } from "../../../../redux/auth";
 import {
@@ -57,8 +58,15 @@ const index = () => {
         [title, content, dispatch, router, id, freeBoardById]
     );
 
+    const data = {
+        title: `${freeBoardById.title} 수정`,
+        description: "자유게시글 수정 페이지, BookDB",
+        canonical: `${router.asPath}`,
+    };
+
     return (
         <Container color={theme.white}>
+            <Seo data={data} />
             <FreeBoardEditForm
                 freeBoardById={freeBoardById}
                 onWrite={onWrite}

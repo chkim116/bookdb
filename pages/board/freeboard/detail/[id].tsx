@@ -5,6 +5,7 @@ import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { END } from "redux-saga";
 import FreeBoardDetail from "../../../../components/board/freeboard/detail/FreeBoardDetail";
+import { Seo } from "../../../../head/Seo";
 import { RootState } from "../../../../redux";
 import { authRequest } from "../../../../redux/auth";
 import {
@@ -43,9 +44,15 @@ const index = () => {
         },
         [router]
     );
+    const data = {
+        title: `${freeBoardById.title}`,
+        description: "자유게시글 디테일 페이지, BookDB",
+        canonical: `${router.asPath}`,
+    };
 
     return (
         <Container color={theme.white}>
+            <Seo data={data} />
             <FreeBoardDetail
                 freeBoardById={freeBoardById}
                 onDelete={onDelete}

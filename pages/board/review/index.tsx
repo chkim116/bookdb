@@ -11,6 +11,7 @@ import { authRequest } from "../../../redux/auth";
 import Axios from "axios";
 import { loadRequest } from "../../../redux/loading";
 import { useRouter } from "next/dist/client/router";
+import { Seo } from "../../../head/Seo";
 
 const index = () => {
     const { reviews } = useSelector((state: RootState) => state.review);
@@ -37,9 +38,15 @@ const index = () => {
         },
         [router]
     );
+    const data = {
+        title: `리뷰`,
+        description: "리뷰를 볼 수 있는 페이지, BookDB",
+        canonical: `${router.asPath}`,
+    };
 
     return (
         <Container>
+            <Seo data={data} />
             <Review
                 reviewPost={reviews}
                 onDelete={onDelete}

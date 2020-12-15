@@ -7,6 +7,7 @@ import { END } from "redux-saga";
 import { BookData } from "../../../../@types/types";
 import ReviewWrite from "../../../../components/board/review/write/ReviewWrite";
 import PleaseLogin from "../../../../components/Common/PleaseLogin";
+import { Seo } from "../../../../head/Seo";
 import { useMore } from "../../../../hook";
 import { RootState } from "../../../../redux";
 import { authRequest } from "../../../../redux/auth";
@@ -111,8 +112,15 @@ const index = () => {
         setSearchText("");
     }, [findId]);
 
+    const data = {
+        title: `리뷰 글 작성`,
+        description: "별점으로 책을 평가하고 리뷰를 남겨보세요!, BookDB",
+        canonical: `${router.asPath}`,
+    };
+
     return (
         <Container color={theme.white}>
+            <Seo data={data} />
             {user.id ? (
                 <ReviewWrite
                     onMore={onMore}

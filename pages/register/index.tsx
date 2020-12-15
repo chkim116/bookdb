@@ -5,6 +5,7 @@ import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { END } from "redux-saga";
 import Register from "../../components/register/Register";
+import { Seo } from "../../head/Seo";
 import { RootState } from "../../redux";
 import { authRequest, registerRequest } from "../../redux/auth";
 import { loadRequest } from "../../redux/loading";
@@ -40,8 +41,15 @@ const index = () => {
         }
     }, [isRegisterErr]);
 
+    const data = {
+        title: `회원가입`,
+        description: "회원가입 페이지, BookDB",
+        canonical: `${router.asPath}`,
+    };
+
     return (
         <Container>
+            <Seo data={data} />
             <Register onRegister={onRegister} onChange={onChange}></Register>
         </Container>
     );

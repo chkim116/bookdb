@@ -9,6 +9,7 @@ import { END } from "redux-saga";
 import { getRecentPostRequest } from "../redux/review";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux";
+import { Seo } from "../head/Seo";
 
 export type Slide = {
     slide: number;
@@ -61,8 +62,14 @@ export default function Home({ interview, list }: Props) {
         setContainerWidth(containerW);
     }, [widths, containerW]);
 
+    const data = {
+        title: "Home",
+        description: "원하는 책을 검색하고, 평가하고 리뷰하세요!, BookDB",
+    };
+
     return (
         <Container>
+            <Seo data={data} />
             <MainPage
                 reviews={reviews}
                 interview={interview}
@@ -78,14 +85,14 @@ export default function Home({ interview, list }: Props) {
 
 export const getServerSideProps = wrapper.getServerSideProps(async (ctx) => {
     const { store } = ctx;
-
+    console.log(ctx.req);
     const interview: Interview[] = await Axios.get("/crawling/interview").then(
         (res) => res.data
     );
     const list: BoardCard[] = await Axios.get("/crawling/steady").then(
         (res) => res.data
     );
-
+    console.log(ctx.req);
     const cookie = ctx.req?.headers?.cookie;
     Axios.defaults.headers.Cookie = "";
 

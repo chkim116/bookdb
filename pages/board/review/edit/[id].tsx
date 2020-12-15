@@ -5,6 +5,7 @@ import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { END } from "redux-saga";
 import ReviewEditForm from "../../../../components/board/review/edit/ReviewEditForm";
+import { Seo } from "../../../../head/Seo";
 import { RootState } from "../../../../redux";
 import { authRequest } from "../../../../redux/auth";
 import { loadRequest } from "../../../../redux/loading";
@@ -57,8 +58,15 @@ const index = () => {
         [title, content, dispatch, id, router, reviewById]
     );
 
+    const data = {
+        title: `${reviewById.title} 수정하기`,
+        description: "리뷰 게시글 수정, BookDB",
+        canonical: `${router.asPath}`,
+    };
+
     return (
         <Container color={theme.white}>
+            <Seo data={data} />
             <ReviewEditForm
                 onSubmit={onSubmit}
                 reviewById={reviewById}

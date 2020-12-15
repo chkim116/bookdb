@@ -11,6 +11,7 @@ import Loader from "../../styles/loader";
 import wrapper from "../../store/configureStore";
 import { authRequest } from "../../redux/auth";
 import { END } from "redux-saga";
+import { Seo } from "../../head/Seo";
 
 const checkRouter = (id: string | string[]): string => {
     if (id === Paths.WEEK) {
@@ -48,8 +49,18 @@ const index = ({ list }: Props) => {
         setTitle(bestTitle);
     }, [router]);
 
+    const data = {
+        title: `베스트셀러`,
+        description:
+            "주간, 월간, 년간 베스트셀러를 쉽게 파악할 수 있어요!, BookDB",
+        keywords:
+            "베스트셀러, 책베스트셀러, 주간베스트셀러, 월간베스트셀러, 년간베스트셀러, 교보문고, 교보문고베스트셀러",
+        canonical: `${router.asPath}`,
+    };
+
     return (
         <Container>
+            <Seo data={data} />
             {isLoading && <Loader />}
             <BestSellerForm
                 list={list}

@@ -5,6 +5,7 @@ import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { END } from "redux-saga";
 import Login from "../../components/login/Login";
+import { Seo } from "../../head/Seo";
 import { RootState } from "../../redux";
 import { authRequest, loginRequest } from "../../redux/auth";
 import { loadRequest } from "../../redux/loading";
@@ -40,8 +41,15 @@ const index = () => {
         }
     }, [isLoginErr]);
 
+    const data = {
+        title: `로그인`,
+        description: "로그인 페이지, BookDB",
+        canonical: `${router.asPath}`,
+    };
+
     return (
         <Container>
+            <Seo data={data} />
             <Login onLogin={onLogin} onChange={onChange}></Login>;
         </Container>
     );
