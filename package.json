@@ -16,7 +16,6 @@
         "@reduxjs/toolkit": "^1.5.0",
         "@types/next-redux-saga": "^3.0.2",
         "@types/quill": "^2.0.4",
-        "antd": "^4.9.1",
         "axios": "^0.21.0",
         "cheerio": "^1.0.0-rc.3",
         "cross-env": "^7.0.3",

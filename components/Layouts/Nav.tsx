@@ -9,7 +9,7 @@ import { RootState } from "../../redux";
 import { BookData } from "../../@types/types";
 import { FormEvent, useCallback, useEffect } from "react";
 import { getSearchFailure, getSearchRequest } from "../../redux/search";
-import { authRequest, logoutRequest } from "../../redux/auth";
+import { logoutRequest } from "../../redux/auth";
 import { loadRequest } from "../../redux/loading";
 import { useMore } from "../../hook";
 
@@ -51,7 +51,7 @@ const Nav = () => {
     const [searchText, onChange, setSearchText] = useInput("");
     const router = useRouter();
     const dispatch = useDispatch();
-    const { isLogin, isAuth } = useSelector((state: RootState) => state.auth);
+    const { isLogin } = useSelector((state: RootState) => state.auth);
     const { id } = useSelector((state: RootState) => state.auth.user);
     const results: BookData[] = useSelector(
         (state: RootState) => state.search.searchData
@@ -67,12 +67,6 @@ const Nav = () => {
         count: 10,
         limit: 100,
     });
-
-    useEffect(() => {
-        if (!isAuth) {
-            dispatch(authRequest());
-        }
-    }, []);
 
     useEffect(() => {
         if (searchText !== "") {
