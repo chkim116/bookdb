@@ -88,7 +88,7 @@ export const RichTextEditor = ({ value }: Props) => {
                     formData.append("image", file);
 
                     // 현재 커서 위치 저장
-                    const range = quill.getSelection(true);
+                    const range: any = quill.getSelection(true);
                     // 현재 위치에 이미지 놓기
                     quill.insertEmbed(
                         range.index,

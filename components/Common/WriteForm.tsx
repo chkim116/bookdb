@@ -114,7 +114,7 @@ type Props = {
     onFindId?: onClick;
     onWrite: onChange;
     onClick?: () => void;
-    onMore: () => void;
+    onMore?: () => void;
     onSubmit: onSubmit;
     searchText?: string | number;
 };
