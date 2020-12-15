@@ -12,6 +12,7 @@ import Axios from "axios";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux";
 import Loader from "../styles/loader";
+import { useEffect } from "react";
 
 const AppLayouts = styled.main`
     width: 100%;
@@ -31,7 +32,21 @@ Axios.defaults.withCredentials = true;
 
 function MyApp({ Component, pageProps }: AppProps) {
     const { isLoading } = useSelector((state: RootState) => state.loading);
+    const { token, isLogout } = useSelector((state: RootState) => state.auth);
+    useEffect(() => {
+        if (token) {
+            const date = new Date();
+            date.setTime(date.getTime() + 7 * 24 * 60 * 60 * 1000);
+            const expires = `; expires=${date.toUTCString()}`;
+            document.cookie = `x_auth=${token} ${expires} ; samesite=none ; httpOnly ; secure`;
+        }
+    }, [token]);
 
+    useEffect(() => {
+        if (isLogout) {
+            document.cookie = "x_auth=; Max-Age=0";
+        }
+    }, [isLogout]);
     return (
         <ThemeProvider theme={theme}>
             {isLoading && <Loader />}

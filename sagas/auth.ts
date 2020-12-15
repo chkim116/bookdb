@@ -21,7 +21,7 @@ import { SignWriteText, User } from "../@types/types";
 // ajax
 
 function login(form: SignWriteText) {
-    return Axios.post("/login", form);
+    return Axios.post("/login", form).then((res) => res.data);
 }
 
 function logout() {
@@ -29,7 +29,7 @@ function logout() {
 }
 
 function register(form: SignWriteText) {
-    return Axios.post("/register", form);
+    return Axios.post("/register", form).then((res) => res.data);
 }
 
 function getUserData() {
@@ -40,8 +40,8 @@ function getUserData() {
 
 function* postLogin({ payload }: PayloadAction<SignWriteText>) {
     try {
-        yield call(login, payload);
-        yield put(loginSuccess());
+        const token = yield call(login, payload);
+        yield put(loginSuccess(token));
         yield put(loadSuccess());
     } catch (err) {
         console.log(err);
@@ -64,9 +64,9 @@ function* postLogout() {
 
 function* postRegister({ payload }: PayloadAction<SignWriteText>) {
     try {
-        yield call(register, payload);
+        const token = yield call(register, payload);
         yield put(registerSuccess());
-        yield put(loginSuccess());
+        yield put(loginSuccess(token));
         yield put(loadSuccess());
     } catch (err) {
         console.log(err);
@@ -79,7 +79,7 @@ function* getAuth() {
     try {
         const userData: User = yield call(getUserData);
         yield put(authSuccess(userData));
-        yield put(loginSuccess());
+        yield put(loginSuccess(userData.token));
     } catch (err) {
         console.log(err);
         yield put(authFailure(err.message));

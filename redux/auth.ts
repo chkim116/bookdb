@@ -5,11 +5,13 @@ export type Auth = {
     isLogin: boolean;
     isRegister: boolean;
     isLoginErr: string | null;
+    isLogout: boolean;
     isLogoutErr: string | null;
     isRegisterErr: string | null;
     isAuth: boolean;
     isAuthErr: string | null;
     user: User;
+    token: string;
 };
 
 const initialState: Auth = {
@@ -17,13 +19,16 @@ const initialState: Auth = {
     isLoginErr: null,
     isRegister: false,
     isRegisterErr: null,
+    isLogout: false,
     isLogoutErr: null,
     isAuthErr: null,
     isAuth: false,
+    token: "",
     user: {
         id: "",
         nickname: "",
         email: "",
+        token: "",
         board: [
             {
                 title: "",
@@ -65,13 +70,16 @@ const auth = createSlice({
         loginRequest: (state, { payload }) => {
             state.isLogin = false;
             state.isLoginErr = null;
+            state.token = "";
         },
-        loginSuccess: (state) => {
+        loginSuccess: (state, { payload }) => {
             state.isLogin = true;
+            state.token = payload ? payload : "";
         },
         loginFailure: (state, { payload }) => {
             state.isLogin = false;
             state.isLoginErr = payload;
+            state.token = "";
         },
 
         registerRequest: (state, { payload }) => {
@@ -88,12 +96,16 @@ const auth = createSlice({
 
         logoutRequest: (state) => {
             state.isLogoutErr = null;
+            state.isLogout = false;
         },
         logoutSuccess: (state) => {
+            state.token = "";
             state.isLogin = false;
+            state.isLogout = true;
         },
         logoutFailure: (state, { payload }) => {
             state.isLogoutErr = payload;
+            state.isLogout = false;
         },
 
         authRequest: (state) => {

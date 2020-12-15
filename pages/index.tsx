@@ -85,16 +85,16 @@ export default function Home({ interview, list }: Props) {
 
 export const getServerSideProps = wrapper.getServerSideProps(async (ctx) => {
     const { store } = ctx;
-    console.log(ctx.req);
     const interview: Interview[] = await Axios.get("/crawling/interview").then(
         (res) => res.data
     );
     const list: BoardCard[] = await Axios.get("/crawling/steady").then(
         (res) => res.data
     );
-    console.log(ctx.req);
     const cookie = ctx.req?.headers?.cookie;
     Axios.defaults.headers.Cookie = "";
+
+    console.log(ctx.req.headers.cookie);
 
     if (ctx.req && cookie) {
         Axios.defaults.headers.Cookie = cookie;
