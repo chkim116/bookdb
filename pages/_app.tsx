@@ -33,34 +33,6 @@ Axios.defaults.withCredentials = true;
 
 function MyApp({ Component, pageProps }: AppProps) {
     const { isLoading } = useSelector((state: RootState) => state.loading);
-    const { token, isLogout } = useSelector((state: RootState) => state.auth);
-
-    const [cookies, setCookie, removeCookie] = useCookies(["cookie-name"]);
-
-    useEffect(() => {
-        if (token) {
-            setCookie("x_auth", token, {
-                maxAge: 7 * 24 * 60 * 60,
-                httpOnly: process.env.NODE_ENV === "production",
-                secure: process.env.NODE_ENV === "production",
-                sameSite: "none",
-                domain: "bookdb-jdjk9yuaz.vercel.app",
-                path: "/",
-            });
-        }
-        console.log(token, cookies);
-    }, [token]);
-
-    useEffect(() => {
-        if (isLogout) {
-            removeCookie("x_auth", {
-                maxAge: 7 * 24 * 60 * 60,
-                httpOnly: process.env.NODE_ENV === "production",
-                secure: process.env.NODE_ENV === "production",
-                sameSite: "none",
-            });
-        }
-    }, [isLogout]);
 
     return (
         <ThemeProvider theme={theme}>

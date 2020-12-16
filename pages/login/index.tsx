@@ -2,6 +2,7 @@ import { useFormInput } from "@cooksmelon/event";
 import Axios from "axios";
 import { useRouter } from "next/dist/client/router";
 import React, { useCallback, useEffect } from "react";
+import { useCookies } from "react-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { END } from "redux-saga";
 import Login from "../../components/login/Login";
@@ -16,9 +17,25 @@ const index = () => {
     const router = useRouter();
     const [form, onChange] = useFormInput();
     const dispatch = useDispatch();
-    const { isLogin, isLoginErr } = useSelector(
+    const { isLogin, isLoginErr, token, isLogout } = useSelector(
         (state: RootState) => state.auth
     );
+
+    const [cookies, setCookie, removeCookie] = useCookies(["cookie-name"]);
+
+    useEffect(() => {
+        if (token) {
+            setCookie("x_auth", token, {
+                maxAge: 7 * 24 * 60 * 60,
+                httpOnly: process.env.NODE_ENV === "production",
+                secure: process.env.NODE_ENV === "production",
+                sameSite: "none",
+                domain: "bookdb-jdjk9yuaz.vercel.app",
+                path: "/",
+            });
+        }
+        console.log(token, cookies);
+    }, [token]);
 
     const onLogin = useCallback(
         (e: React.FormEvent<HTMLFormElement>) => {

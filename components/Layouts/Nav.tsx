@@ -12,6 +12,7 @@ import { getSearchFailure, getSearchRequest } from "../../redux/search";
 import { logoutRequest } from "../../redux/auth";
 import { loadRequest } from "../../redux/loading";
 import { useMore } from "../../hook";
+import { useCookies } from "react-cookie";
 
 const Container = styled.div`
     margin: 0 auto;
@@ -50,8 +51,9 @@ const UserForm = styled.div`
 const Nav = () => {
     const [searchText, onChange, setSearchText] = useInput("");
     const router = useRouter();
+    const [cookies, setCookie, removeCookie] = useCookies(["cookie-name"]);
     const dispatch = useDispatch();
-    const { isLogin } = useSelector((state: RootState) => state.auth);
+    const { isLogin, isLogout } = useSelector((state: RootState) => state.auth);
     const { id } = useSelector((state: RootState) => state.auth.user);
     const results: BookData[] = useSelector(
         (state: RootState) => state.search.searchData
@@ -67,6 +69,17 @@ const Nav = () => {
         count: 10,
         limit: 100,
     });
+
+    useEffect(() => {
+        if (isLogout) {
+            removeCookie("x_auth", {
+                maxAge: 7 * 24 * 60 * 60,
+                httpOnly: process.env.NODE_ENV === "production",
+                secure: process.env.NODE_ENV === "production",
+                sameSite: "none",
+            });
+        }
+    }, [isLogout]);
 
     useEffect(() => {
         if (searchText !== "") {
