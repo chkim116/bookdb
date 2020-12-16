@@ -46,6 +46,7 @@ function MyApp({ Component, pageProps }: AppProps) {
                 sameSite: "none",
             });
         }
+        console.log(token, cookies);
     }, [token]);
 
     useEffect(() => {
@@ -59,7 +60,6 @@ function MyApp({ Component, pageProps }: AppProps) {
         }
     }, [isLogout]);
 
-    console.log(cookies);
     return (
         <ThemeProvider theme={theme}>
             {isLoading && <Loader />}
