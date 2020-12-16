@@ -44,6 +44,8 @@ function MyApp({ Component, pageProps }: AppProps) {
                 httpOnly: process.env.NODE_ENV === "production",
                 secure: process.env.NODE_ENV === "production",
                 sameSite: "none",
+                domain: "bookdb-jdjk9yuaz.vercel.app",
+                path: "/",
             });
         }
         console.log(token, cookies);
