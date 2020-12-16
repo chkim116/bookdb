@@ -54,7 +54,7 @@ function* postLogin({ payload }: PayloadAction<SignWriteText>) {
 function* postLogout() {
     try {
         yield call(logout);
-        document.cookie = ``;
+        document.cookie = "x_auth=; expires=Thu, 01 Jan 1970 00:00:00 UTC;";
         yield put(logoutSuccess());
         yield put(loadSuccess());
     } catch (err) {

@@ -31,6 +31,7 @@ const index = () => {
 
     useEffect(() => {
         if (isLogin) {
+            dispatch(loadRequest());
             router.push("/");
         }
     }, [isLogin, router]);

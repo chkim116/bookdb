@@ -35,6 +35,11 @@ const Freeboards = styled.div`
     justify-content: center;
     margin: 0 auto;
     max-width: ${(props) => props.theme.maxWidth};
+    padding-bottom: 24px;
+
+    img {
+        width: 100%;
+    }
 `;
 
 const Board = styled.div`
@@ -43,6 +48,7 @@ const Board = styled.div`
     min-height: 300px;
     max-height: 300px;
     cursor: pointer;
+    overflow: hidden;
 `;
 
 const BoardTitle = styled.div`
