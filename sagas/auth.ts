@@ -41,6 +41,7 @@ function getUserData() {
 function* postLogin({ payload }: PayloadAction<SignWriteText>) {
     try {
         const token = yield call(login, payload);
+        document.cookie = `x_auth=${token}`;
         yield put(loginSuccess(token));
         yield put(loadSuccess());
     } catch (err) {
@@ -53,6 +54,7 @@ function* postLogin({ payload }: PayloadAction<SignWriteText>) {
 function* postLogout() {
     try {
         yield call(logout);
+        document.cookie = ``;
         yield put(logoutSuccess());
         yield put(loadSuccess());
     } catch (err) {

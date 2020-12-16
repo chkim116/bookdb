@@ -12,8 +12,6 @@ import Axios from "axios";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux";
 import Loader from "../styles/loader";
-import { useEffect } from "react";
-import { useCookies } from "react-cookie";
 
 const AppLayouts = styled.main`
     width: 100%;
