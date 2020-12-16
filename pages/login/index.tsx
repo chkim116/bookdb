@@ -27,11 +27,6 @@ const index = () => {
         if (token) {
             setCookie("x_auth", token, {
                 maxAge: 7 * 24 * 60 * 60,
-                httpOnly: process.env.NODE_ENV === "production",
-                secure: process.env.NODE_ENV === "production",
-                sameSite: "none",
-                domain: "bookdb-jdjk9yuaz.vercel.app",
-                path: "/",
             });
         }
         console.log(token, cookies);

@@ -74,9 +74,6 @@ const Nav = () => {
         if (isLogout) {
             removeCookie("x_auth", {
                 maxAge: 7 * 24 * 60 * 60,
-                httpOnly: process.env.NODE_ENV === "production",
-                secure: process.env.NODE_ENV === "production",
-                sameSite: "none",
             });
         }
     }, [isLogout]);
