@@ -124,7 +124,6 @@ export type User = {
     id: string;
     nickname: string;
     email: string;
-    token: string;
     board: FreeBoard[];
     review: ReviewPost[];
 };

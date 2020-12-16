@@ -11,7 +11,6 @@ export type Auth = {
     isAuth: boolean;
     isAuthErr: string | null;
     user: User;
-    token: string;
 };
 
 const initialState: Auth = {
@@ -23,12 +22,10 @@ const initialState: Auth = {
     isLogoutErr: null,
     isAuthErr: null,
     isAuth: false,
-    token: "",
     user: {
         id: "",
         nickname: "",
         email: "",
-        token: "",
         board: [
             {
                 title: "",
@@ -70,16 +67,13 @@ const auth = createSlice({
         loginRequest: (state, { payload }) => {
             state.isLogin = false;
             state.isLoginErr = null;
-            state.token = "";
         },
-        loginSuccess: (state, { payload }) => {
+        loginSuccess: (state) => {
             state.isLogin = true;
-            state.token = payload ? payload : "";
         },
         loginFailure: (state, { payload }) => {
             state.isLogin = false;
             state.isLoginErr = payload;
-            state.token = "";
         },
 
         registerRequest: (state, { payload }) => {
@@ -99,7 +93,6 @@ const auth = createSlice({
             state.isLogout = false;
         },
         logoutSuccess: (state) => {
-            state.token = "";
             state.isLogin = false;
             state.isLogout = true;
         },
