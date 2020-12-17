@@ -44,15 +44,15 @@
 -   @types
     -   공통되는 타입들을 전역적으로 사용하기 위해 한 데로 묶어 관리하는 폴더입니다.
 -   components
-    -   기본적으론 **페이지 별로 보여지는 컴포넌트**를 담당하는 폴더입니다.
-    -   common 폴더에선 **공통적으로 사용되는 컴포넌트의 로직 및 보여지는 부분**을 관리합니다.
+    -   기본적으론 **페이지 별로 보여지는 UI 컴포넌트**를 담당하는 폴더입니다.
+    -   common 폴더에선 UI는 물론 **공통적으로 사용되는 컴포넌트의 로직**도 관리합니다.
     -   Layouts 폴더에선 **Nav나 Header, Footer 등 레이아웃**을 관리합니다.
 -   head
     -   **메타 태그 설정**을 관리하는 폴더입니다.
 -   hook
     -   **커스텀 훅** 폴더입니다.
 -   pages
-    -   Next에서 라우터 기능을 담당하는 폴더이며, **페이지 별 로직**은 이곳에 있습니다.
+    -   Next에서 라우터 기능을 담당하는 폴더이며, **페이지 별 주요 로직**은 이곳에 있습니다.
 -   redux
     -   **리덕스 폴더**입니다. ducks패턴을 사용했습니다.
 -   sagas
@@ -87,9 +87,11 @@
 
 <p>북디비에서는 교보문고에서 크롤링한 최신 작가 인터뷰, 스테디셀러, 주간&월간&년간 베스트 셀러를 제공합니다.</p>
 <p>데이터는 Node를 활용해 크롤링했으며 모듈은 cheerio, iconv-ite를 사용했습니다.</p>
+<small>*크롤링 코드는 서버에 존재합니다.</small>
+
 <br />
-<img src="./images/bestseller.png"  style="width: 500px" alt="크롤링한사진" /> <br />
-<img src="./images/steady.png" style="width: 500px"  alt="크롤링한사진" />
+<img src="./images/bestseller.png"   alt="크롤링한사진" /> <br />
+<img src="./images/steady.png"   alt="크롤링한사진" />
 </p>
 
 <br />
@@ -98,9 +100,9 @@
 
 <br />
 <p>네이버 검색 API를 사용해, 책을 검색할 수 있습니다.<br />
-검색창에 검색어를 입력할 시, 실시간으로 검색 목록이 나타납니다.</p>
+유저의 편의성을 위해 검색창에 검색어를 입력할 시, 실시간으로 검색 목록이 나타납니다.</p>
 <br />
-<img src="./images/search.gif" style="width: 500px"  alt="크롤링한사진" />
+<img src="./images/search.gif"   alt="크롤링한사진" />
 <br />
 
 ### <a style="color: black" id="scroll">인피니트 스크롤 </a>
@@ -112,14 +114,14 @@ scroll 이벤트를 활용하던 기존의 방식 대신, 보다 효율적으로
 
 <br />
 
-<img src="./images/scroll.gif" style="width: 500px"  alt="크롤링한사진" />
+<img src="./images/scroll.gif"   alt="크롤링한사진" />
 <br />
 
 ### <a style="color: black" id="rating">별점 평가 </a>
 
 <br />
-<p>책 리뷰를 위해 별점 평가를 사용할 수 있는 별점 평가 기능을 구현했습니다.</p>
-<img src="./images/rating.gif" style="width: 500px"  alt="크롤링한사진" />
+<p>리액트 아이콘과 mouseOver 이벤트를 활용, 책 리뷰를 위해 별점 평가를 사용할 수 있는 별점 평가 기능을 구현했습니다.</p>
+<img src="./images/rating.gif"   alt="크롤링한사진" />
 <br />
 
 ### <a style="color: black" id="text">위지위그 에디터 </a>
@@ -127,5 +129,21 @@ scroll 이벤트를 활용하던 기존의 방식 대신, 보다 효율적으로
 <br />
 <p>quill에디터를 도입하여 이미지 업로드, 글자 크기, 글꼴의 변경 등 보다 상세한 글쓰기 기능을 구현 했습니다.<br />
 </p>
-<img src="./images/text.gif" style="width: 500px"  alt="크롤링한사진" />
+<img src="./images/text.gif"   alt="크롤링한사진" />
 <br />
+
+## git commit
+
+<p>이번 프로젝트에서는 커밋의 내용을 쉽게 파악하기 위해 메시지 규칙을 정해 진행하였습니다.</p>
+
+-   Initialize : 초기 파일, 폴더 생성
+
+-   Fix : 코드 수정
+
+-   Refactor : 코드 최적화 및 컴포넌트 분할
+
+-   Feat : 새로운 기능을 위한 코드 추가
+
+-   Styling : css 등으로 스타일링
+
+-   Correct : 오타 수정
