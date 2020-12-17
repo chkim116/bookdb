@@ -5,6 +5,7 @@ const withBundleAnalyzer = require("@next/bundle-analyzer")({
 
 module.exports = withBundleAnalyzer(
     withImages({
+        target: "serverless",
         compress: true,
         webpack(config, { webpack }) {
             const prod = process.env.NODE_ENV === "production";
