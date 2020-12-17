@@ -25,26 +25,16 @@ const checkRouter = (id: string | string[]): string => {
     }
 };
 
-const index = () => {
+type Props = {
+    list: BoardCard[];
+};
+
+const index = ({ list }: Props) => {
     const router = useRouter();
     const [title, setTitle] = useState<string>("주간 베스트셀러 TOP20");
     const [selected, setSelected] = useState<string>("0");
     const dispatch = useDispatch();
     const { isLoading } = useSelector((state: RootState) => state.loading);
-    const [list, setList] = useState<BoardCard[]>([]);
-
-    useEffect(() => {
-        const getBest = async () => {
-            await Axios.post("/crawling/best", router.query).then((res) =>
-                setList(res.data)
-            );
-            const { id } = router.query;
-            const bestTitle = checkRouter(id);
-            setTitle(bestTitle);
-            dispatch(loadSuccess());
-        };
-        getBest();
-    }, [router.query]);
 
     const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         const { value } = e.target as HTMLInputElement;
@@ -52,6 +42,13 @@ const index = () => {
         dispatch(loadRequest());
         router.push(`/bestseller/${value}`);
     };
+
+    useEffect(() => {
+        const { id } = router.query;
+        const bestTitle = checkRouter(id);
+        dispatch(loadSuccess());
+        setTitle(bestTitle);
+    }, [router]);
 
     const data = {
         title: `베스트셀러`,
@@ -79,6 +76,10 @@ const index = () => {
 export const getServerSideProps = wrapper.getServerSideProps(async (ctx) => {
     const { store, params } = ctx;
 
+    const list: BoardCard[] = await Axios.post("/crawling/best", params).then(
+        (res) => res.data
+    );
+
     const cookie = ctx.req?.headers?.cookie;
     Axios.defaults.headers.Cookie = "";
 
@@ -88,6 +89,10 @@ export const getServerSideProps = wrapper.getServerSideProps(async (ctx) => {
         store.dispatch(END);
         await store.sagaTask.toPromise();
     }
+    return {
+        props: {
+            list: list,
+        },
+    };
 });
-
 export default index;
