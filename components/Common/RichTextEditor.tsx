@@ -6,6 +6,7 @@ import Quill from "quill";
 import Axios from "axios";
 import { writeContent } from "../../redux/write";
 import { useDispatch } from "react-redux";
+import { loadRequest, loadSuccess } from "../../redux/loading";
 
 const QuillContainer = styled.div`
     width: 100%;
@@ -110,7 +111,9 @@ export const RichTextEditor = ({ value }: Props) => {
                     quill.deleteText(range.index, 1);
 
                     // api로 받아온 이미지 추가
+                    dispatch(loadRequest());
                     const img = await postImg();
+                    dispatch(loadSuccess());
                     quill.insertEmbed(range.index, "image", img);
 
                     // 다음 위치에 커서 옮기기

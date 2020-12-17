@@ -1,12 +1,11 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { BookData, ReviewPost, SelectedBook, WriteText } from "../@types/types";
-import { SearchPayload } from "./search";
+import { createSlice } from "@reduxjs/toolkit";
+import { BookData, ReviewPost, SelectedBook } from "../@types/types";
 
 export type ReviewState = {
     selectedBook: SelectedBook;
     searchData: BookData[];
     isReviewErr: string | null;
-    isSelect: boolean;
+    isSubmit: boolean;
     reviewById: ReviewPost;
     reviews: ReviewPost[];
     reviewRouter: string;
@@ -67,8 +66,8 @@ const initialState: ReviewState = {
         },
     ],
     isReviewErr: null,
-    isSelect: false,
     reviewRouter: "",
+    isSubmit: false,
 };
 
 const review = createSlice({
@@ -76,15 +75,12 @@ const review = createSlice({
     initialState,
     reducers: {
         selectBookRequest: (state, { payload }) => {
-            isSelect: false;
             state.selectedBook = state.selectedBook;
         },
         selectBookSuccess: (state, { payload }) => {
-            isSelect: true;
             state.selectedBook = payload;
         },
         selectBookFailure: (state, { payload }) => {
-            isSelect: false;
             state.isReviewErr = payload;
             state.selectedBook.title = "";
             state.selectedBook.image = "";
@@ -106,6 +102,7 @@ const review = createSlice({
         reviewWriteSubmit: (state, { payload }) => {},
         reviewWriteUpdate: (state, { payload }) => {},
         reviewRouter: (state, { payload }) => {
+            state.isSubmit = true;
             state.reviewRouter = payload;
         },
         getReviewByIdRequest: (state, { payload }) => {

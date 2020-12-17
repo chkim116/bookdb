@@ -1,6 +1,6 @@
 # BookDB
 
-[홈페이지](https://bookdb-ij29ffk6g.vercel.app/)
+[홈페이지](https://bookdb.netlify.app/)
 <br />
 
 ---
@@ -43,8 +43,8 @@
 <li><a href="#crawling">실시간 검색 </a></li>
 <li><a href="#crawling">별점 평가 </a></li>
 <li><a href="#crawling">인피니트 스크롤 </a></li>
-<li><a href="#crawling">서버사이드렌더링 </a></li>
 <li><a href="#crawling">위지위그 에디터 </a></li>
+<li><a href="#crawling">서버사이드렌더링 </a></li>
 </ul>
 
 <br />
@@ -55,8 +55,10 @@
 <br />
 
 <p>북디비에서는 교보문고에서 크롤링한 최신 작가 인터뷰, 스테디셀러, 주간&월간&년간 베스트 셀러를 제공합니다.</p>
-<p>데이터는 Node를 활용해 크롤링했으며
-<br />모듈은 cheerio, iconv-ite를 사용했습니다.
+<p>데이터는 Node를 활용해 크롤링했으며 모듈은 cheerio, iconv-ite를 사용했습니다.</p>
+<br />
+<img src="./images/bestseller.png"  style="width: 500px" alt="크롤링한사진" /> <br />
+<img src="./images/steady.png" style="width: 500px"  alt="크롤링한사진" />
 </p>
 
 <br />
@@ -64,31 +66,34 @@
 #### <a style="color: black" id="crawling">실시간 검색 </a>
 
 <br />
-<p>네이버 검색 API를 사용해, 책을 검색할 수 있습니다.</p>
-<p>검색창에 검색어를 입력할 시, 실시간으로 검색 목록이 나타납니다.</p>
+<p>네이버 검색 API를 사용해, 책을 검색할 수 있습니다.<br />
+검색창에 검색어를 입력할 시, 실시간으로 검색 목록이 나타납니다.</p>
+<img src="./images/search.gif" style="width: 500px"  alt="크롤링한사진" />
 <br />
 
 #### <a style="color: black" id="crawling">인피니트 스크롤 </a>
 
 <br />
 <p> </p>
+<img src="./images/scroll.gif" style="width: 500px"  alt="크롤링한사진" />
 <br />
 
 #### <a style="color: black" id="crawling">별점 평가 </a>
 
 <br />
 <p>책 리뷰를 위해 별점 평가를 사용할 수 있게 별점 평가 기능을 구현했습니다.</p>
+<img src="./images/rating.gif" style="width: 500px"  alt="크롤링한사진" />
+<br />
+
+#### <a style="color: black" id="crawling">위지위그 에디터 </a>
+
+<br />
+<p>quill에디터를 도입하여 이미지 업로드, 글자 크기, 글꼴의 변경 등 보다 상세한 글쓰기 기능을 구현 했습니다.<br />
+</p>
 <br />
 
 #### <a style="color: black" id="crawling">서버사이드렌더링 </a>
 
 <br />
 <p>getServerSideProps를 사용해 Next의 서버사이드렌더링 기능을 활용했습니다.</p>
-<br />
-
-#### <a style="color: black" id="crawling">위지위그 에디터 </a>
-
-<br />
-<p>quill에디터를 도입해 게시글을 쓸 수 있게 구현했습니다.<br />
-이미지 업로드도 구현했습니다.</p>
 <br />

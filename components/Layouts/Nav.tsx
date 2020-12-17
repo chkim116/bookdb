@@ -58,6 +58,7 @@ const Nav = () => {
     );
 
     const isSearch: boolean = useSelector((state: RootState) => state.search);
+
     const onLogout = useCallback(() => {
         dispatch(logoutRequest());
     }, [dispatch]);
