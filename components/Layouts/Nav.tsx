@@ -9,7 +9,7 @@ import { RootState } from "../../redux";
 import { BookData } from "../../@types/types";
 import { FormEvent, useCallback, useEffect } from "react";
 import { getSearchFailure, getSearchRequest } from "../../redux/search";
-import { logoutRequest } from "../../redux/auth";
+import { authRequest, logoutRequest } from "../../redux/auth";
 import { loadRequest } from "../../redux/loading";
 import { useMore } from "../../hook";
 
@@ -56,6 +56,7 @@ const Nav = () => {
     const results: BookData[] = useSelector(
         (state: RootState) => state.search.searchData
     );
+
     const isSearch: boolean = useSelector((state: RootState) => state.search);
     const onLogout = useCallback(() => {
         dispatch(logoutRequest());

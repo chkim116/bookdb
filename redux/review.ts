@@ -6,6 +6,7 @@ export type ReviewState = {
     selectedBook: SelectedBook;
     searchData: BookData[];
     isReviewErr: string | null;
+    isSelect: boolean;
     reviewById: ReviewPost;
     reviews: ReviewPost[];
     reviewRouter: string;
@@ -66,6 +67,7 @@ const initialState: ReviewState = {
         },
     ],
     isReviewErr: null,
+    isSelect: false,
     reviewRouter: "",
 };
 
@@ -74,12 +76,15 @@ const review = createSlice({
     initialState,
     reducers: {
         selectBookRequest: (state, { payload }) => {
+            isSelect: false;
             state.selectedBook = state.selectedBook;
         },
         selectBookSuccess: (state, { payload }) => {
+            isSelect: true;
             state.selectedBook = payload;
         },
         selectBookFailure: (state, { payload }) => {
+            isSelect: false;
             state.isReviewErr = payload;
             state.selectedBook.title = "";
             state.selectedBook.image = "";

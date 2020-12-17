@@ -118,12 +118,11 @@ const SearchForm = ({
                         {results.map((r, index) => (
                             <>
                                 <Link
-                                    key={index}
                                     href={`/search?query=${r.title.replace(
                                         /<[^>]*>?/gm,
                                         ""
                                     )}`}>
-                                    <a>
+                                    <a key={index}>
                                         <SearchBookList>
                                             <div>
                                                 <img

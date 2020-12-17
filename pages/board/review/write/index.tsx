@@ -30,7 +30,7 @@ const index = () => {
     const [write, onWrite] = useFormInput();
     const [findId, onFindId] = useFindId();
     const { user } = useSelector((state: RootState) => state.auth);
-    const { isDone } = useSelector((state: RootState) => state.loading);
+    const { isSelect } = useSelector((state: RootState) => state.review);
     const { title, content, rating } = useSelector(
         (state: RootState) => state.write
     );
@@ -80,10 +80,10 @@ const index = () => {
     );
 
     useEffect(() => {
-        if (isDone) {
+        if (isSelect) {
             router.push(`/board/review/detail/${reviewRouter}`);
         }
-    }, [isDone]);
+    }, [isSelect]);
 
     // content 작성 로직은 RichTextEditor.tsx에 있습니다.
     useEffect(() => {
