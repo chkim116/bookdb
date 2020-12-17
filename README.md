@@ -20,7 +20,7 @@
 
 ## Stack
 
-#### **다음과 같은 스택으로 구성되었습니다.**
+#### **북디비는 다음과 같은 스택으로 구성되었습니다.**
 
 <p>1.서버사이드렌더링 및 검색 엔진 최적화를 경험하기 위한 <strong>Next.js</strong> </p>
 
@@ -40,17 +40,16 @@
 
 <ul>
 <li><a href="#crawling"> 크롤링</a></li>
-<li><a href="#crawling">실시간 검색 </a></li>
-<li><a href="#crawling">별점 평가 </a></li>
-<li><a href="#crawling">인피니트 스크롤 </a></li>
-<li><a href="#crawling">위지위그 에디터 </a></li>
-<li><a href="#crawling">서버사이드렌더링 </a></li>
+<li><a href="#search">실시간 검색 </a></li>
+<li><a href="#rating">별점 평가 </a></li>
+<li><a href="#scroll">인피니트 스크롤 </a></li>
+<li><a href="#text">위지위그 에디터 </a></li>
 </ul>
 
 <br />
 <br />
 
-#### <a style="color: black" id="crawling"> 크롤링</a>
+### <a style="color: black" id="crawling"> 크롤링</a>
 
 <br />
 
@@ -63,37 +62,38 @@
 
 <br />
 
-#### <a style="color: black" id="crawling">실시간 검색 </a>
+### <a style="color: black" id="search">실시간 검색 </a>
 
 <br />
 <p>네이버 검색 API를 사용해, 책을 검색할 수 있습니다.<br />
 검색창에 검색어를 입력할 시, 실시간으로 검색 목록이 나타납니다.</p>
+<br />
 <img src="./images/search.gif" style="width: 500px"  alt="크롤링한사진" />
 <br />
 
-#### <a style="color: black" id="crawling">인피니트 스크롤 </a>
+### <a style="color: black" id="scroll">인피니트 스크롤 </a>
 
 <br />
-<p> </p>
+<p>유저 경험을 고려해 인피니트 스크롤을 구현하여 페이지를 넘기지 않아도 컨텐츠를 볼 수 있도록 하였습니다.<br /> 
+scroll 이벤트를 활용하던 기존의 방식 대신, 보다 효율적으로 구현하기 위해 IntersectionObserver API를 활용했습니다.
+</p>
+
+<br />
+
 <img src="./images/scroll.gif" style="width: 500px"  alt="크롤링한사진" />
 <br />
 
-#### <a style="color: black" id="crawling">별점 평가 </a>
+### <a style="color: black" id="rating">별점 평가 </a>
 
 <br />
-<p>책 리뷰를 위해 별점 평가를 사용할 수 있게 별점 평가 기능을 구현했습니다.</p>
+<p>책 리뷰를 위해 별점 평가를 사용할 수 있는 별점 평가 기능을 구현했습니다.</p>
 <img src="./images/rating.gif" style="width: 500px"  alt="크롤링한사진" />
 <br />
 
-#### <a style="color: black" id="crawling">위지위그 에디터 </a>
+### <a style="color: black" id="text">위지위그 에디터 </a>
 
 <br />
 <p>quill에디터를 도입하여 이미지 업로드, 글자 크기, 글꼴의 변경 등 보다 상세한 글쓰기 기능을 구현 했습니다.<br />
 </p>
-<br />
-
-#### <a style="color: black" id="crawling">서버사이드렌더링 </a>
-
-<br />
-<p>getServerSideProps를 사용해 Next의 서버사이드렌더링 기능을 활용했습니다.</p>
+<img src="./images/text.gif" style="width: 500px"  alt="크롤링한사진" />
 <br />
