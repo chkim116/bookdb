@@ -7,7 +7,9 @@ export const Seo = ({ data }: any) => {
     const title = data.title;
     const description = data.description;
     const image = data.img ? data.img : img;
-    const canonical = `https://www.bookdb.cf/${data.canonical}`;
+    const canonical = `https://bookdb.netlify.app/${
+        data.canonical ? data.canonical : ""
+    }`;
     const type = data.type === undefined ? "article" : data.type;
     const width = data.image && (data.width || 1200);
     const height = data.image && (data.height || 630);
@@ -35,7 +37,7 @@ export const Seo = ({ data }: any) => {
             {height ? (
                 <meta property="og:image:height" content={height} />
             ) : null}
-            <meta property="fb:pages" content="https://bookdb.cf" />
+            <meta property="fb:pages" content="https://bookdb.netlify.app/" />
 
             <meta name="twitter:card" content="summary_large_image" />
             <meta name="twitter:title" content={title} />
@@ -43,7 +45,7 @@ export const Seo = ({ data }: any) => {
                 <meta name="twitter:description" content={description} />
             ) : null}
             {image ? <meta name="twitter:image" content={image} /> : null}
-            <meta name="twitter:site" content="https://bookdb.cf" />
+            <meta name="twitter:site" content="https://bookdb.netlify.app/" />
         </Head>
     );
 };
