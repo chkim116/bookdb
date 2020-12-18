@@ -61,6 +61,10 @@ export default function Home({ interview, list }: Props) {
     }
 
     useEffect(() => {
+        dispatch(getRecentPostRequest());
+    }, []);
+
+    useEffect(() => {
         if (process.browser) {
             const cookie = document.cookie;
             Axios.defaults.headers.Cookie = "";
@@ -99,8 +103,6 @@ export default function Home({ interview, list }: Props) {
 }
 
 export const getStaticProps = wrapper.getStaticProps(async (ctx) => {
-    const { store } = ctx;
-
     const url =
         "http://news.kyobobook.co.kr/people/interview.ink?orderclick=QBJ";
     let interview: Interview[] = [];
@@ -158,10 +160,6 @@ export const getStaticProps = wrapper.getStaticProps(async (ctx) => {
     } catch (err) {
         console.log(err);
     }
-
-    store.dispatch(getRecentPostRequest());
-    store.dispatch(END);
-    await store.sagaTask.toPromise();
 
     return {
         props: {
