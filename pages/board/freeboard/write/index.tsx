@@ -21,8 +21,7 @@ const index = () => {
     const [write, onWrite] = useFormInput();
     const { title, content } = useSelector((state: RootState) => state.write);
     const { user } = useSelector((state: RootState) => state.auth);
-    const { isDone } = useSelector((state: RootState) => state.loading);
-    const { freeBoardRouter } = useSelector(
+    const { freeBoardRouter, isSubmit } = useSelector(
         (state: RootState) => state.freeBoard
     );
 
@@ -52,10 +51,10 @@ const index = () => {
     );
 
     useEffect(() => {
-        if (isDone) {
+        if (isSubmit) {
             router.push(`/board/freeboard/detail/${freeBoardRouter}`);
         }
-    }, [isDone]);
+    }, [isSubmit]);
 
     const data = {
         title: `자유게시판 글 작성`,

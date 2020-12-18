@@ -6,6 +6,7 @@ type InitialState = {
     freeBoards: FreeBoard[];
     isFreeBoardErr: string | null;
     freeBoardRouter: string;
+    isSubmit: boolean;
 };
 
 const initialState: InitialState = {
@@ -34,6 +35,7 @@ const initialState: InitialState = {
         },
     ],
     isFreeBoardErr: null,
+    isSubmit: false,
     freeBoardRouter: "",
 };
 
@@ -64,6 +66,7 @@ const freeBoard = createSlice({
         freeBoardWriteSubmit: (state, { payload }) => {},
         freeBoardRouter: (state, { payload }) => {
             state.freeBoardRouter = payload;
+            state.isSubmit = true;
         },
         freeBoardWriteUpdate: (state, { payload }) => {},
 
