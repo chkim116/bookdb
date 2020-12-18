@@ -6,6 +6,7 @@ export type ReviewState = {
     searchData: BookData[];
     isReviewErr: string | null;
     isSubmit: boolean;
+    isRecent: boolean;
     reviewById: ReviewPost;
     reviews: ReviewPost[];
     reviewRouter: string;
@@ -66,6 +67,7 @@ const initialState: ReviewState = {
         },
     ],
     isReviewErr: null,
+    isRecent: false,
     reviewRouter: "",
     isSubmit: false,
 };
@@ -117,12 +119,15 @@ const review = createSlice({
 
         getRecentPostRequest: (state) => {
             state.isReviewErr = null;
+            state.isRecent = false;
         },
         getRecentPostSuccess: (state, { payload }) => {
             state.reviews = payload;
+            state.isRecent = true;
         },
         getRecentPostFailure: (state, { payload }) => {
             state.isReviewErr = payload;
+            state.isRecent = true;
         },
 
         getReviewsPostRequest: (state) => {
@@ -130,9 +135,11 @@ const review = createSlice({
         },
         getReviewsPostSuccess: (state, { payload }) => {
             state.reviews = payload;
+            state.isRecent = true;
         },
         getReviewsPostFailure: (state, { payload }) => {
             state.isReviewErr = payload;
+            state.isRecent = true;
         },
 
         delReviewRequest: (state, { payload }) => {

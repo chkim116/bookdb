@@ -5,7 +5,6 @@ import { BoardCard, Interview } from "../@types/types";
 import { useCallback, useEffect, useState } from "react";
 import wrapper from "../store/configureStore";
 import { authRequest } from "../redux/auth";
-import { END } from "redux-saga";
 import { getRecentPostRequest } from "../redux/review";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux";
@@ -97,7 +96,6 @@ export default function Home({ interview, list }: Props) {
                 list={list}
                 slide={slide}
             />
-            <div></div>
         </Container>
     );
 }

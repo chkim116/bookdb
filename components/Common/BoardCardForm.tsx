@@ -9,7 +9,7 @@ import Rating from "./Rating";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux";
 
-const Container = styled.article<Components>`
+export const Container = styled.article<Components>`
     max-width: ${(props) => props.theme.maxWidth};
     width: 100%;
     ${(props) =>
@@ -35,13 +35,14 @@ const ReviewForm = styled.div`
     }
 `;
 
-const BoardCardForm = styled.div<Components>`
+export const BoardCardForm = styled.div<Components>`
     text-align: center;
     padding: 12px;
     ${(props) =>
         props.review &&
         css`
             max-height: 400px;
+            min-height: 300px;
             max-width: 350px;
             min-width: 235px;
         `}
@@ -123,6 +124,7 @@ const BoardForm = ({
     main,
 }: Props) => {
     const { user } = useSelector((state: RootState) => state.auth);
+    const { isRecent } = useSelector((state: RootState) => state.review);
     return (
         <Container review={review ? true : false}>
             {review
@@ -131,19 +133,28 @@ const BoardForm = ({
                           <Link href={`/board/review/detail/${v._id}`}>
                               <a>
                                   <BoardCardForm review={review}>
-                                      <BoardTitle>{v.title}</BoardTitle>
-                                      <div>조회수 {v.count}</div>
+                                      <BoardTitle>
+                                          {isRecent && v.title}
+                                      </BoardTitle>
+                                      <div>
+                                          {isRecent && `조회수 ${v.count}`}
+                                      </div>
                                       <BoardImg review={review}>
-                                          <img
-                                              src={v.selectedBook.image}
-                                              alt="리뷰 책"
-                                          />
+                                          {isRecent && (
+                                              <img
+                                                  src={v.selectedBook.image}
+                                                  alt="리뷰 책"
+                                              />
+                                          )}
                                       </BoardImg>
-                                      <Auth>{v.selectedBook.author}</Auth>
-                                      <Rating rating={v.rating} />
+                                      <Auth>
+                                          {isRecent && v.selectedBook.author}
+                                      </Auth>
+                                      <Rating rating={isRecent && v.rating} />
                                       <Content
                                           dangerouslySetInnerHTML={{
                                               __html:
+                                                  isRecent &&
                                                   v.content.length > 200
                                                       ? `${v.content.slice(
                                                             0,
