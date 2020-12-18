@@ -83,9 +83,11 @@ function* getAuth() {
         const userData: User = yield call(getUserData);
         yield put(authSuccess(userData));
         yield put(loginSuccess());
+        yield put(loadSuccess());
     } catch (err) {
         console.log(err);
         yield put(authFailure(err.message));
+        yield put(loadSuccess());
     }
 }
 

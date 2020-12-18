@@ -31,7 +31,6 @@ Axios.defaults.withCredentials = true;
 
 function MyApp({ Component, pageProps }: AppProps) {
     const { isLoading } = useSelector((state: RootState) => state.loading);
-
     return (
         <ThemeProvider theme={theme}>
             {isLoading && <Loader />}

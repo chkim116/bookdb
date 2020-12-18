@@ -9,7 +9,7 @@ import { RootState } from "../../redux";
 import { BookData } from "../../@types/types";
 import { FormEvent, useCallback, useEffect } from "react";
 import { getSearchFailure, getSearchRequest } from "../../redux/search";
-import { authRequest, logoutRequest } from "../../redux/auth";
+import { logoutRequest } from "../../redux/auth";
 import { loadRequest } from "../../redux/loading";
 import { useMore } from "../../hook";
 
@@ -113,7 +113,7 @@ const Nav = () => {
                     onMore={onMore}
                 />
                 <UserForm>
-                    {isLogin ? (
+                    {isLogin || (process.browser && document.cookie) ? (
                         <>
                             <div onClick={onLogout}>로그아웃</div>
                             <Link href={`/mypage/${id}`}>
