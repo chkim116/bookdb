@@ -1,4 +1,3 @@
-import Axios from "axios";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/dist/client/router";
 import React, { useCallback } from "react";
@@ -7,7 +6,6 @@ import { END } from "redux-saga";
 import FreeBoardDetail from "../../../../components/board/freeboard/detail/FreeBoardDetail";
 import { Seo } from "../../../../head/Seo";
 import { RootState } from "../../../../redux";
-import { authRequest } from "../../../../redux/auth";
 import {
     delFreeBoardRequest,
     getFreeBoardByIdRequest,
@@ -66,13 +64,6 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
     async (ctx) => {
         const { store, params } = ctx;
 
-        const cookie = ctx.req?.headers?.cookie;
-        Axios.defaults.headers.Cookie = "";
-
-        if (ctx.req && cookie) {
-            Axios.defaults.headers.Cookie = cookie;
-            store.dispatch(authRequest());
-        }
         store.dispatch(getFreeBoardByIdRequest(params.id));
         store.dispatch(END);
         await store.sagaTask.toPromise();

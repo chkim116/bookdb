@@ -4,11 +4,8 @@ import { useRouter } from "next/dist/client/router";
 import { Container } from "../../styles/CommonStyle";
 import { BoardCard, Paths } from "../../@types/types";
 import Axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { loadRequest, loadSuccess } from "../../redux/loading";
-import { RootState } from "../../redux";
-import Loader from "../../styles/loader";
-import { authRequest } from "../../redux/auth";
 import { Seo } from "../../head/Seo";
 import { GetStaticPaths, GetStaticProps } from "next";
 import iconv from "iconv-lite";
@@ -35,7 +32,6 @@ const index = ({ list }: Props) => {
     const [title, setTitle] = useState<string>("주간 베스트셀러 TOP20");
     const [selected, setSelected] = useState<string>("0");
     const dispatch = useDispatch();
-    const { isLoading } = useSelector((state: RootState) => state.loading);
 
     const onClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         const { value } = e.target as HTMLInputElement;
@@ -51,18 +47,6 @@ const index = ({ list }: Props) => {
         setTitle(bestTitle);
     }, [router]);
 
-    useEffect(() => {
-        if (process.browser) {
-            const cookie = document.cookie;
-            Axios.defaults.headers.Cookie = "";
-            Axios.defaults.headers.withCredentials = true;
-            if (cookie) {
-                Axios.defaults.headers.Cookie = cookie;
-                dispatch(authRequest());
-            }
-        }
-    }, [router.query]);
-
     const data = {
         title: `베스트셀러`,
         description:
@@ -75,7 +59,6 @@ const index = ({ list }: Props) => {
     return (
         <Container>
             <Seo data={data} />
-            {isLoading && <Loader />}
             <BestSellerForm
                 list={list}
                 title={title}

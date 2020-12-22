@@ -7,8 +7,6 @@ import { delReviewRequest, getReviewsPostRequest } from "../../../redux/review";
 import { END } from "redux-saga";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux";
-import { authRequest } from "../../../redux/auth";
-import Axios from "axios";
 import { loadRequest } from "../../../redux/loading";
 import { useRouter } from "next/dist/client/router";
 import { Seo } from "../../../head/Seo";
@@ -59,13 +57,6 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
     async (ctx) => {
         const { store } = ctx;
 
-        const cookie = ctx.req?.headers?.cookie;
-        Axios.defaults.headers.Cookie = "";
-
-        if (ctx.req && cookie) {
-            Axios.defaults.headers.Cookie = cookie;
-            store.dispatch(authRequest());
-        }
         store.dispatch(getReviewsPostRequest());
         store.dispatch(END);
         await store.sagaTask.toPromise();

@@ -113,7 +113,8 @@ const Nav = () => {
                     onMore={onMore}
                 />
                 <UserForm>
-                    {isLogin || (process.browser && document.cookie) ? (
+                    {isLogin ||
+                    (process.browser && document.cookie.includes("x_auth")) ? (
                         <>
                             <div onClick={onLogout}>로그아웃</div>
                             <Link href={`/mypage/${id}`}>

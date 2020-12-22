@@ -128,7 +128,7 @@ const BoardForm = ({
     const { isRecent } = useSelector((state: RootState) => state.review);
     return (
         <Container review={review ? true : false}>
-            {isRecent || <Loader />}
+            {/* {isRecent || <Loader />} */}
             {review
                 ? reviewPost.map((v) => (
                       <ReviewForm key={v._id}>

@@ -4,7 +4,6 @@ import Axios from "axios";
 import { BoardCard, Interview } from "../@types/types";
 import { useCallback, useEffect, useState } from "react";
 import wrapper from "../store/configureStore";
-import { authRequest } from "../redux/auth";
 import { getRecentPostRequest } from "../redux/review";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux";
@@ -61,18 +60,6 @@ export default function Home({ interview, list }: Props) {
 
     useEffect(() => {
         dispatch(getRecentPostRequest());
-    }, []);
-
-    useEffect(() => {
-        if (process.browser) {
-            const cookie = document.cookie;
-            Axios.defaults.headers.Cookie = "";
-            Axios.defaults.headers.withCredentials = true;
-            if (cookie) {
-                Axios.defaults.headers.Cookie = cookie;
-                dispatch(authRequest());
-            }
-        }
     }, []);
 
     useEffect(() => {
