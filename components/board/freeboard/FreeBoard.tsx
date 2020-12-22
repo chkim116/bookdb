@@ -43,8 +43,8 @@ type Props = {
 const freeBoard = ({ freeBoards, onDelete, onEdit }: Props) => {
     return (
         <Container>
-            <BannerImg src={freebanner} />
             <Title>자유게시판</Title>
+            <BannerImg src={freebanner} />
             <PostButton />
             <BoardContainer>
                 <BoardHead>

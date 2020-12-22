@@ -1,11 +1,13 @@
 import React from "react";
 import styled from "@emotion/styled";
 
-const BoardImg = styled.div`
+const BoardImg = styled.div<Src>`
     width: 100%;
     text-align: center;
-    max-height: 420px;
+    min-height: 420px;
     padding-top: 12px;
+    text-align: center;
+    background: url(${(props) => props.src}) no-repeat center;
 `;
 
 export type Src = {
@@ -13,11 +15,7 @@ export type Src = {
 };
 
 const BannerImg = ({ src }: Src) => {
-    return (
-        <BoardImg>
-            <img src={src} />
-        </BoardImg>
-    );
+    return <BoardImg src={src}></BoardImg>;
 };
 
 export default BannerImg;

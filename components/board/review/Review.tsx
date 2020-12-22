@@ -22,8 +22,8 @@ type Props = {
 const Review = ({ reviewPost, onDelete, onEdit }: Props) => {
     return (
         <Container>
-            <BannerImg src={banner} />
             <Title>작품 리뷰</Title>
+            <BannerImg src={banner} />
             <PostButton review={true} />
             <BoardForm
                 reviewPost={reviewPost}

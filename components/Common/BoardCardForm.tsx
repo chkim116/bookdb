@@ -8,6 +8,7 @@ import { css } from "@emotion/react";
 import Rating from "./Rating";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux";
+import Loader from "../../styles/loader";
 
 export const Container = styled.article<Components>`
     max-width: ${(props) => props.theme.maxWidth};
@@ -127,6 +128,7 @@ const BoardForm = ({
     const { isRecent } = useSelector((state: RootState) => state.review);
     return (
         <Container review={review ? true : false}>
+            {isRecent || <Loader />}
             {review
                 ? reviewPost.map((v) => (
                       <ReviewForm key={v._id}>

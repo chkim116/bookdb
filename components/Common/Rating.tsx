@@ -20,7 +20,7 @@ type Props = {
 };
 
 const Rating = ({ rating }: Props) => {
-    const stars = useRef();
+    const stars = useRef(null);
     const [ratingNum, setRatingNum] = useState("");
     const dispatch = useDispatch();
 
