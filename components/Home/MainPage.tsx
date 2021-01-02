@@ -7,6 +7,7 @@ import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 import BookSliders from "./BookSliders";
 import InterviewForm from "./InterviewForm";
 import BoardForm from "../Common/BoardCardForm";
+import Link from "next/link";
 
 const Container = styled.div`
     padding: 12px;
@@ -102,9 +103,13 @@ const MainPage = ({
             </BestContainer>
             <More align="left">
                 작가인터뷰
-                <Button bg={theme.blue} color={theme.white}>
-                    더 구경하기
-                </Button>
+                <Link href="http://news.kyobobook.co.kr/main.ink?orderclick=QA">
+                    <a target="blank">
+                        <Button bg={theme.blue} color={theme.white}>
+                            더 구경하기
+                        </Button>
+                    </a>
+                </Link>
             </More>
             <Board>
                 <InterviewForm interview={interview}></InterviewForm>

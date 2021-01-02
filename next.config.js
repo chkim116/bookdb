@@ -13,7 +13,7 @@ module.exports = withBundleAnalyzer(
             return {
                 ...config,
                 mode: prod ? "production" : "development",
-                devtool: prod ? "hidden-source-map" : "eval",
+                devtool: prod ? "hidden-source-map" : "inline-source-map",
                 plugins,
                 module: {
                     ...config.module,
